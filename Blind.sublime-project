@@ -1,0 +1,25 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"name": "Blind",
+			"path": "C:\\Users\\taylow3\\HaxeFlixel Projects/Blind"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Flixel",
+			"path": "C:\\HaxeToolkit\\haxe\\lib\\flixel/4,1,1/"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Flixel Addons",
+			"path": "C:\\HaxeToolkit\\haxe\\lib\\flixel-addons/2,1,0/"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Haxe",
+			"path": "C:\\HaxeToolkit\\haxe\\std"
+		}
+	]
+}
