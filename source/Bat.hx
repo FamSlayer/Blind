@@ -31,7 +31,8 @@ class Bat extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
 		super(X, Y);
-		makeGraphic(16, 8, FlxColor.BROWN);
+		//makeGraphic(16, 8, FlxColor.BROWN);
+		loadGraphic("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", true);// , 16, 16);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
