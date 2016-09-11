@@ -32,12 +32,12 @@ class PlayState extends FlxState
 		
         add(_test);
 		
-		_player = new Player(_playerY, _playerY);
-		add(_player);
+		// = new Player(_playerY, _playerY);
+		//add(_player);
 		
-		_bat = new Bat(_playerY - 4, _playerY - 4);
-		add(_bat);
-		//addPlayerAndBat();
+		//_bat = new Bat(_playerY - 4, _playerY - 4);
+		//add(_bat);
+		addPlayerAndBat();
 		
 		
 		
