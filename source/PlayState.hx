@@ -6,9 +6,22 @@ import flixel.addons.nape.FlxNapeVelocity;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
+import haxe.MainLoop.MainEvent;
+
+import nape.geom.Vec2;
+import nape.phys.Body;
+import nape.phys.BodyType;
+import nape.shape.Polygon;
+import nape.space.Space;
+import nape.util.ShapeDebug;
+import nape.util.BitmapDebug;
+import nape.util.Debug;
+import flash.events.Event;
+import flash.display.Stage;
 
 class PlayState extends FlxState
 {
@@ -19,11 +32,27 @@ class PlayState extends FlxState
 	var _bat:Bat;
 	var _test:FlxNapeSprite;
 	
+	var gravity:Vec2;
+	var space:Space;
+	var _block:Polygon;
+	var _blockBody:Body;
+	var debug:ShapeDebug;
+	
 	override public function create():Void
 	{
 		
 		super.create();
 		FlxNapeSpace.init();
+		
+		gravity = Vec2.weak(0, 600);
+        space = new Space(gravity);
+		
+		debug = new ShapeDebug(stage.width, stage.height, stage.color);
+		addChild(debug.display);
+		
+		addBlock();
+		
+		stage.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		
 		_test = new FlxNapeSprite(16, 16);
         _test.makeGraphic(16, 16);
@@ -40,8 +69,6 @@ class PlayState extends FlxState
 		addPlayerAndBat();
 		
 		
-		
-		
 	}
 
 	override public function update(elapsed:Float):Void
@@ -51,12 +78,28 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 	
+	// written by Gabriel
+	function enterFrameHandler(ev:Event):Void {
+		space.step(1 / stage.frameRate);
+        debug.clear();
+        debug.draw(space);
+        debug.flush();
+	}
+	
+	// written by Gabriel
+	function addBlock():Void {
+		_block = new Polygon(Polygon.box(16, 16));
+		_blockBody = new Body(BodyType.STATIC);
+		_blockBody.shapes.add(_block);
+		_blockBody.position.setxy(20, 228);
+		_blockBody.space = space;
+	}
 	
 	// written by Fuller
 	function addPlayerAndBat():Void 	
 	{
-		_player = new Player(_playerY, _playerY);
-		_bat = new Bat(_playerY-4, _playerY-4);
+		_player = new Player(_playerX, _playerY);
+		_bat = new Bat(_playerX-4, _playerY-4);
 		
 		_bat.setPlayerSpeed(_player.getSpeed());
 		

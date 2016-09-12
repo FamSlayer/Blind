@@ -25,7 +25,6 @@ class Player extends FlxNapeSprite
 	{
 		super(X, Y);
 		
-		
 		createRectangularBody(16, 28);
 		body.allowRotation = false;
 		makeGraphic(16, 28, FlxColor.PURPLE);
@@ -41,7 +40,6 @@ class Player extends FlxNapeSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-		
 		move();
 		super.update(elapsed);
 		
