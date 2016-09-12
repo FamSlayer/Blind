@@ -6,16 +6,18 @@ package;
  */
 
  import flixel.FlxSprite;
+ import flixel.addons.nape.FlxNapeSprite;
  import flixel.util.FlxColor;
  import flixel.FlxG;
  import flixel.math.FlxPoint;
  import flixel.FlxObject;
 
-class Bat extends FlxSprite
+class Bat extends FlxNapeSprite
 {
 	var _paired:Bool = true;		// is the bat paired with the player? If it is, it will move with the player.
+	var _player_speed:Float;
 	
-	var speed:Float = 200;
+	var speed:Float = 300;
 	var _rot: Float = 0;
 	var _up:Bool = false;
 	var _down:Bool = false;
@@ -28,17 +30,20 @@ class Bat extends FlxSprite
 	var _d:Bool = false;
 	var _spacebar:Bool = false;
 	
+	
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
 		super(X, Y);
-		//makeGraphic(16, 8, FlxColor.BROWN);
-		loadGraphic("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", true);// , 16, 16);
+		
+		createRectangularBody(16, 8);
+		body.allowRotation = false;
+		makeGraphic(16, 8, FlxColor.BROWN);
+		//loadGraphic("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", true);// , 16, 16);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		drag.x = 1600;
-		drag.y = 1600;	// because it's actually flying, so it should have more vertical drag? Play with numbers
+		
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -55,11 +60,32 @@ class Bat extends FlxSprite
 		return _paired;
 	}
 	
+	public function setPlayerSpeed(s:Float):Void
+	{
+		_player_speed = s;
+	}
+	
 	
 	// written by Fuller
 	public function togglePaired():Void
 	{
+		var output:String = "Toggled from ";
+		if (_paired)
+			output += "paired ";
+		else
+			output += "not paired ";
+		
+		output += "to ";
+		
+		
 		_paired = !_paired;		// toggle the variable. Ultimately, the player should only be able to pair with the bat again within a certain range
+		
+		if (_paired)
+			output += "paired ";
+		else
+			output += "not paired ";
+		
+		FlxG.log.add(output);
 		
 	}
 	
@@ -99,18 +125,20 @@ class Bat extends FlxSprite
 				{
 					_rot = 180;
 					facing = FlxObject.LEFT;
+					body.velocity.x = -_player_speed;
 				}
 				else if (_right)
 				{
 					_rot = 0;
 					facing = FlxObject.RIGHT;
+					body.velocity.x = _player_speed;
 				}
-				velocity.set(speed,0);
-				velocity.rotate(new FlxPoint(0,0), _rot);
 			}
-		}
-		
-		// bat has been unpaired. should be controlled by WASD
+			else
+			{
+				body.velocity.x = 0;
+			}
+		}// bat has been unpaired. should be controlled by WASD
 		else{				
 			if (_w || _s || _a || _d){
 				if (_a)
@@ -130,8 +158,11 @@ class Bat extends FlxSprite
 				else if (_s) _rot = 90;
 				else if (_w) _rot = 270;
 			 
-				velocity.set(speed,0);
-				velocity.rotate(new FlxPoint(0,0), _rot);
+				body.velocity.setxy(speed * Math.cos( -1 * _rot * 3.14 / 180), speed * Math.sin(_rot * 3.14 / 180));
+				//velocity.rotate(new FlxPoint(0,0), _rot);
+			}
+			else{
+				body.velocity.setxy(0, 0);	// for polish, give the bat a hover when it's not being controlled
 			}
 		}
 		
