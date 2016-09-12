@@ -3,15 +3,15 @@ package;
  * ...
  * @author Fuller Taylor
  */
- 
 import flixel.FlxSprite;
+import flixel.addons.nape.FlxNapeSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.FlxObject;
 
-class Player extends FlxSprite
+class Player extends FlxNapeSprite
 {
 	var speed:Float = 200;
 	var _rot: Float = 0;
@@ -21,25 +21,38 @@ class Player extends FlxSprite
 	var _left:Bool = false;
 	var _right:Bool = false;
 	
-    public function new(?X:Float=0, ?Y:Float=0)
-    {
-        super(X, Y);
-		makeGraphic(16,28, FlxColor.PURPLE);
-		//loadGraphic("assets/images/duck.png", true, 100, 114);
-		// setFacingFlip(direction, flipx, flipy)
+	function new(?X:Float=0, ?Y:Float=0)
+	{
+		super(X, Y);
+		
+		
+		createRectangularBody(16, 28);
+		body.allowRotation = false;
+		makeGraphic(16, 28, FlxColor.PURPLE);
+		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
-		//animation.add("walk", [0,1,0,2], 5, true);
-		drag.x = drag.y = 1600;
-    }
-	 
-	override public function update(elapsed:Float):Void
-	{
-		move();
-		super.update(elapsed);
+		
+		//setBodyMaterial(1, 0.2, 0.4, 250); 		// set stupid high density to be less afected by blob weight.
+		//body.gravMass = 10; 						// cancels gravity for this object.
+		
+		
 	}
 	
-	// written by Fuller
+	override public function update(elapsed:Float):Void 
+	{
+		
+		move();
+		super.update(elapsed);
+		
+	}
+	
+	public function getSpeed():Float
+	{
+		return speed;
+	}
+	
+	
 	function move():Void
 	{
 		_up = FlxG.keys.anyPressed([UP]);
@@ -59,21 +72,18 @@ class Player extends FlxSprite
 			{
 				_rot = 180;
 				facing = FlxObject.LEFT;
+				body.velocity.x = -speed;
 			}
 			else if (_right)
 			{
 				_rot = 0;
 				facing = FlxObject.RIGHT;
+				body.velocity.x = speed;
 			}
-		 	velocity.set(speed,0);
-			velocity.rotate(new FlxPoint(0,0), _rot);
 		}
-		/*
-		if (velocity.x != 0 || velocity.y != 0){
-			animation.play("walk");
+		else
+		{
+			body.velocity.x = 0;
 		}
-		else animation.stop();
-		*/
 	}
-	
 }

@@ -57,8 +57,8 @@ class ApplicationMain {
 				
 				#if mobile
 				
-				forceWidth = 640;
-				forceHeight = 480;
+				forceWidth = 1024;
+				forceHeight = 768;
 				
 				container = new flash.display.Sprite ();
 				barA = new flash.display.Sprite ();
@@ -127,7 +127,7 @@ class ApplicationMain {
 				}
 				
 			},
-			640, 480, 
+			1024, 768, 
 			60, 
 			0,
 			(true ? flash.Lib.HARDWARE : 0) |
@@ -248,13 +248,13 @@ class ScaledStage extends flash.display.Stage {
 	
 	private override function get_stageHeight ():Int {
 		
-		return 480;
+		return 768;
 	
 	}
 	
 	private override function get_stageWidth ():Int {
 		
-		return 640;
+		return 1024;
 	
 	}
 	
@@ -325,11 +325,11 @@ class ApplicationMain {
 		wx.App.boot (function () {
 			
 			
-			frame = wx.Frame.create (null, null, "Blind", null, { width: 640, height: 480 });
+			frame = wx.Frame.create (null, null, "Blind", null, { width: 1024, height: 768 });
 			
 			
 			#if openfl
-			var stage = wx.NMEStage.create (frame, null, null, { width: 640, height: 480 });
+			var stage = wx.NMEStage.create (frame, null, null, { width: 1024, height: 768 });
 			#end
 			
 			var hasMain = false;
@@ -511,7 +511,11 @@ class ApplicationMain {
 		
 		config = {
 			
+<<<<<<< HEAD
 			build: "36",
+=======
+			build: "196",
+>>>>>>> 23bcfbaa999e3c9f01baee7ffc6b89d03bbfbe0d
 			company: "HaxeFlixel",
 			file: "Blind",
 			fps: 60,
@@ -529,13 +533,13 @@ class ApplicationMain {
 					display: 0,
 					fullscreen: false,
 					hardware: true,
-					height: 480,
+					height: 768,
 					parameters: "{}",
 					resizable: true,
 					stencilBuffer: false,
 					title: "Blind",
 					vsync: true,
-					width: 640,
+					width: 1024,
 					x: null,
 					y: null
 				},
@@ -545,7 +549,7 @@ class ApplicationMain {
 		
 		#if (js && html5)
 		#if (munit || utest)
-		openfl.Lib.embed (null, 640, 480, "null");
+		openfl.Lib.embed (null, 1024, 768, "null");
 		#end
 		#else
 		create ();
