@@ -21,6 +21,17 @@ class Player extends FlxNapeSprite
 	var _left:Bool = false;
 	var _right:Bool = false;
 	
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    public function new(?X:Float=0, ?Y:Float=0)
+    {
+        super(X, Y);
+		makeGraphic(16,28, FlxColor.PURPLE);
+		//loadGraphic("assets/images/duck.png", true, 100, 114);
+		// setFacingFlip(direction, flipx, flipy)
+=======
+>>>>>>> 132f4b77d9f61395a517d59c37e4452786dece9c
 	function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);
@@ -30,6 +41,10 @@ class Player extends FlxNapeSprite
 		body.allowRotation = false;
 		makeGraphic(16, 28, FlxColor.PURPLE);
 		
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 86e6be4... Checking in
+>>>>>>> 132f4b77d9f61395a517d59c37e4452786dece9c
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
