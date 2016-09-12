@@ -21,12 +21,24 @@ class Player extends FlxSprite
 	var _left:Bool = false;
 	var _right:Bool = false;
 	
+<<<<<<< HEAD
     public function new(?X:Float=0, ?Y:Float=0)
     {
         super(X, Y);
 		makeGraphic(16,28, FlxColor.PURPLE);
 		//loadGraphic("assets/images/duck.png", true, 100, 114);
 		// setFacingFlip(direction, flipx, flipy)
+=======
+	function new(?X:Float=0, ?Y:Float=0)
+	{
+		super(X, Y);
+		
+		
+		createRectangularBody(16, 28);
+		body.allowRotation = false;
+		makeGraphic(16, 28, FlxColor.PURPLE);
+		
+>>>>>>> parent of 86e6be4... Checking in
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		//animation.add("walk", [0,1,0,2], 5, true);
@@ -35,6 +47,7 @@ class Player extends FlxSprite
 	 
 	override public function update(elapsed:Float):Void
 	{
+		
 		move();
 		super.update(elapsed);
 	}

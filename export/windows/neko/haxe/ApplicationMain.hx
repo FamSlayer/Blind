@@ -511,7 +511,11 @@ class ApplicationMain {
 		
 		config = {
 			
+<<<<<<< HEAD
 			build: "30",
+=======
+			build: "197",
+>>>>>>> parent of 86e6be4... Checking in
 			company: "HaxeFlixel",
 			file: "Blind",
 			fps: 60,

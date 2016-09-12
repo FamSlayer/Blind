@@ -14,11 +14,39 @@ class PlayState extends FlxState
 	var _player:Player;
 	
 	var _bat:Bat;
+<<<<<<< HEAD
 	
 	override public function create():Void
 	{
 		addPlayerAndBat();
 		super.create();
+=======
+	var _test:FlxNapeSprite;
+	
+	override public function create():Void
+	{
+		
+		super.create();
+		FlxNapeSpace.init();
+		
+		_test = new FlxNapeSprite(16, 16);
+        _test.makeGraphic(16, 16);
+        _test.createRectangularBody();
+        _test.body.velocity.x = 5;
+		
+        add(_test);
+		
+		// = new Player(_playerY, _playerY);
+		//add(_player);
+		
+		//_bat = new Bat(_playerY - 4, _playerY - 4);
+		//add(_bat);
+		addPlayerAndBat();
+		
+		
+		
+		
+>>>>>>> parent of 86e6be4... Checking in
 	}
 
 	override public function update(elapsed:Float):Void
@@ -33,6 +61,11 @@ class PlayState extends FlxState
 	{
 		_player = new Player(_playerY, _playerY);
 		_bat = new Bat(_playerY-4, _playerY-4);
+<<<<<<< HEAD
+=======
+		
+		_bat.setPlayerSpeed(_player.getSpeed());
+>>>>>>> parent of 86e6be4... Checking in
 		
 		add(_player);
 		add(_bat);
