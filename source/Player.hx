@@ -21,14 +21,6 @@ class Player extends FlxNapeSprite
 	var _left:Bool = false;
 	var _right:Bool = false;
 	
-
-    public function new(?X:Float=0, ?Y:Float=0)
-    {
-        super(X, Y);
-		makeGraphic(16,28, FlxColor.PURPLE);
-		//loadGraphic("assets/images/duck.png", true, 100, 114);
-		// setFacingFlip(direction, flipx, flipy)
-
 	function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);

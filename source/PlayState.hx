@@ -19,11 +19,6 @@ class PlayState extends FlxState
 	var _bat:Bat;
 	var _test:FlxNapeSprite;
 	
-	override public function create():Void
-	{
-		
-		super.create();
-	}
 	
 	override public function create():Void
 	{
