@@ -9,6 +9,7 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
+import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
@@ -18,6 +19,10 @@ class PlayState extends FlxState
 	
 	var _bat:Bat;
 	var _test:FlxNapeSprite;
+    var _platform:FlxNapeSprite;
+    var _light:FlxNapeSprite;
+    var _batplatform:FlxNapeSprite;
+    var _rock:FlxNapeSprite;
 	
 	override public function create():Void
 	{
@@ -31,6 +36,7 @@ class PlayState extends FlxState
         _test.body.velocity.x = 5;
 		
         add(_test);
+        
 		
 		// = new Player(_playerY, _playerY);
 		//add(_player);
@@ -38,6 +44,8 @@ class PlayState extends FlxState
 		//_bat = new Bat(_playerY - 4, _playerY - 4);
 		//add(_bat);
 		addPlayerAndBat();
+        addPlatformAndLight();
+        addBatPlatformAndRock();
 		
 		
 		
@@ -48,8 +56,64 @@ class PlayState extends FlxState
 	{
 		//FlxNapeVelocity.moveTowardsMouse(_test, 1);
 		checkPairPressed();		// check if the player is trying to pair themself with the bat again
+        platformTouched();
+        batPlatformTouched();
 		super.update(elapsed);
 	}
+    
+    //written by Eric
+    function addBatPlatformAndRock():Void
+    {
+        _batplatform = new FlxNapeSprite(800,100);
+        _batplatform.makeGraphic(8,8);
+        _batplatform.createRectangularBody();
+        _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        
+        _rock = new FlxNapeSprite(800,200);
+        _rock.makeGraphic(64,64);
+        _rock.createRectangularBody(); 
+        _rock.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        
+        add(_batplatform);
+        add(_rock);
+    }
+    
+    //written by Eric
+    function addPlatformAndLight():Void
+    {
+        _platform = new FlxNapeSprite(400,214);
+        _platform.makeGraphic(32,8);
+        _platform.createRectangularBody();
+        _platform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        
+        _light = new FlxNapeSprite(400,100);
+		_light.makeGraphic(32, 32, FlxColor.YELLOW);
+        _light.createRectangularBody();
+        _light.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        
+        add(_light);
+        add(_platform);
+    }
+    
+    //written by Eric
+    function platformTouched():Void
+    {
+        if (FlxG.keys.anyPressed([P]) && FlxG.collide(_player, _platform))
+        {
+            _light.kill();
+            _platform.kill();
+        }
+    }
+    
+    //written by Eric
+    function batPlatformTouched():Void
+    {
+        if (FlxG.keys.anyPressed([B]) && FlxG.collide(_bat, _batplatform))
+        {
+            _rock.kill();
+            _batplatform.kill();
+        }
+    }
 	
 	
 	// written by Fuller
