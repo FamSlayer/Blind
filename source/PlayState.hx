@@ -2,7 +2,6 @@ package;
 
 import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
-import flixel.addons.nape.FlxNapeVelocity;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -29,24 +28,15 @@ class PlayState extends FlxState
         _test.makeGraphic(16, 16);
         _test.createRectangularBody();
         _test.body.velocity.x = 5;
-		
         add(_test);
 		
-		// = new Player(_playerY, _playerY);
-		//add(_player);
 		
-		//_bat = new Bat(_playerY - 4, _playerY - 4);
-		//add(_bat);
 		addPlayerAndBat();
-		
-		
-		
 		
 	}
 
 	override public function update(elapsed:Float):Void
 	{
-		//FlxNapeVelocity.moveTowardsMouse(_test, 1);
 		checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		super.update(elapsed);
 	}
