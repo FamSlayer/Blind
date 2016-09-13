@@ -6,25 +6,42 @@ import flixel.addons.nape.FlxNapeVelocity;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
+
+import nape.geom.Vec2;
+import nape.phys.Body;
+import nape.phys.BodyType;
+import nape.shape.Polygon;
+import nape.space.Space;
 
 class PlayState extends FlxState
 {
 	var _playerY:Int = 200;
 	var _playerX:Int = 20;
 	var _player:Player;
+	var playerBody:Body;
+	var playerShape:Polygon;
 	
 	var _bat:Bat;
 	var _test:FlxNapeSprite;
 	
+	var gravity:Vec2;
+	var space:Space;
 	
 	override public function create():Void
 	{
 		
 		super.create();
 		FlxNapeSpace.init();
+		
+		gravity = new Vec2(0, 600);
+		space = new Space(gravity);
+		
+		//addFloor(W,H,X,Y)
+		addFloor(1024,16,512,526);
 		
 		_test = new FlxNapeSprite(16, 16);
         _test.makeGraphic(16, 16);
@@ -39,10 +56,6 @@ class PlayState extends FlxState
 		//_bat = new Bat(_playerY - 4, _playerY - 4);
 		//add(_bat);
 		addPlayerAndBat();
-		
-		
-		
-		
 	}
 
 	override public function update(elapsed:Float):Void
@@ -52,8 +65,21 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 	
+	// written by Gabriel
+	function addFloor(W:Int,H:Int,X:Int,Y:Int):Void {
+		var floorBody:Body = new Body(BodyType.STATIC);
+		var floorShape:Polygon = new Polygon(Polygon.box(W, H));
+		floorShape.body = floorBody;
+		floorBody.space = space;
+		floorBody.position.setxy(X, Y);
+		floorBody.allowMovement = false;
+		var floorSprite = new FlxNapeSprite(X,Y);
+		floorSprite.makeGraphic(W, H, FlxColor.RED);
+		floorSprite.createRectangularBody();
+		add(floorSprite);
+	}
 	
-	// written by Fuller
+	// written by Fuller and Gabriel
 	function addPlayerAndBat():Void 	
 	{
 		_player = new Player(_playerY, _playerY);
@@ -61,7 +87,13 @@ class PlayState extends FlxState
 		
 		_bat.setPlayerSpeed(_player.getSpeed());
 		
-		_bat.setPlayerSpeed(_player.getSpeed());
+		// physics for player
+		playerBody = new Body(BodyType.DYNAMIC);
+		playerShape = new Polygon(Polygon.box(16,28));
+		playerShape.body = playerBody;
+		playerBody.space = space;
+		playerBody.position.setxy(_playerX, _playerY);
+		playerBody.gravMass = 55;
 		
 		add(_player);
 		add(_bat);
