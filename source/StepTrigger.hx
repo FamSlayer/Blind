@@ -2,7 +2,7 @@ package;
 
 /**
  * ...
- * @author Fuller Taylor
+ * @author Fuller Taylor, Eric Roque
  */
 
 import flixel.addons.nape.FlxNapeSprite; 
@@ -15,12 +15,13 @@ class StepTrigger extends FlxNapeSprite
 	var _depressed_position:FlxPoint;
 	var _upside_down:Bool;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false) 
+	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false)
 	{
 		super(X, Y);
 		
 		_rest_position = new FlxPoint(X, Y);
 		_upside_down = flipped;
+		_depressed_position = depressed;
 		
 		if (!flipped)
 		{
