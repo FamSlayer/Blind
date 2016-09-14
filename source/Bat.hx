@@ -85,7 +85,7 @@ class Bat extends FlxNapeSprite
 		else
 			output += "not paired ";
 		
-		FlxG.log.add(output);
+		//FlxG.log.add(output);
 		
 	}
 	

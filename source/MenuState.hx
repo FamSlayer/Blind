@@ -14,7 +14,7 @@ class MenuState extends FlxState
 	override public function create():Void
 	{
 		// add(new FlxText(10,10,20, "Hello, world!"));
-		_playButton  = new FlxButton(0,0, "Play", clickPlay);
+		_playButton  = new FlxButton(0,0, "P L A Y", clickPlay);
 		_playButton.screenCenter();
 		add(_playButton);
 		super.create();
@@ -28,6 +28,6 @@ class MenuState extends FlxState
 	function clickPlay():Void
 	{
 		// switch to play scene!
-		FlxG.switchState(new PlayState());
+		FlxG.switchState(new TestingState());
 	}
 }
