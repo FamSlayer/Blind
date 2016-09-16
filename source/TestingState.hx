@@ -126,9 +126,9 @@ class TestingState extends FlxState
 			if ( !_rock.inMotion())
 			{
 				
-				FlxG.log.add("_rock.trigger() called");
+				//FlxG.log.add("_rock.trigger() called");
 				_rock.trigger();
-				FlxG.log.add("");
+				//FlxG.log.add("");
 			}
             //_batplatform.kill();
         }
