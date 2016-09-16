@@ -5,6 +5,7 @@ import flixel.addons.nape.FlxNapeSpace;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
@@ -25,11 +26,11 @@ class TestingState extends FlxState
 	var _bat:Bat;
 	var _test:FlxNapeSprite;
 	
+	var _standable_objects:FlxGroup;
 	
     var _platform:StepTrigger;
     var _light:FlxNapeSprite;
 	//var _light_sprite:FlxSprite;
-	
 	
     var _batplatform:FlxNapeSprite;
     var _rock:Gate;
@@ -41,13 +42,12 @@ class TestingState extends FlxState
 		super.create();
 		FlxNapeSpace.init();
 		
-		_test = new FlxNapeSprite(16, 16);
-        _test.makeGraphic(16, 16);
-        _test.createRectangularBody();
-        _test.body.velocity.x = 5;
-        add(_test);
+		_temp_groud = new FlxNapeSprite(16, 16);
+        _temp_groud.makeGraphic(16, 16);
+        _temp_groud.createRectangularBody();
+        //_temp_groud.body.velocity.x = 5;
+        add(_temp_groud);
         
-		
 		
 		addPlayerAndBat();
         addPlatformAndLight();
@@ -57,10 +57,27 @@ class TestingState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
+		super.update(elapsed);
 		checkPairPressed();		// check if the player is trying to pair themself with the bat again
         platformTouched();
         batPlatformTouched();
-		super.update(elapsed);
+		applyGravity();
+	}
+	
+	// written by Gabriel, modified by Fuller
+	public function applyGravity():Void {
+		if (FlxG.collide(_player, _standable_objects) && _player.canJump())
+		{
+			_player.body.velocity.y = 0;
+			if (! _player.canJump())
+			{
+				_player.allowJump();
+			}
+		}
+		else
+		{
+			_player.body.velocity.y += 10;
+		}
 	}
     
     //written by Eric, modified by Fuller
@@ -88,7 +105,7 @@ class TestingState extends FlxState
 		
 		
         _platform = new StepTrigger(400,214);
-        		
+        
         add(_light);
         add(_platform);
     }
