@@ -132,13 +132,7 @@ class TestingState extends FlxState
 			}
             //_batplatform.kill();
         }
-		else
-		{
-			if _stepTrigger.isDepressed() 
-			{
-				_stepTrigger.raise();
-			}
-		}
+		
     }
 	
 	

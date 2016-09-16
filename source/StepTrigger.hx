@@ -13,6 +13,7 @@ class StepTrigger extends FlxNapeSprite
 {
 	var _rest_position:FlxPoint;
 	var _depressed_position:FlxPoint;
+	var _depressed:Bool;
 	var _upside_down:Bool;
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false)
@@ -21,7 +22,7 @@ class StepTrigger extends FlxNapeSprite
 		
 		_rest_position = new FlxPoint(X, Y);
 		_upside_down = flipped;
-		_depressed_position = depressed;
+		_depressed = depressed;
 		
 		if (!flipped)
 		{
