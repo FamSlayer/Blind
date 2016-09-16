@@ -17,6 +17,7 @@ class StepTrigger extends FlxNapeSprite
 	var _depressed_position:FlxPoint;
     
     var _moving_to_depressed_position:Bool = false;
+
 	var _upside_down:Bool;
     var _depressed:Bool;
     
@@ -38,6 +39,7 @@ class StepTrigger extends FlxNapeSprite
         makeGraphic(32,4);
         createRectangularBody();
         setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+
 		
 		if (!flipped)
 		{

@@ -132,6 +132,7 @@ class TestingState extends FlxState
 			}
             //_batplatform.kill();
         }
+
     }
 	
 	
