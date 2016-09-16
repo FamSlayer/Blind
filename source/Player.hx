@@ -15,9 +15,9 @@ class Player extends FlxNapeSprite
 {
 	var speed:Float = 200;
 	var _rot: Float = 0;
-	public var _jumped:Bool = true;
+	var _can_jump:Bool = true;
 	// helper variables to be able to tell which keys are pressed
-	public var _up:Bool = false;
+	var _up:Bool = false;
 	var _down:Bool = false;
 	var _left:Bool = false;
 	var _right:Bool = false;
@@ -39,15 +39,23 @@ class Player extends FlxNapeSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-		
-		move();
 		super.update(elapsed);
-		acceleration.x = 0;
+		move();
 	}
 	
 	public function getSpeed():Float
 	{
 		return speed;
+	}
+	
+	public function canJump():Bool
+	{
+		return _can_jump;
+	}
+	
+	public function allowJump():Void
+	{
+		_can_jump = true;
 	}
 	
 	function move():Void
@@ -56,10 +64,10 @@ class Player extends FlxNapeSprite
 		_left = FlxG.keys.anyPressed([LEFT]);
 		_right = FlxG.keys.anyPressed([RIGHT]);
 		
-		if(_up && !_jumped)
+		if(_up && _can_jump)
 		{
 			body.velocity.y = -300;
-			_jumped = true;
+			_can_jump = false;
 		}
 		
 		// cancel out opposing directions

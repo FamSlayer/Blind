@@ -32,6 +32,9 @@ class MenuState extends FlxState
 		_playButton.screenCenter();
 		add(_playButton);
 		
+		var grav_button = new FlxButton(360, 600, "Gravity", loadGrav);
+		add(grav_button);
+		
 		var _button0 = new FlxButton(576, 256 + 0 * 24, " Demo: Level " + 0,  loadLevel0);
 		var _button1 = new FlxButton(576, 256 + 1 * 24, " Demo: Level " + 1,  loadLevel1);
 		var _button2 = new FlxButton(576, 256 + 2 * 24, " Demo: Level " + 2,  loadLevel2);
@@ -52,6 +55,11 @@ class MenuState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+	}
+
+	function loadGrav():Void 
+	{
+		FlxG.switchState(new GravityState());
 	}
 	
 	function loadLevel0():Void

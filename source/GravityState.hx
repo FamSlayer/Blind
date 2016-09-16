@@ -12,7 +12,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.group.FlxGroup;
 
-class PlayState extends FlxState
+class GravityState extends FlxState
 {
 	var _playerY:Int = 200;
 	var _playerX:Int = 20;
@@ -38,20 +38,25 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
-		//FlxNapeVelocity.moveTowardsMouse(_test, 1);
-		checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		super.update(elapsed);
-		gravity();
-		FlxG.collide(_blocks, _player);
+		checkPairPressed();		// check if the player is trying to pair themself with the bat again
+		applyGravity();
 	}
 	
-	// written by Gabriel
-	public function gravity():Void {
-		if (!FlxG.collide(_player, _blocks) && _player._jumped) {
-			_player.body.velocity.y += 10;
-		} else if (!_player._up){
+	// written by Gabriel, modified by Fuller
+	public function applyGravity():Void {
+		if (FlxG.collide(_player, _blocks) && _player.canJump())
+		{
 			_player.body.velocity.y = 0;
-			_player._jumped = false;
+			if (! _player.canJump())
+			{
+				_player.allowJump();
+			}
+			
+		}
+		else
+		{
+			_player.body.velocity.y += 10;
 		}
 	}
 	
