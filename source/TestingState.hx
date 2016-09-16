@@ -26,13 +26,14 @@ class TestingState extends FlxState
 	var _test:FlxNapeSprite;
 	
 	
-    var _platform:FlxNapeSprite;
+    var _platform:StepTrigger;
     var _light:FlxNapeSprite;
 	//var _light_sprite:FlxSprite;
 	
 	
     var _batplatform:FlxNapeSprite;
     var _rock:Gate;
+    
 	
 	override public function create():Void
 	{
@@ -87,11 +88,7 @@ class TestingState extends FlxState
 		
 		
         _platform = new StepTrigger(400,214);
-        _platform.makeGraphic(32,4);
-        _platform.createRectangularBody();
-        _platform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
-        
-		
+        		
         add(_light);
         add(_platform);
     }
@@ -103,16 +100,17 @@ class TestingState extends FlxState
 		if(FlxG.collide(_player, _platform))
         {
             _light.kill();
-            _platform.body.velocity.setxy(0,5);
         }
 		else
 		{
-			if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
+            _light.revive();
+			/*if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
 				// I HOPE that the only time the body.space will be nulled out is after a kill call, and I THINK that'll be true!
 				// otherwise, create a boolean variable that just keeps track of whether the object is deleted or not!
 			{
 				_light.revive();
-			}
+			}*/
+            
 		}
     }
     
@@ -132,13 +130,7 @@ class TestingState extends FlxState
 			}
             //_batplatform.kill();
         }
-		else
-		{
-			if _stepTrigger.isDepressed() 
-			{
-				_stepTrigger.raise();
-			}
-		}
+
     }
 	
 	
