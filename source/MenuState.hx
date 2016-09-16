@@ -46,7 +46,6 @@ class MenuState extends FlxState
 		add(_button4);
 		add(_button5);
 		
-		
 		super.create();
 	}
 
