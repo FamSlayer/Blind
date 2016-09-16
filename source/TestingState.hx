@@ -36,6 +36,8 @@ class TestingState extends FlxState
     var _gate:Gate;
 	
 	var _temp_ground:FlxNapeSprite;
+	
+	var Layer:Layers;
     
 	
 	override public function create():Void
@@ -50,6 +52,11 @@ class TestingState extends FlxState
 		_temp_ground.body.allowMovement = false;
 		_temp_ground.body.allowRotation = false;
 		_temp_ground.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		_temp_ground.body.gravMass = 300000;
+		
+		Layer = new Layers();
+		_temp_ground.body.shapes.at(0).filter = Layer.ground_filter;
+		
         //_temp_ground.body.velocity.x = 5;
         add(_temp_ground);
 		
@@ -126,6 +133,8 @@ class TestingState extends FlxState
         
         add(_batplatform);
         add(_gate);
+		
+		_standable_objects.add(_gate);
     }
     
     //written by Eric, modified by Fuller
@@ -143,6 +152,8 @@ class TestingState extends FlxState
         
         add(_light);
         add(_platform);
+		
+		_standable_objects.add(_platform);
     }
     
     //written by Eric, modified by Fuller

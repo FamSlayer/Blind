@@ -12,7 +12,7 @@ import flixel.math.FlxPoint;
 import nape.geom.Vec2;
 
 
-class StepTrigger extends FlxSprite 
+class StepTrigger extends FlxNapeSprite 
 {
 	var _rest_position:FlxPoint;
 	var _depressed_position:FlxPoint;
@@ -30,6 +30,8 @@ class StepTrigger extends FlxSprite
     
     private var _times:Array<Float>; // will be used to count the FPS
 	
+	var Layer:Layers;
+	
 	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false)
 	{
 		super(X, Y);
@@ -40,8 +42,11 @@ class StepTrigger extends FlxSprite
         _times = [];
         
         makeGraphic(32,6);
-        //createRectangularBody();
-        //setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        createRectangularBody();
+        setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		
+		Layer = new Layers();
+		body.shapes.at(0).filter = Layer.gate_filter;
 
 		
 		if (!flipped)

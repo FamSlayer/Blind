@@ -24,8 +24,9 @@ class Gate extends FlxNapeSprite
 	var _vertical:Bool;
 	
 	var _speed:Int = 100;
-	
 	var _moving:Bool = false;
+	
+	var Layer:Layers;
 	
 	private var _times:Array<Float>; // will be used to count the FPS
 	
@@ -37,10 +38,14 @@ class Gate extends FlxNapeSprite
 		_move_to = new FlxPoint(dX, dY);
 		_times = [];
 		
-		makeGraphic(15,60);
+		makeGraphic(15,60);		// <-- replace this line with loading an image instead of loading the gate
         createRectangularBody();
-        setBodyMaterial(.6, 9999999, 9999999, 9999999, 9999999);	//non-elastic, the rest of the numbers basically say "should not be moved by other stuff"
+        setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);	//non-elastic, the rest of the numbers basically say "should not be moved by other stuff"
 		body.allowRotation = false;
+		
+		// set collision layer
+		Layer = new Layers();
+		body.shapes.at(0).filter = Layer.gate_filter;
 		
 		// bunch of logic to determine how the gate will move based on the origin and destination given in the constructor
 		if (Y != dY)
