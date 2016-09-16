@@ -10,26 +10,18 @@ import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
-
-import nape.geom.Vec2;
-import nape.phys.Body;
-import nape.phys.BodyType;
-import nape.shape.Polygon;
-import nape.space.Space;
+import flixel.group.FlxGroup;
 
 class PlayState extends FlxState
 {
 	var _playerY:Int = 200;
 	var _playerX:Int = 20;
 	var _player:Player;
-	var playerBody:Body;
-	var playerShape:Polygon;
+	
+	var _blocks:FlxGroup;
 	
 	var _bat:Bat;
 	var _test:FlxNapeSprite;
-	
-	var gravity:Vec2;
-	var space:Space;
 	
 	override public function create():Void
 	{
@@ -37,24 +29,10 @@ class PlayState extends FlxState
 		super.create();
 		FlxNapeSpace.init();
 		
-		gravity = new Vec2(0, 600);
-		space = new Space(gravity);
+		_blocks = new FlxGroup(128);
 		
-		//addFloor(W,H,X,Y)
-		addFloor(1024,16,512,526);
+		addFloor(64, 2, 0, 700);
 		
-		_test = new FlxNapeSprite(16, 16);
-        _test.makeGraphic(16, 16);
-        _test.createRectangularBody();
-        _test.body.velocity.x = 5;
-		
-        add(_test);
-		
-		// = new Player(_playerY, _playerY);
-		//add(_player);
-		
-		//_bat = new Bat(_playerY - 4, _playerY - 4);
-		//add(_bat);
 		addPlayerAndBat();
 	}
 
@@ -63,37 +41,38 @@ class PlayState extends FlxState
 		//FlxNapeVelocity.moveTowardsMouse(_test, 1);
 		checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		super.update(elapsed);
+		gravity();
+		FlxG.collide(_blocks, _player);
 	}
 	
 	// written by Gabriel
-	function addFloor(W:Int,H:Int,X:Int,Y:Int):Void {
-		var floorBody:Body = new Body(BodyType.STATIC);
-		var floorShape:Polygon = new Polygon(Polygon.box(W, H));
-		floorShape.body = floorBody;
-		floorBody.space = space;
-		floorBody.position.setxy(X, Y);
-		floorBody.allowMovement = false;
-		var floorSprite = new FlxNapeSprite(X,Y);
-		floorSprite.makeGraphic(W, H, FlxColor.RED);
-		floorSprite.createRectangularBody();
-		add(floorSprite);
+	public function gravity():Void {
+		if (!FlxG.collide(_player, _blocks) && _player._jumped) {
+			_player.body.velocity.y += 10;
+		} else if (!_player._up){
+			_player.body.velocity.y = 0;
+			_player._jumped = false;
+		}
 	}
 	
-	// written by Fuller and Gabriel
+	// written by Gabriel
+	public function addFloor(W:Int, H:Int, X:Int, Y:Int):Void {
+		for (i in 0...W) {
+			for (u in 0...H) {
+				var b:Block = new Block(X + i * 16, Y + u * 16);
+				_blocks.add(b);
+			}
+		}
+		add(_blocks);
+	}
+	
+	// written by Fuller
 	function addPlayerAndBat():Void 	
 	{
-		_player = new Player(_playerY, _playerY);
-		_bat = new Bat(_playerY-4, _playerY-4);
+		_player = new Player(_playerX, _playerY);
+		_bat = new Bat(_playerX-4, _playerY-4);
 		
 		_bat.setPlayerSpeed(_player.getSpeed());
-		
-		// physics for player
-		playerBody = new Body(BodyType.DYNAMIC);
-		playerShape = new Polygon(Polygon.box(16,28));
-		playerShape.body = playerBody;
-		playerBody.space = space;
-		playerBody.position.setxy(_playerX, _playerY);
-		playerBody.gravMass = 55;
 		
 		add(_player);
 		add(_bat);

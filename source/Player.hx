@@ -15,8 +15,9 @@ class Player extends FlxNapeSprite
 {
 	var speed:Float = 200;
 	var _rot: Float = 0;
+	public var _jumped:Bool = true;
 	// helper variables to be able to tell which keys are pressed
-	var _up:Bool = false;
+	public var _up:Bool = false;
 	var _down:Bool = false;
 	var _left:Bool = false;
 	var _right:Bool = false;
@@ -25,18 +26,15 @@ class Player extends FlxNapeSprite
 	{
 		super(X, Y);
 		
-		
 		createRectangularBody(16, 28);
 		body.allowRotation = false;
+		body.gravMass = 55;
 		makeGraphic(16, 28, FlxColor.PURPLE);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
 		//setBodyMaterial(1, 0.2, 0.4, 250); 		// set stupid high density to be less afected by blob weight.
-		//body.gravMass = 10; 						// cancels gravity for this object.
-		
-		
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -44,7 +42,7 @@ class Player extends FlxNapeSprite
 		
 		move();
 		super.update(elapsed);
-		
+		acceleration.x = 0;
 	}
 	
 	public function getSpeed():Float
@@ -52,12 +50,17 @@ class Player extends FlxNapeSprite
 		return speed;
 	}
 	
-	
 	function move():Void
 	{
 		_up = FlxG.keys.anyPressed([UP]);
 		_left = FlxG.keys.anyPressed([LEFT]);
 		_right = FlxG.keys.anyPressed([RIGHT]);
+		
+		if(_up && !_jumped)
+		{
+			body.velocity.y = -300;
+			_jumped = true;
+		}
 		
 		// cancel out opposing directions
 		if (_left && _right)
