@@ -12,7 +12,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.group.FlxGroup;
 
-class PlayState extends FlxState
+class GravityState extends FlxState
 {
 	var _playerY:Int = 200;
 	var _playerX:Int = 20;
@@ -31,7 +31,8 @@ class PlayState extends FlxState
 		
 		_blocks = new FlxGroup(128);
 		
-		addFloor(64, 2, 0, 700);
+		addFloor(32, 2, 0, 700);
+		addFloor(24, 2, 512+16*12, 700);
 		
 		addPlayerAndBat();
 	}
