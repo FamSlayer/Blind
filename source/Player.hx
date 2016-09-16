@@ -17,14 +17,18 @@ class Player extends FlxNapeSprite
 	var _rot: Float = 0;
 	var _can_jump:Bool = true;
 	// helper variables to be able to tell which keys are pressed
-	var _up:Bool = false;
+	public var _up:Bool = false;
 	var _down:Bool = false;
 	var _left:Bool = false;
 	var _right:Bool = false;
 	
-	function new(?X:Float=0, ?Y:Float=0)
+	var _the_bat:Bat;
+	
+	function new(?X:Float=0, ?Y:Float=0, b:Bat)
 	{
 		super(X, Y);
+		
+		_the_bat = b;
 		
 		createRectangularBody(16, 28);
 		body.allowRotation = false;
@@ -67,6 +71,7 @@ class Player extends FlxNapeSprite
 		if(_up && _can_jump)
 		{
 			body.velocity.y = -300;
+			_the_bat.body.velocity.y = -300;
 			_can_jump = false;
 		}
 		

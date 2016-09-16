@@ -74,10 +74,10 @@ class GravityState extends FlxState
 	// written by Fuller
 	function addPlayerAndBat():Void 	
 	{
-		_player = new Player(_playerX, _playerY);
-		_bat = new Bat(_playerX-4, _playerY-4);
+		_bat = new Bat(_playerY-24, _playerY-8);
+		_player = new Player(_playerY, _playerY, _bat);
 		
-		_bat.setPlayerSpeed(_player.getSpeed());
+		_bat.body.velocity = _player.body.velocity;
 		
 		add(_player);
 		add(_bat);
