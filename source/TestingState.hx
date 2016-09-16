@@ -2,7 +2,6 @@ package;
 
 import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
-import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
@@ -10,6 +9,8 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
+
+import nape.dynamics.InteractionFilter;
 
 import flixel.FlxG; // for debug logging
 
@@ -32,7 +33,7 @@ class TestingState extends FlxState
     var _light:FlxNapeSprite;
 	
     var _batplatform:FlxNapeSprite;
-    var _rock:Gate;
+    var _gate:Gate;
 	
 	var _temp_ground:FlxNapeSprite;
     
@@ -121,10 +122,10 @@ class TestingState extends FlxState
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         
-        _rock = new Gate(800,400, 800,300);
+        _gate = new Gate(800,400, 800,300);
         
         add(_batplatform);
-        add(_rock);
+        add(_gate);
     }
     
     //written by Eric, modified by Fuller
@@ -174,11 +175,11 @@ class TestingState extends FlxState
 		if (FlxG.collide(_bat, _batplatform))
         {
 			//FlxG.log.add("Bat is pushing the button");
-			if ( !_rock.inMotion())
+			if ( !_gate.inMotion())
 			{
 				
-				//FlxG.log.add("_rock.trigger() called");
-				_rock.trigger();
+				//FlxG.log.add("_gate.trigger() called");
+				_gate.trigger();
 				//FlxG.log.add("");
 			}
             //_batplatform.kill();

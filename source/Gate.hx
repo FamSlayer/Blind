@@ -39,7 +39,7 @@ class Gate extends FlxNapeSprite
 		
 		makeGraphic(15,60);
         createRectangularBody();
-        setBodyMaterial(0, 9999999, 9999999, 9999999, 9999999);	//non-elastic, the rest of the numbers basically say "should not be moved by other stuff"
+        setBodyMaterial(.6, 9999999, 9999999, 9999999, 9999999);	//non-elastic, the rest of the numbers basically say "should not be moved by other stuff"
 		body.allowRotation = false;
 		
 		// bunch of logic to determine how the gate will move based on the origin and destination given in the constructor
