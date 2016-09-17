@@ -163,18 +163,16 @@ class TestingState extends FlxState
 		if(FlxG.collide(_player, _platform))
         {
             _light.kill();
-            _platform.trigger();
         }
 		else
 		{
-            
-			if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
+            _light.revive();
+			/*if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
 				// I HOPE that the only time the body.space will be nulled out is after a kill call, and I THINK that'll be true!
 				// otherwise, create a boolean variable that just keeps track of whether the object is deleted or not!
 			{
-                _platform.trigger();
 				_light.revive();
-			}
+			}*/
             
 		}
     }
