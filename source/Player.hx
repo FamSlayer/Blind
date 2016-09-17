@@ -30,10 +30,15 @@ class Player extends FlxNapeSprite
 		
 		_the_bat = b;
 		
-		createRectangularBody(16, 28);
-		body.allowRotation = false;
+        
+		createRectangularBody(30, 106);
+        
+        loadGraphic("assets/images/Idle_0.png", false);
+		
+        body.allowRotation = false;
 		body.gravMass = 55;
-		makeGraphic(16, 28, FlxColor.PURPLE);
+		
+        //makeGraphic(16, 28, FlxColor.PURPLE);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);

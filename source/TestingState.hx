@@ -4,6 +4,7 @@ import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -37,13 +38,16 @@ class TestingState extends FlxState
 	
 	var _temp_ground:FlxNapeSprite;
     
+    private var background:FlxSprite;
+    
 	
 	override public function create():Void
 	{
 		
 		super.create();
 		FlxNapeSpace.init();
-		
+        		
+        loadBackground();
 		_temp_ground = new FlxNapeSprite(500, 400);
         _temp_ground.makeGraphic(800, 20, FlxColor.BROWN);
         _temp_ground.createRectangularBody();
@@ -70,12 +74,37 @@ class TestingState extends FlxState
 		if (_bat.isPaired()) movePairTogether();	// if bat is still paired, set _bat.body.velocity = player.body.velocity
 		applyGravity();
 		
-		
+		reset();
 		
 		
         platformTouched();
         batPlatformTouched();
 	}
+    
+    public function reset():Void
+    {
+        if (FlxG.keys.anyPressed([R]))
+        {
+            FlxG.resetState();
+        }
+    }
+    
+    public function loadBackground():Void
+    {
+        background = new FlxSprite();
+        background.loadGraphic("assets/images/Cave_fore_background.png");
+        add(background);
+    }
+    
+    public function loadMidground():Void
+    {
+        
+    }
+    
+    public function loadForeground():Void
+    {
+        
+    }
 	
 	// written by Gabriel, modified by Fuller
 	public function applyGravity():Void {

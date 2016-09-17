@@ -39,7 +39,7 @@ class Bat extends FlxNapeSprite
 		body.allowRotation = false;
 		//body.gravMass = 2;
 		makeGraphic(16, 8, FlxColor.BROWN);
-		//loadGraphic("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", true);// , 16, 16);
+		loadGraphic("assets/images/REALBAT!.png", true);// , 16, 16);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
