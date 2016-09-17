@@ -12,12 +12,12 @@ import flixel.math.FlxPoint;
 import nape.geom.Vec2;
 
 
-class StepTrigger extends FlxSprite 
+class StepTrigger extends FlxNapeSprite 
 {
 	var _rest_position:FlxPoint;
 	var _depressed_position:FlxPoint;
     
-    var _moving_to_depressed_position:Bool = false;
+    var _moving_to_depressed_position:Bool = true;
 
 	var _upside_down:Bool;
     var _depressed:Bool;
@@ -30,6 +30,8 @@ class StepTrigger extends FlxSprite
     
     private var _times:Array<Float>; // will be used to count the FPS
 	
+	var Layer:Layers;
+	
 	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false)
 	{
 		super(X, Y);
@@ -40,11 +42,14 @@ class StepTrigger extends FlxSprite
         _times = [];
         
         makeGraphic(32,6);
-        //createRectangularBody();
-        //setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        createRectangularBody();
+        setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		
+		Layer = new Layers();
+		body.shapes.at(0).filter = Layer.gate_filter;
 
 		
-		if (!flipped)
+		if (!_upside_down)
 		{
 			_depressed_position = new FlxPoint(X, Y + 6);		// 6 because that's the height of the graphic
 		}
@@ -113,21 +118,27 @@ class StepTrigger extends FlxSprite
     
     function checkIfReached():Void
 	{
+		/*
+        body.velocity.setxy(0, 0);
 		var reached:Bool = false;
 		if (_moving_to_depressed_position)	// if moving to the origin, check the distance to the origin
 		{
 			reached = FlxMath.isDistanceToPointWithin(this, _depressed_position, _speed / _times.length, true);
+            
 			// _times.length = FPS
 		}
 		else					// if moving away from the origin, check the distance to the target
 		{
 			reached = FlxMath.isDistanceToPointWithin(this, _rest_position, _speed / _times.length, true);
+            body.velocity.setxy(0, 0);
 		}
 		
 		if (reached)
 		{
+            body.velocity.setxy(0, 0);
 			if (_moving_to_depressed_position)
 			{
+<<<<<<< HEAD
 				//body.position.set(new Vec2(_depressed_position.x, _depressed_position.y));
 				var d_pos:Vec2 = new Vec2(_depressed_position.x, _depressed_position.y);
 				this.x = d_pos.x;
@@ -140,11 +151,27 @@ class StepTrigger extends FlxSprite
 				this.x = r_pos.x;
 				this.y = r_pos.y;
 			}
+			
+		else
+		{
+			if(_moving_to_depressed_position
 			//body.velocity.setxy(0, 0);
 			velocity.set(0, 0);
+=======
+				body.position.set(new Vec2(_depressed_position.x, _depressed_position.y));
+                
+			}
+			else
+			{
+				body.position.set(new Vec2(_rest_position.x, _rest_position.y));
+                
+			}
+			//body.velocity.setxy(0, 0);
+>>>>>>> 5e53f17bc02c4cdb5c5c5238a98910bcd428b466
 			_moving = false;
 			_moving_to_depressed_position = !_moving_to_depressed_position;
 		}
+		*/
 		
 	}
 	

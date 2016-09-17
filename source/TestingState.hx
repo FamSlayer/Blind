@@ -37,6 +37,8 @@ class TestingState extends FlxState
     var _gate:Gate;
 	
 	var _temp_ground:FlxNapeSprite;
+	
+	var Layer:Layers;
     
     private var background:FlxSprite;
     
@@ -54,6 +56,11 @@ class TestingState extends FlxState
 		_temp_ground.body.allowMovement = false;
 		_temp_ground.body.allowRotation = false;
 		_temp_ground.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		_temp_ground.body.gravMass = 300000;
+		
+		Layer = new Layers();
+		_temp_ground.body.shapes.at(0).filter = Layer.ground_filter;
+		
         //_temp_ground.body.velocity.x = 5;
         add(_temp_ground);
 		
@@ -155,6 +162,8 @@ class TestingState extends FlxState
         
         add(_batplatform);
         add(_gate);
+		
+		_standable_objects.add(_gate);
     }
     
     //written by Eric, modified by Fuller
@@ -172,6 +181,8 @@ class TestingState extends FlxState
         
         add(_light);
         add(_platform);
+		
+		_standable_objects.add(_platform);
     }
     
     //written by Eric, modified by Fuller
@@ -181,18 +192,16 @@ class TestingState extends FlxState
 		if(FlxG.collide(_player, _platform))
         {
             _light.kill();
-            _platform.trigger();
         }
 		else
 		{
-            
-			if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
+            _light.revive();
+			/*if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
 				// I HOPE that the only time the body.space will be nulled out is after a kill call, and I THINK that'll be true!
 				// otherwise, create a boolean variable that just keeps track of whether the object is deleted or not!
 			{
-                _platform.trigger();
 				_light.revive();
-			}
+			}*/
             
 		}
     }

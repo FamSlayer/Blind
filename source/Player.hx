@@ -24,6 +24,8 @@ class Player extends FlxNapeSprite
 	
 	var _the_bat:Bat;
 	
+	var Layer:Layers;
+	
 	function new(?X:Float=0, ?Y:Float=0, b:Bat)
 	{
 		super(X, Y);
@@ -39,6 +41,10 @@ class Player extends FlxNapeSprite
 		body.gravMass = 55;
 		
         //makeGraphic(16, 28, FlxColor.PURPLE);
+		
+		// set collision layer
+		Layer = new Layers();
+		body.shapes.at(0).filter = Layer.player_filter;
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);

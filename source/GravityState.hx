@@ -1,5 +1,8 @@
 package;
-
+/**
+ * ...
+ * @author Gabe
+ */
 import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
 import flixel.addons.nape.FlxNapeVelocity;
