@@ -33,7 +33,7 @@ class StepTrigger extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false)
+	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false, image_path:String) //added a variabe in constructor for image path
 	{
 		super(X, Y);
 		
@@ -44,7 +44,7 @@ class StepTrigger extends FlxNapeSprite
         
         makeGraphic(32, 6);
 		//loadGraphic("assets/images/blue button 1", false);
-		loadGraphic("assets/images/blue button 1.png", false);// , 16, 16);
+		loadGraphic(image_path, false);// , 16, 16);
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		
