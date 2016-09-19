@@ -204,7 +204,7 @@ class Level2 extends FlxState
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         
-        _gate = new Gate(200, 430, 700, 430, 0, 0, "assets/images/platform.png");
+        _gate = new Gate(450, 460, 700, 460, 60, 15);//, "assets/images/platform.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
         
