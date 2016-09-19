@@ -181,7 +181,7 @@ class TestingState extends FlxState
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         
-        _gate = new Gate(800,400, 800,300, 15, 60,"assets/images/platform.png");
+        _gate = new Gate(800,400, 800,300, 15, 60);//,"assets/images/platform.png");
         
         add(_batplatform);
         add(_gate);
