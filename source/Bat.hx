@@ -30,16 +30,20 @@ class Bat extends FlxNapeSprite
 	var _d:Bool = false;
 	var _spacebar:Bool = false;
 	
+	var Layer:Layers;
+	
 	
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
 		super(X, Y);
+		Layer = new Layers();
 		
-		createRectangularBody(16, 8);
+		
+		loadGraphic("assets/images/REALBAT!.png", true, 80, 50);// , 16, 16);
+		
+		createRectangularBody();
 		body.allowRotation = false;
-		//body.gravMass = 2;
-		makeGraphic(16, 8, FlxColor.BROWN);
-		//loadGraphic("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", true);// , 16, 16);
+		body.shapes.at(0).filter = Layer.bat_filter;
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);

@@ -4,11 +4,13 @@ import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
+import nape.util.Debug;
 
 import nape.dynamics.InteractionFilter;
 
@@ -29,7 +31,7 @@ class TestingState extends FlxState
 	
 	var _standable_objects:FlxGroup;
 	
-    var _platform:StepTrigger;
+    var _stepTrigger:StepTrigger;
     var _light:FlxNapeSprite;
 	
     var _batplatform:FlxNapeSprite;
@@ -38,6 +40,11 @@ class TestingState extends FlxState
 	var _temp_ground:FlxNapeSprite;
 	
 	var Layer:Layers;
+    
+    private var background:FlxSprite;
+	
+	
+	var _debug_line:FlxSprite;
     
 	
 	override public function create():Void
@@ -48,6 +55,10 @@ class TestingState extends FlxState
 		Layer = new Layers();
 		
 		
+		
+		
+        loadBackground();
+		
 		_temp_ground = new FlxNapeSprite(500, 400);
         _temp_ground.makeGraphic(800, 20, FlxColor.BROWN);
         _temp_ground.createRectangularBody();
@@ -56,18 +67,16 @@ class TestingState extends FlxState
 		_temp_ground.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		_temp_ground.body.gravMass = 300000;
 		
-		
 		_temp_ground.body.shapes.at(0).filter = Layer.ground_filter;
 		
-        //_temp_ground.body.velocity.x = 5;
         add(_temp_ground);
 		
 		_standable_objects = new FlxGroup();
 		_standable_objects.add(_temp_ground);
         
 		
-		addPlayerAndBat();
         addPlatformAndLight();
+		addPlayerAndBat();
         addBatPlatformAndRock();
 		
 	}
@@ -79,12 +88,46 @@ class TestingState extends FlxState
 		if (_bat.isPaired()) movePairTogether();	// if bat is still paired, set _bat.body.velocity = player.body.velocity
 		applyGravity();
 		
-		
+		reset();
 		
 		
         platformTouched();
         batPlatformTouched();
+		
+		/*
+		var x:Float = _player.x + _player.width / 2;
+		var y:Float = _player.y + _player.height;
+		_debug_line = new FlxSprite(x,y);
+		_debug_line.makeGraphic(1, 1);
+		add(_debug_line);
+		*/
+		
 	}
+    
+    public function reset():Void
+    {
+        if (FlxG.keys.anyPressed([R]))
+        {
+            FlxG.resetState();
+        }
+    }
+    
+    public function loadBackground():Void
+    {
+        background = new FlxSprite();
+        background.loadGraphic("assets/images/Cave_fore_background.png");
+        add(background);
+    }
+    
+    public function loadMidground():Void
+    {
+        
+    }
+    
+    public function loadForeground():Void
+    {
+        
+    }
 	
 	// Written by Fuller
 	function movePairTogether():Void
@@ -119,11 +162,11 @@ class TestingState extends FlxState
 			{
 				if ( (_bat.y - _bat.height / 2.0)  < (_player.y - _player.height * .8) ) // bat will stop falling below the player..?
 				{
-					FlxG.log.add("Applying gravity to the bat");
+					//FlxG.log.add("Applying gravity to the bat");
 					_bat.body.velocity.y += 10;
 				}
 				else{
-					FlxG.log.add("NOT APPLYING");
+					//FlxG.log.add("NOT APPLYING");
 				}
 			}
 		}
@@ -149,38 +192,45 @@ class TestingState extends FlxState
     function addPlatformAndLight():Void
     {
 		
-		_light = new FlxNapeSprite(400, 100);
-		_light.makeGraphic(32, 4);
+		_light = new FlxNapeSprite(450, 250);
+		_light.makeGraphic(32, 400, FlxColor.YELLOW);
         _light.createRectangularBody();
         _light.setBodyMaterial(9999999, 9999999, 9999999, 9999999, 9999999);
+		_light.body.shapes.at(0).filter = Layer.light_filter;
 		
 		
-        _platform = new StepTrigger(400, 390 - 6);	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+        _stepTrigger = new StepTrigger(400, 390 - 6);	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
-        
-        add(_light);
-        add(_platform);
+		_standable_objects.add(_stepTrigger);
 		
-		_standable_objects.add(_platform);
+        add(_light);
+        add(_stepTrigger);
+		
     }
     
     //written by Eric, modified by Fuller
     function platformTouched():Void
     {
-        //if (FlxG.keys.anyPressed([P]) && FlxG.collide(_player, _platform))
-		if(FlxG.collide(_player, _platform))
-        {
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+        
+		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		
+		if (  Math.abs(y - _stepTrigger.y) < .5 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width )
+		{
+			
+			//FlxG.log.add("collision");
+			
             _light.kill();
-        }
+		}
 		else
 		{
-            _light.revive();
-			/*if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
+			if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
 				// I HOPE that the only time the body.space will be nulled out is after a kill call, and I THINK that'll be true!
 				// otherwise, create a boolean variable that just keeps track of whether the object is deleted or not!
 			{
 				_light.revive();
-			}*/
+			}
             
 		}
     }

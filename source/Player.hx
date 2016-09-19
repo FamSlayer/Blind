@@ -28,14 +28,19 @@ class Player extends FlxNapeSprite
 	
 	function new(?X:Float=0, ?Y:Float=0, b:Bat)
 	{
-		super(X, Y);
+		super(X, Y, false, true);
 		
 		_the_bat = b;
 		
-		createRectangularBody(16, 28);
-		body.allowRotation = false;
+        
+		createRectangularBody(30, 106);
+        
+        loadGraphic("assets/images/Idle_0.png", false);
+		
+        body.allowRotation = false;
 		body.gravMass = 55;
-		makeGraphic(16, 28, FlxColor.PURPLE);
+		
+        //makeGraphic(16, 28, FlxColor.PURPLE);
 		
 		// set collision layer
 		Layer = new Layers();
@@ -76,8 +81,8 @@ class Player extends FlxNapeSprite
 		
 		if(_up && _can_jump)
 		{
-			body.velocity.y = -300;
-			_the_bat.body.velocity.y = -300;
+			body.velocity.y = -400;
+			_the_bat.body.velocity.y = -400;
 			_can_jump = false;
 		}
 		

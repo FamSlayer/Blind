@@ -10,6 +10,7 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import nape.geom.Vec2;
+import flixel.FlxG;
 
 
 class StepTrigger extends FlxNapeSprite 
@@ -41,7 +42,9 @@ class StepTrigger extends FlxNapeSprite
 		_depressed = depressed;
         _times = [];
         
-        makeGraphic(32,6);
+        makeGraphic(32, 6);
+		//loadGraphic("assets/images/blue button 1", false);
+		loadGraphic("assets/images/blue button 1.png", false);// , 16, 16);
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		
@@ -57,6 +60,13 @@ class StepTrigger extends FlxNapeSprite
 		{
 			_depressed_position = new FlxPoint(X, Y + 6);		// 6 because that's the height of the graphic
 		}
+		
+		
+		FlxG.log.add(_rest_position);
+		
+		FlxG.log.add(_depressed_position);
+		
+		
 		
 	}
     
