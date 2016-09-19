@@ -26,7 +26,7 @@ class Player extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
-	function new(?X:Float=0, ?Y:Float=0, b:Bat)
+	function new(?X:Float=0, ?Y:Float=0, b:Bat, ?face_left:Bool = false)
 	{
 		super(X, Y, false, true);
 		
@@ -50,6 +50,9 @@ class Player extends FlxNapeSprite
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
 		//setBodyMaterial(1, 0.2, 0.4, 250); 		// set stupid high density to be less afected by blob weight.
+		if (face_left){
+			facing = FlxObject.LEFT;
+		}
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -81,8 +84,8 @@ class Player extends FlxNapeSprite
 		
 		if(_up && _can_jump)
 		{
-			body.velocity.y = -400;
-			_the_bat.body.velocity.y = -400;
+			body.velocity.y = -525;
+			_the_bat.body.velocity.y = -525;
 			_can_jump = false;
 		}
 		
