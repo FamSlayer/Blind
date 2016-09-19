@@ -16,6 +16,7 @@ import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import flixel.math.FlxMath;
+import flixel.FlxObject;
 import Layers;
 
 class Level0 extends FlxState
@@ -31,6 +32,8 @@ class Level0 extends FlxState
     var _standable_objects:FlxGroup;
 	
 	var Layer:Layers;
+	
+	var _debug_line:FlxSprite;
 	
 	override public function create():Void
 	{
@@ -62,6 +65,7 @@ class Level0 extends FlxState
         applyGravity();
         reset();
         nextLevel();
+		
 		
 	}
 	
@@ -101,7 +105,7 @@ class Level0 extends FlxState
 		
 		// add light
 		_light = new FlxNapeSprite(800, 450);
-		_light.makeGraphic(32, 800, FlxColor.YELLOW);
+		_light.makeGraphic(32, 800, FlxColor.BLUE);
         _light.createRectangularBody();
 		_light.body.allowMovement = false;
         _light.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
@@ -128,7 +132,7 @@ class Level0 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTrigger = new StepTrigger(200, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTrigger = new StepTrigger(725, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
@@ -223,14 +227,14 @@ class Level0 extends FlxState
 		else
 		{
 			//FlxG.log.add("not colliding, applying gravity to player");
-			_player.body.velocity.y += 11;
+			_player.body.velocity.y += 18;
 			
 			if (_bat.isPaired())	// move the bat with the player if they are paired
 			{
 				if ( (_bat.y - _bat.height / 2.0)  < (_player.y - _player.height * .8) ) // bat will stop falling below the player..?
 				{
 					//FlxG.log.add("Applying gravity to the bat");
-					_bat.body.velocity.y += 11;
+					_bat.body.velocity.y += 18;
 				}
 				else{
 					//FlxG.log.add("NOT APPLYING");
@@ -244,27 +248,54 @@ class Level0 extends FlxState
     function platformTouched():Void
     {
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
-		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
-        
-		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if (  Math.abs(y - _stepTrigger.y) < .5 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width )
+		var x:Float = _player.x + _player.width / 2; 	// x position of the middle of the player sprite
+		
+		var x_feet:Float = _player.x + _player.width;	// x position of the player's feet
+		if (_player.facing == FlxObject.LEFT)
+		{
+			x_feet = _player.x;
+		}
+        
+		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
+		
+		var p_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width;
+		var p_from_left:Bool = Math.abs(x_feet - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
+		var p_from_right:Bool = Math.abs(x_feet - trigger_right_x) < 2.0 && y >= _stepTrigger.y;
+		
+		var p_triggered:Bool = p_standing_on || p_from_left || p_from_right;	// triggered by the player
+		
+		var b_triggered:Bool = false;	// triggered by the boulder
+		
+		var triggered:Bool = p_triggered || b_triggered;
+		
+		//FlxG.log.add("_from_left: " + _from_left + "\t_from_right: " + _from_right);
+		if ( triggered )
 		{
 			
-			//FlxG.log.add("collision");
+			// lower the stepTrigger
+			if ( !_stepTrigger.isDepressed()  )//&& !_stepTrigger.inMotion() )
+			{
+				_stepTrigger.lower();
+				_light.kill();
+			}
 			
-            _light.kill();
 		}
 		else
 		{
-			if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
-				// I HOPE that the only time the body.space will be nulled out is after a kill call, and I THINK that'll be true!
-				// otherwise, create a boolean variable that just keeps track of whether the object is deleted or not!
-			{
-				_light.revive();
+			if (_stepTrigger.isDepressed() && !_stepTrigger.inMotion()){
+				
+				if ( _light.body.space == null)
+				{
+					// raise the stepTrigger
+					_stepTrigger.raise();
+					_light.revive();
+				}
+				
 			}
-            
+			
 		}
+		
     }
     
     function nextLevel():Void

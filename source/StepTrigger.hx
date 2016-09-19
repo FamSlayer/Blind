@@ -23,7 +23,7 @@ class StepTrigger extends FlxNapeSprite
 	var _upside_down:Bool;
     var _depressed:Bool;
     
-    var _speed:Int = 100;
+    var _speed:Int = 60;
     
     var _moving:Bool = false;
 	
@@ -33,7 +33,7 @@ class StepTrigger extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false, image_path:String) //added a variabe in constructor for image path
+	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false, ?image_path:String = "")
 	{
 		super(X, Y);
 		
@@ -42,11 +42,19 @@ class StepTrigger extends FlxNapeSprite
 		_depressed = depressed;
         _times = [];
         
-        makeGraphic(32, 6);
+        
+		if (image_path == "")
+		{	
+			loadGraphic("assets/images/blue button 1.png", false);
+		}
+		
+		
+        //makeGraphic(32, 6);
 		//loadGraphic("assets/images/blue button 1", false);
-		loadGraphic(image_path, false);// , 16, 16);
+		loadGraphic(image_path, false);// , 16, 16)
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		body.allowRotation = false;
 		
 		Layer = new Layers();
 		body.shapes.at(0).filter = Layer.gate_filter;
@@ -54,11 +62,11 @@ class StepTrigger extends FlxNapeSprite
 		
 		if (!_upside_down)
 		{
-			_depressed_position = new FlxPoint(X, Y - 6);		// 6 because that's the height of the graphic
+			_depressed_position = new FlxPoint(X, Y + (height/2 - 6));		// 6 because that's the height of the graphic
 		}
 		else
 		{
-			_depressed_position = new FlxPoint(X, Y + 6);		// 6 because that's the height of the graphic
+			_depressed_position = new FlxPoint(X, Y - (height/2 - 6));		// 6 because that's the height of the graphic
 		}
 		
 		
@@ -96,51 +104,52 @@ class StepTrigger extends FlxNapeSprite
 	{
 		return _moving;
 	}
+	
+	public function isDepressed():Bool
+	{
+		return _depressed;
+	}
     
-    public function trigger():Void
-    {
-        if (!_upside_down)
-        {
-            if (!_moving_to_depressed_position)
-            {
-                //body.velocity.setxy(0, -_speed);
-				velocity.set(0, -_speed);
-            }
-            else
-            {	
-                // moving back to its original state
-				//body.velocity.setxy(0, _speed);
-				velocity.set(0, _speed);
-				
-            }
-        }
-        else
-        {
-            if (!_moving_to_depressed_position)
-            {
-				//body.velocity.setxy(0, _speed);
-				velocity.set(0, _speed);
-            }
-            else
-            {	
-                // moving back to its original state
-				//body.velocity.setxy(0, -_speed);
-				velocity.set(0, -_speed);
-            }
-        }
-        _moving = true;
-    }
-    
+	
+	public function lower():Void
+	{
+		if (!_upside_down)
+		{
+			body.velocity.setxy(0, _speed);
+		}
+		else
+		{
+			body.velocity.setxy(0, -_speed);
+		}
+		
+		_moving = true;
+		_depressed = true;
+		_moving_to_depressed_position = true;
+	}
+	
+	public function raise():Void
+	{
+		if (!_upside_down)
+		{
+			body.velocity.setxy(0, -_speed);
+		}
+		else
+		{
+			body.velocity.setxy(0, _speed);
+		}
+		_moving = true;
+		_depressed = false;
+		_moving_to_depressed_position = false;
+	}
+     
+	
     function checkIfReached():Void
 	{
-		/*
-        //body.velocity.setxy(0, 0);
 		var reached:Bool = false;
 		if (_moving_to_depressed_position)	// if moving to the origin, check the distance to the origin
 		{
-			reached = FlxMath.isDistanceToPointWithin(this, _depressed_position, _speed / _times.length, true);
-            
-			// _times.length = FPS
+			reached = FlxMath.isDistanceToPointWithin(this, _depressed_position, _speed / _times.length, true);	// _times.length = FPS
+			//body.velocity.setxy(0, 0);
 		}
 		else					// if moving away from the origin, check the distance to the target
 		{
@@ -150,43 +159,21 @@ class StepTrigger extends FlxNapeSprite
 		
 		if (reached)
 		{
-            body.velocity.setxy(0, 0);
+			FlxG.log.add("ARRIVED. _depressed: " + _depressed);
+			body.velocity.setxy(0, 0);
+			_moving = false;
 			if (_moving_to_depressed_position)
 			{
-<<<<<<< HEAD
-				//body.position.set(new Vec2(_depressed_position.x, _depressed_position.y));
-				var d_pos:Vec2 = new Vec2(_depressed_position.x, _depressed_position.y);
-				this.x = d_pos.x;
-				this.y = d_pos.y;
-			}
-			else
-			{
-				//body.position.set(new Vec2(_rest_position.x, _rest_position.y));
-				var r_pos:Vec2 = new Vec2(_rest_position.x, _rest_position.y);
-				this.x = r_pos.x;
-				this.y = r_pos.y;
-			}
-			
-		else
-		{
-			if(_moving_to_depressed_position
-			//body.velocity.setxy(0, 0);
-			velocity.set(0, 0);
-=======
 				body.position.set(new Vec2(_depressed_position.x, _depressed_position.y));
-                
 			}
 			else
 			{
 				body.position.set(new Vec2(_rest_position.x, _rest_position.y));
-                
 			}
-			//body.velocity.setxy(0, 0);
->>>>>>> 5e53f17bc02c4cdb5c5c5238a98910bcd428b466
-			_moving = false;
+
 			_moving_to_depressed_position = !_moving_to_depressed_position;
+			
 		}
-		*/
 		
 	}
 	
