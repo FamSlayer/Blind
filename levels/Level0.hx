@@ -132,7 +132,7 @@ class Level0 extends FlxState
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
-		
+		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc. 
 		add(_light);
 		add(_ground);
 		add(_ground_sprite);
