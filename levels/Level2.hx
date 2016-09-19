@@ -204,6 +204,7 @@ class Level2 extends FlxState
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         
+        
         _gate = new Gate(450, 460, 700, 460, 60, 15);//, "assets/images/platform.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
@@ -308,6 +309,19 @@ class Level2 extends FlxState
 			}
             //_batplatform.kill();
         }
+
+    }
+    function nextLevel():Void
+    {
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+        
+		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		
+		if ( 50 <= x  && x <= 100 && 250 <= y && y <= 350 )
+		{
+            FlxG.switchState(new Level3());
+		}
 
     }
 	

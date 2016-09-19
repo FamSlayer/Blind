@@ -61,6 +61,7 @@ class Level0 extends FlxState
         platformTouched();
         applyGravity();
         reset();
+        nextLevel();
 		
 	}
 	
@@ -264,6 +265,20 @@ class Level0 extends FlxState
 			}
             
 		}
+    }
+    
+    function nextLevel():Void
+    {
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+        
+		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		
+		if ( 850 <= x  && x <= 900 )
+		{
+            FlxG.switchState(new Level1());
+		}
+
     }
 	
 	
