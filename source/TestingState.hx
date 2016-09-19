@@ -45,6 +45,8 @@ class TestingState extends FlxState
 		
 		super.create();
 		FlxNapeSpace.init();
+		Layer = new Layers();
+		
 		
 		_temp_ground = new FlxNapeSprite(500, 400);
         _temp_ground.makeGraphic(800, 20, FlxColor.BROWN);
@@ -54,7 +56,7 @@ class TestingState extends FlxState
 		_temp_ground.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		_temp_ground.body.gravMass = 300000;
 		
-		Layer = new Layers();
+		
 		_temp_ground.body.shapes.at(0).filter = Layer.ground_filter;
 		
         //_temp_ground.body.velocity.x = 5;
@@ -82,6 +84,12 @@ class TestingState extends FlxState
 		
         platformTouched();
         batPlatformTouched();
+	}
+	
+	// Written by Fuller
+	function movePairTogether():Void
+	{
+		_bat.body.velocity = _player.body.velocity;
 	}
 	
 	// written by Gabriel, modified by Fuller
@@ -240,9 +248,6 @@ class TestingState extends FlxState
 		return false;
 	}
 	
-	function movePairTogether():Void
-	{
-		_bat.body.velocity = _player.body.velocity;
-	}
+	
 
 }

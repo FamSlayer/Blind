@@ -51,11 +51,11 @@ class StepTrigger extends FlxNapeSprite
 		
 		if (!_upside_down)
 		{
-			_depressed_position = new FlxPoint(X, Y + 6);		// 6 because that's the height of the graphic
+			_depressed_position = new FlxPoint(X, Y - 6);		// 6 because that's the height of the graphic
 		}
 		else
 		{
-			_depressed_position = new FlxPoint(X, Y - 6);		// 6 because that's the height of the graphic
+			_depressed_position = new FlxPoint(X, Y + 6);		// 6 because that's the height of the graphic
 		}
 		
 	}
@@ -80,6 +80,11 @@ class StepTrigger extends FlxNapeSprite
 		
 		// OUR FPS IS _times.length
 		
+	}
+	
+	public function inMotion():Bool
+	{
+		return _moving;
 	}
     
     public function trigger():Void
@@ -119,7 +124,7 @@ class StepTrigger extends FlxNapeSprite
     function checkIfReached():Void
 	{
 		/*
-        body.velocity.setxy(0, 0);
+        //body.velocity.setxy(0, 0);
 		var reached:Bool = false;
 		if (_moving_to_depressed_position)	// if moving to the origin, check the distance to the origin
 		{
@@ -130,7 +135,7 @@ class StepTrigger extends FlxNapeSprite
 		else					// if moving away from the origin, check the distance to the target
 		{
 			reached = FlxMath.isDistanceToPointWithin(this, _rest_position, _speed / _times.length, true);
-            body.velocity.setxy(0, 0);
+            //body.velocity.setxy(0, 0);
 		}
 		
 		if (reached)
@@ -175,9 +180,6 @@ class StepTrigger extends FlxNapeSprite
 		
 	}
 	
-	public function inMotion():Bool
-	{
-		return _moving;
-	}
+	
 	
 }
