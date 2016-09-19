@@ -33,7 +33,7 @@ class StepTrigger extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false, ?color:String = "")
+	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false, ?image_path:String = "")
 	{
 		super(X, Y);
 		
@@ -43,31 +43,15 @@ class StepTrigger extends FlxNapeSprite
         _times = [];
         
         
-		if (color == "blue")
-		{
-			loadGraphic("assets/images/blue button 1.png", false);
-		}
-		else if (color == "pink")
-		{
-			loadGraphic("assets/images/pink button 1.png", false);
-		}
-		else if (color == "green")
-		{
-			loadGraphic("assets/images/green button 1.png", false);
-		}
-		else if (color == "purple")
-		{
-			loadGraphic("assets/images/purple button depressed.png", false);
-		}
-		else
+		if (image_path == "")
 		{	
 			loadGraphic("assets/images/blue button 1.png", false);
 		}
 		
 		
-        makeGraphic(32, 6);
+        //makeGraphic(32, 6);
 		//loadGraphic("assets/images/blue button 1", false);
-		//loadGraphic(image_path, false);// , 16, 16)
+		loadGraphic(image_path, false);// , 16, 16)
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		body.allowRotation = false;
@@ -157,41 +141,7 @@ class StepTrigger extends FlxNapeSprite
 		_depressed = false;
 		_moving_to_depressed_position = false;
 	}
-    public function trigger():Void
-    {
-        if (!_upside_down)
-        {
-            if (!_moving_to_depressed_position)
-            {
-                body.velocity.setxy(0, -_speed);
-				//velocity.set(0, -_speed);
-            }
-            else
-            {	
-                // moving back to its original state
-				body.velocity.setxy(0, _speed);
-				//velocity.set(0, _speed);
-				
-            }
-        }
-        else
-        {
-            if (!_moving_to_depressed_position)
-            {
-				body.velocity.setxy(0, _speed);
-				//velocity.set(0, _speed);
-            }
-            else
-            {	
-                // moving back to its original state
-				body.velocity.setxy(0, -_speed);
-				//velocity.set(0, -_speed);
-            }
-        }
-        _moving = true;
-		_depressed = !_depressed;
-    }
-    
+     
 	
     function checkIfReached():Void
 	{

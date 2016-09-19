@@ -131,7 +131,7 @@ class Level0 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTrigger = new StepTrigger(200, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTrigger = new StepTrigger(725, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
@@ -250,33 +250,13 @@ class Level0 extends FlxState
 		
 		var x:Float = _player.x + _player.width / 2; 	// x position of the middle of the player sprite
 		
-		var x_feet:Float; 								// x position of the player's feet
+		var x_feet:Float = _player.x + _player.width;	// x position of the player's feet
 		if (_player.facing == FlxObject.LEFT)
 		{
-			x_feet = _player.x;// - _player.width;
-			//FlxG.log.add("LEFT");
-		}
-		else
-		{
-			x_feet = _player.x + _player.width;
-			//FlxG.log.add("RIGHT");
+			x_feet = _player.x;
 		}
         
-		_debug_line = new FlxSprite(x_feet,y);
-		_debug_line.makeGraphic(1, 1);
-		//add(_debug_line);
-		
-		
 		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
-		
-		if (_player.facing == FlxObject.RIGHT){
-			//FlxG.log.add("X: " + x_feet + "\tPlatform.x: " + _stepTrigger.x);
-		}
-		else{
-			//FlxG.log.add("X: " + x_feet + "\tPlatform.x: " + trigger_right_x);
-		}
-		
-		
 		
 		var p_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width;
 		var p_from_left:Bool = Math.abs(x_feet - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
@@ -314,6 +294,7 @@ class Level0 extends FlxState
 			}
 			
 		}
+		
     }
 	
 	
