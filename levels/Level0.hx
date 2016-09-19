@@ -26,7 +26,6 @@ class Level0 extends FlxState
 	var _ground_height:Int = 660;
     var _player:Player;
 	var _bat:Bat;
-    var _platform:StepTrigger;
     var _light:FlxNapeSprite;
 	var _stepTrigger:StepTrigger;
 	
@@ -132,7 +131,7 @@ class Level0 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTrigger = new StepTrigger(600, _ground_height - 30 - 6);	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTrigger = new StepTrigger(200, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
@@ -206,7 +205,7 @@ class Level0 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 	}
     
-    	// written by Gabriel, modified by Fuller
+    // written by Gabriel, modified by Fuller
 	public function applyGravity():Void {
 		if (FlxG.collide(_player, _standable_objects) && !_player._up)
 		{

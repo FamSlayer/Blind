@@ -25,6 +25,7 @@ class TestingState extends FlxState
 	var _playerY:Int = 200;
 	var _playerX:Int = 20;
 	var _player:Player;
+    var _ground_height:Int = 660;
 	
 	var _bat:Bat;
 	var _test:FlxNapeSprite;
@@ -180,7 +181,7 @@ class TestingState extends FlxState
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         
-        _gate = new Gate(800,400, 800,300, 15, 60);
+        _gate = new Gate(800,400, 800,300, 15, 60,"assets/images/platform.png");
         
         add(_batplatform);
         add(_gate);
@@ -199,7 +200,7 @@ class TestingState extends FlxState
 		_light.body.shapes.at(0).filter = Layer.light_filter;
 		
 		
-        _stepTrigger = new StepTrigger(400, 390 - 6);	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+        _stepTrigger = new StepTrigger(200, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		

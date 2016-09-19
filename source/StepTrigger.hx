@@ -65,6 +65,9 @@ class StepTrigger extends FlxNapeSprite
 		}
 		
 		
+        makeGraphic(32, 6);
+		//loadGraphic("assets/images/blue button 1", false);
+		//loadGraphic(image_path, false);// , 16, 16)
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		body.allowRotation = false;
