@@ -41,10 +41,9 @@ class TestingState extends FlxState
 	
 	var Layer:Layers;
     
-    private var background:FlxSprite;
-	
-	
+
 	var _debug_line:FlxSprite;
+    var background:FlxSprite;
     
 	
 	override public function create():Void
@@ -60,14 +59,19 @@ class TestingState extends FlxState
         loadBackground();
 		
 		_temp_ground = new FlxNapeSprite(500, 400);
-        _temp_ground.makeGraphic(800, 20, FlxColor.BROWN);
+        _temp_ground.makeGraphic(200, 20, FlxColor.BROWN);
         _temp_ground.createRectangularBody();
 		_temp_ground.body.allowMovement = false;
 		_temp_ground.body.allowRotation = false;
 		_temp_ground.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		_temp_ground.body.gravMass = 300000;
 		
+<<<<<<< HEAD
 		_temp_ground.body.shapes.at(0).filter = Layer.ground_filter;
+=======
+		Layer = new Layers();
+		_temp_ground.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
+>>>>>>> 0fa16d6d09c484e4bb62848ca0e63e0daddf778f
 		
         add(_temp_ground);
 		
@@ -180,7 +184,7 @@ class TestingState extends FlxState
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         
-        _gate = new Gate(800,400, 800,300);
+        _gate = new Gate(800,400, 800,300, 15, 60);
         
         add(_batplatform);
         add(_gate);

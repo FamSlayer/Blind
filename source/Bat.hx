@@ -40,7 +40,7 @@ class Bat extends FlxNapeSprite
 		
 		
 		loadGraphic("assets/images/REALBAT!.png", true, 80, 50);// , 16, 16);
-		
+		centerOffsets();
 		createRectangularBody();
 		body.allowRotation = false;
 		body.shapes.at(0).filter = Layer.bat_filter;
