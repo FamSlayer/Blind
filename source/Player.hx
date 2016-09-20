@@ -29,6 +29,8 @@ class Player extends FlxNapeSprite
 	var drop_timer:Int = 30;
 	var wind_timer:Int = 38 * 30;
 	
+	
+	
 	function new(?X:Float=0, ?Y:Float=0, b:Bat, ?face_left:Bool = false)
 	{
 		super(X, Y, false, true);
@@ -106,7 +108,7 @@ class Player extends FlxNapeSprite
 	public function checkDrops():Void {
 		drop_timer -= 1;
 		if (drop_timer <= 0) {
-			FlxG.sound.play("assets/sounds/water_droplet.wav");
+			//FlxG.sound.play("assets/sounds/water_droplet.wav");
 			drop_timer = FlxG.random.int(300, 900);
 		}
 	}

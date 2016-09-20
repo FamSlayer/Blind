@@ -46,6 +46,7 @@ class Level0 extends FlxState
 		Layer = new Layers();
 		_standable_objects = new FlxGroup();
 		
+		
 		/*functions planned by Fuller*/
 		loadBackground();	// everything behind the player scenery wise
 		loadMidground();	// everything the player will interact with including the ground
@@ -303,7 +304,7 @@ class Level0 extends FlxState
 			{
 				_stepTrigger.lower();
 				_light.kill();
-				FlxG.sound.play("assets/sounds/light_click.wav");
+				//FlxG.sound.play("assets/sounds/light_click.wav");
 			}
 			
 		}
