@@ -40,7 +40,7 @@ class Bat extends FlxNapeSprite
 		
 		
 		loadGraphic("assets/images/Bat_Sprite_Sheet.png", true, 76, 25);// , 16, 16);
-		animation.add("fly", [0, 1, 2, 3, 4], 12, true);
+		animation.add("fly", [0, 1, 2, 3, 4], 10, true);
 		animation.play("fly", false, false, -1);
 		centerOffsets();
 		createRectangularBody();
