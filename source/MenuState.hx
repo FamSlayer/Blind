@@ -30,6 +30,9 @@ class MenuState extends FlxState
 		_playButton.screenCenter();
 		add(_playButton);
 		
+		var cutscene_button = new FlxButton(100, 100, "Watch cutscene", loadCutscene);
+		add(cutscene_button);
+		
 		var grav_button = new FlxButton(360, 600, "Gravity", loadGrav);
 		add(grav_button);
 		
@@ -55,6 +58,11 @@ class MenuState extends FlxState
 		super.update(elapsed);
 	}
 
+	function loadCutscene():Void
+	{
+		FlxG.switchState(new CutsceneState());
+	}
+	
 	function loadGrav():Void 
 	{
 		FlxG.switchState(new GravityState());
