@@ -74,13 +74,6 @@ class Bat extends FlxNapeSprite
 		_player_speed = s;
 	}
 	
-<<<<<<< HEAD
-	// written by Gabriel
-	public function Squeak():Void {
-		//FlxG.sound.play("assets/sounds/bat_squeak");
-	}
-=======
->>>>>>> c4f46799d9397dd319f9ffeae25c9ffd9cc381e7
 	
 	// written by Fuller
 	public function togglePaired():Void
