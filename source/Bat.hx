@@ -3,6 +3,7 @@ package;
 /**
  * ...
  * @author Fuller Taylor
+ * Sound playing added by: Gabe
  */
 
  import flixel.FlxSprite;
@@ -50,9 +51,8 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		
-		
-		
+		FlxG.sound.playMusic("fast_wings", 1, true);
+		Squeak();
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -75,6 +75,10 @@ class Bat extends FlxNapeSprite
 		_player_speed = s;
 	}
 	
+	// written by Gabriel
+	public function Squeak():Void {
+		FlxG.sound.play("bat_squeak");
+	}
 	
 	// written by Fuller
 	public function togglePaired():Void
