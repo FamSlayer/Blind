@@ -32,10 +32,18 @@ class Player extends FlxNapeSprite
 		
 		_the_bat = b;
         
-        loadGraphic("assets/images/Idle_0.png", false);
+		// load jump animation
+		loadGraphic("assets/images/jump_sprite_sheet12.png", true, 53, 125);// , 16, 16);
+		animation.add("jump", [1, 2, 3, 3, 3, 3, 3, 2, 1, 0], 10, false);	
+		// Fuller I'm literally just playing with the order of the frames so Amanda doesn't have to change any frames.
+		
+		
+        //loadGraphic("assets/images/Idle_0.png", false);
 		createRectangularBody(30, 106);
         body.allowRotation = false;
 		body.gravMass = 55;
+		
+		
 		
         //makeGraphic(16, 28, FlxColor.PURPLE);
 		
@@ -84,6 +92,8 @@ class Player extends FlxNapeSprite
 			body.velocity.y = -525;
 			_the_bat.body.velocity.y = -525;
 			_can_jump = false;
+			animation.play("jump");
+			// play the player's jump animation, and leave it in the final pose
 		}
 		
 		// cancel out opposing directions
@@ -112,5 +122,9 @@ class Player extends FlxNapeSprite
 		{
 			body.velocity.x = 0;
 		}
+		
+		// if x velocity = 0 and y velocity = 0,  play idle animation on repeat
+		// if x velocity = 0 and y velocity = 0,  play walking animation
+		// if 
 	}
 }

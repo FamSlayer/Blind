@@ -80,8 +80,11 @@ class Level0 extends FlxState
 		 * 	etc
 		 */
         
-        var background:FlxSprite; //background variable
-        background = new FlxSprite();
+		var super_background:FlxSprite = new FlxSprite();
+		super_background.loadGraphic("assets/images/cave_back_background.png");
+		add(super_background);
+		
+        var background:FlxSprite = new FlxSprite();
         background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
         add(background);
         
