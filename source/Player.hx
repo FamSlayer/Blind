@@ -26,18 +26,28 @@ class Player extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
+	var drop_timer:Int = 30;
+	
 	function new(?X:Float=0, ?Y:Float=0, b:Bat, ?face_left:Bool = false)
 	{
 		super(X, Y, false, true);
 		
 		_the_bat = b;
         
-        loadGraphic("assets/images/Idle_0.png", false);
-		createRectangularBody(30, 106);
+		// load animation sprite sheet
+		loadGraphic("assets/images/jump_sprite_sheet12.png", true, 53, 125);// , 16, 16);
+		animation.add("jump", [1, 2, 3, 3, 3, 3, 3, 2, 1, 0], 10, false);	
+		// I'm literally just playing with the order of the frames so Amanda doesn't have to change any frames. - Fuller 
+		
+		//animation.add("idle", [0, 0], 2, false);
+		//animation.play("jump");
+		centerOffsets();
+        //loadGraphic("assets/images/Idle_0.png", false);
+		createRectangularBody();// 53, 106);
         body.allowRotation = false;
 		body.gravMass = 55;
 		
-        //makeGraphic(16, 28, FlxColor.PURPLE);
+		
 		
 		// set collision layer
 		Layer = new Layers();
@@ -52,10 +62,13 @@ class Player extends FlxNapeSprite
 		}
 	}
 	
+
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
 		move();
+		checkDrops();
+		//checkFootsteps();
 	}
 	
 	public function getSpeed():Float
@@ -73,6 +86,26 @@ class Player extends FlxNapeSprite
 		_can_jump = true;
 	}
 	
+	//Written by Gabriel
+	/*
+	public function checkFootstep():Void {
+		if (animation.name == "walk") {
+			if (animation.frameIndex == 1 || animation.frameIndex == 4) {
+				FlxG.sound.play("footstep");
+			}
+		}
+	}
+	*/
+	
+	//written by Gabriel
+	public function checkDrops():Void {
+		drop_timer -= 1;
+		if (drop_timer <= 0) {
+			FlxG.sound.play("water_droplet");
+			drop_timer = FlxG.random.int(300, 900);
+		}
+	}
+	
 	function move():Void
 	{
 		_up = FlxG.keys.anyPressed([UP]);
@@ -84,6 +117,8 @@ class Player extends FlxNapeSprite
 			body.velocity.y = -525;
 			_the_bat.body.velocity.y = -525;
 			_can_jump = false;
+			animation.play("jump");
+			// play the player's jump animation, and leave it in the final pose
 		}
 		
 		// cancel out opposing directions
@@ -112,5 +147,9 @@ class Player extends FlxNapeSprite
 		{
 			body.velocity.x = 0;
 		}
+		
+		// if x velocity = 0 and y velocity = 0,  play idle animation on repeat
+		// if x velocity = 0 and y velocity = 0,  play walking animation
+		// if 
 	}
 }
