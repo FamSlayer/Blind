@@ -59,10 +59,6 @@ class Player extends FlxNapeSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-<<<<<<< HEAD
-		move();
-=======
->>>>>>> f560002174e018c232234bf065abb9adea1f0fed
 		super.update(elapsed);
 		move();
 	}
