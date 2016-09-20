@@ -15,39 +15,62 @@ class Player extends FlxNapeSprite
 {
 	var speed:Float = 200;
 	var _rot: Float = 0;
-	public var _jumped:Bool = true;
+	var _can_jump:Bool = true;
 	// helper variables to be able to tell which keys are pressed
 	public var _up:Bool = false;
 	var _down:Bool = false;
 	var _left:Bool = false;
 	var _right:Bool = false;
 	
-	function new(?X:Float=0, ?Y:Float=0)
+	var _the_bat:Bat;
+	
+	var Layer:Layers;
+	
+	function new(?X:Float=0, ?Y:Float=0, b:Bat, ?face_left:Bool = false)
 	{
-		super(X, Y);
+		super(X, Y, false, true);
 		
-		createRectangularBody(16, 28);
-		body.allowRotation = false;
+		_the_bat = b;
+        
+        loadGraphic("assets/images/Idle_0.png", false);
+		createRectangularBody(30, 106);
+        body.allowRotation = false;
 		body.gravMass = 55;
-		makeGraphic(16, 28, FlxColor.PURPLE);
+		
+        //makeGraphic(16, 28, FlxColor.PURPLE);
+		
+		// set collision layer
+		Layer = new Layers();
+		body.shapes.at(0).filter = Layer.player_filter;
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
 		//setBodyMaterial(1, 0.2, 0.4, 250); 		// set stupid high density to be less afected by blob weight.
+		if (face_left){
+			facing = FlxObject.LEFT;
+		}
 	}
 	
 	override public function update(elapsed:Float):Void 
 	{
-		
-		move();
 		super.update(elapsed);
-		acceleration.x = 0;
+		move();
 	}
 	
 	public function getSpeed():Float
 	{
 		return speed;
+	}
+	
+	public function canJump():Bool
+	{
+		return _can_jump;
+	}
+	
+	public function allowJump():Void
+	{
+		_can_jump = true;
 	}
 	
 	function move():Void
@@ -56,10 +79,11 @@ class Player extends FlxNapeSprite
 		_left = FlxG.keys.anyPressed([LEFT]);
 		_right = FlxG.keys.anyPressed([RIGHT]);
 		
-		if(_up && !_jumped)
+		if(_up && _can_jump)
 		{
-			body.velocity.y = -300;
-			_jumped = true;
+			body.velocity.y = -525;
+			_the_bat.body.velocity.y = -525;
+			_can_jump = false;
 		}
 		
 		// cancel out opposing directions

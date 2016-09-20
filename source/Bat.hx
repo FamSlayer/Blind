@@ -30,15 +30,20 @@ class Bat extends FlxNapeSprite
 	var _d:Bool = false;
 	var _spacebar:Bool = false;
 	
+	var Layer:Layers;
+	
 	
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
 		super(X, Y);
+		Layer = new Layers();
 		
-		createRectangularBody(16, 8);
+		
+		loadGraphic("assets/images/REALBAT!.png", true, 80, 50);// , 16, 16);
+		centerOffsets();
+		createRectangularBody();
 		body.allowRotation = false;
-		makeGraphic(16, 8, FlxColor.BROWN);
-		//loadGraphic("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", true);// , 16, 16);
+		body.shapes.at(0).filter = Layer.bat_filter;
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
@@ -48,9 +53,10 @@ class Bat extends FlxNapeSprite
 	
 	override public function update(elapsed:Float):Void
 	{
-		move();
-		// Here, play the animation. Because the bat is never walking, it should always be playing its animation. No need to check if its motionless.
 		super.update(elapsed);
+		// Here, play the animation. Because the bat is never walking, it should always be playing its animation. No need to check if its motionless.
+		move();
+		
 	}
 	
 	// written by Fuller
@@ -76,7 +82,9 @@ class Bat extends FlxNapeSprite
 			output += "not paired ";
 		
 		output += "to ";
-		
+		if (_paired){
+			body.velocity.setxy(0, 0);	// when unpairing, stop the bat's movement
+		}
 		
 		_paired = !_paired;		// toggle the variable. Ultimately, the player should only be able to pair with the bat again within a certain range
 		
@@ -116,30 +124,9 @@ class Bat extends FlxNapeSprite
 			_a = _d = false;
 		}
 		
-		// bat is paired with the player, thus bat moves with the arrow keys
-		if (_paired)
-		{		
-			if (_left || _right)
-			{
-				if (_left)
-				{
-					_rot = 180;
-					facing = FlxObject.LEFT;
-					body.velocity.x = -_player_speed;
-				}
-				else if (_right)
-				{
-					_rot = 0;
-					facing = FlxObject.RIGHT;
-					body.velocity.x = _player_speed;
-				}
-			}
-			else
-			{
-				body.velocity.x = 0;
-			}
-		}// bat has been unpaired. should be controlled by WASD
-		else{				
+		// bat has been unpaired. should be controlled by WASD
+		if (!_paired)
+		{	
 			if (_w || _s || _a || _d){
 				if (_a)
 				{
@@ -158,12 +145,34 @@ class Bat extends FlxNapeSprite
 				else if (_s) _rot = 90;
 				else if (_w) _rot = 270;
 			 
-				body.velocity.setxy(speed * Math.cos( -1 * _rot * 3.14 / 180), speed * Math.sin(_rot * 3.14 / 180));
-				//velocity.rotate(new FlxPoint(0,0), _rot);
+				body.velocity.setxy(speed * Math.cos( -1 * _rot * 3.14159 / 180), speed * Math.sin(_rot * 3.14159 / 180));
 			}
 			else{
-				body.velocity.setxy(0, 0);	// for polish, give the bat a hover when it's not being controlled
+				body.velocity.setxy(0, 0);	// for polish, give the bat a hover when it's not being moved
 			}
+			
+		}
+		else{ // bat is paired with the player, thus bat moves with the arrow keys
+			/*
+			if (_left || _right)
+			{
+				if (_left)
+				{
+					_rot = 180;
+					facing = FlxObject.LEFT;
+					body.velocity.x = -_player_speed;
+				}
+				else if (_right)
+				{
+					_rot = 0;
+					facing = FlxObject.RIGHT;
+					body.velocity.x = _player_speed;
+				}
+			}
+			else
+			{
+				body.velocity.x = 0;
+			}*/
 		}
 		
 	}
