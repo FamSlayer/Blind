@@ -104,9 +104,9 @@ class Level0 extends FlxState
 		// adding objects in this order: light, ground, stepTrigger, player, bat
 		
 		// add light
-		_light = new FlxNapeSprite(800, 450);
-		_light.makeGraphic(32, 800, FlxColor.BLUE);
-        _light.createRectangularBody();
+		_light = new FlxNapeSprite(825, 400);
+		_light.loadGraphic("assets/images/Blue_Light.png");
+        _light.createRectangularBody();		// change this to be a different kind of body!
 		_light.body.allowMovement = false;
         _light.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_light.body.shapes.at(0).filter = Layer.light_filter;
@@ -136,13 +136,14 @@ class Level0 extends FlxState
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
-		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc. 
-		add(_light);
+		// adding them in this SPECIFIC order
 		add(_ground);
 		add(_ground_sprite);
 		add(_player);
 		add(_stepTrigger);
 		add(_bat);
+		
+		add(_light);
 		
 		
 	}
