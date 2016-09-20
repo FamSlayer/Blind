@@ -118,30 +118,33 @@ class Level4 extends FlxState
 		
 		// add light
 		_lightA = new FlxNapeSprite(600, 450);
-		_lightA.makeGraphic(32, 800, FlxColor.BLUE);
+		_lightA.loadGraphic("assets/images/Blue_Light.png");
 		_lightA.body.rotation = 135 / 180 * 3.14;
         _lightA.createRectangularBody();
 		_lightA.body.allowMovement = false;
+		_lightA.body.allowRotation = false;
         _lightA.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightA.body.shapes.at(0).filter = Layer.light_filter;
 		
 		_lightB = new FlxNapeSprite(700, 450);
-		_lightB.makeGraphic(32, 800, FlxColor.PINK);
+		_lightB.loadGraphic("assets/images/Purple_Light.png");
         _lightB.createRectangularBody();
 		_lightB.body.allowMovement = false;
+		_lightB.body.allowRotation = false;
         _lightB.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightB.body.shapes.at(0).filter = Layer.light_filter;
 		
 		_lightC = new FlxNapeSprite(800, 450);
-		_lightC.makeGraphic(32, 800, FlxColor.GREEN);
+		_lightC.loadGraphic("assets/images/Green_Light.png");
         _lightC.createRectangularBody();
 		_lightC.body.allowMovement = false;
+		_lightC.body.allowRotation = false;
         _lightC.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightC.body.shapes.at(0).filter = Layer.light_filter;
 		
 		
 		// add ground
-		var _ground_sprite = new FlxSprite(0, _ground_height-60);
+		var _ground_sprite = new FlxSprite(0, _ground_height-60);	
 		_ground_sprite.loadGraphic("assets/images/cave_floor_final.png", false);
 		
 		var _ground = new FlxNapeSprite(512, _ground_height);
@@ -173,9 +176,7 @@ class Level4 extends FlxState
 		_standable_objects.add(_stepTriggerC);
 		
 		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc. 
-		add(_lightA);
-		add(_lightB);
-		add(_lightC);
+		
 		
 		add(_ground);
 		add(_ground_sprite);
@@ -184,6 +185,10 @@ class Level4 extends FlxState
 		add(_stepTriggerB);
 		add(_stepTriggerC);
 		add(_bat);
+		
+		add(_lightA);
+		add(_lightB);
+		add(_lightC);
 		
 		
 	}

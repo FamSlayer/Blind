@@ -40,17 +40,13 @@ class Player extends FlxNapeSprite
         body.allowRotation = false;
 		body.gravMass = 55;
 		
-<<<<<<< HEAD
-		createRectangularBody(16, 28);
+		createRectangularBody();
 		body.allowRotation = false;
-		makeGraphic(16, 28, FlxColor.PURPLE);
-=======
         //makeGraphic(16, 28, FlxColor.PURPLE);
 		
 		// set collision layer
 		Layer = new Layers();
 		body.shapes.at(0).filter = Layer.player_filter;
->>>>>>> f560002174e018c232234bf065abb9adea1f0fed
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
