@@ -62,11 +62,11 @@ class StepTrigger extends FlxNapeSprite
 		
 		if (!_upside_down)
 		{
-			_depressed_position = new FlxPoint(X, Y + (height/2 - 6));		// 6 because that's the height of the graphic
+			_depressed_position = new FlxPoint(X, Y + (height));		// 6 because that's the height of the graphic
 		}
 		else
 		{
-			_depressed_position = new FlxPoint(X, Y - (height/2 - 6));		// 6 because that's the height of the graphic
+			_depressed_position = new FlxPoint(X, Y - (height));		// 6 because that's the height of the graphic
 		}
 		
 		
