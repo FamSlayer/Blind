@@ -36,8 +36,6 @@ class Level1 extends FlxState
 	
 	var Layer:Layers;
 	
-	var _debug_line:FlxSprite;
-	
 	override public function create():Void
 	{
 		super.create();
@@ -168,14 +166,13 @@ class Level1 extends FlxState
         //add boulder
         _boulder = new FlxNapeSprite(300, _ground_height);
         _boulder.loadGraphic("assets/images/boulder.png", false);
-        _boulder.createCircularBody(30);
+        _boulder.createCircularBody(35);
 		_boulder.body.allowMovement = true;
 		_boulder.body.allowRotation = true;
 		_boulder.setDrag(40, 10);
         _boulder.setBodyMaterial(.5, 2000, 0.4, 1, 0.001);
 		_boulder.body.gravMass = 2000;
 		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
-		_standable_objects.add(_boulder);
 		
 		add(_lightA);
         add(_lightB);
@@ -186,8 +183,8 @@ class Level1 extends FlxState
 		add(_player);
 		add(_stepTriggerA);
         add(_stepTriggerB);
-        add(_boulder);
 		add(_bat);
+        add(_boulder);
 		
 		
 	}
@@ -202,7 +199,6 @@ class Level1 extends FlxState
 		 */
 	}
     
-	// written by Eric
     public function reset():Void
     {
         if (FlxG.keys.anyPressed([R]))
@@ -224,13 +220,16 @@ class Level1 extends FlxState
 				return true;
 			}
 			else{
-				var maxPairingDistance:Float = 100.0;		// should only pair if the bat is within a certain range
+				// should only pair if the bat is within a certain range
+				var maxPairingDistance:Float = 100.0;
 				//FlxG.log.add("trying to re-pair the two");
 				
 				// Is it close enough to pair with the player?
 				if ( FlxMath.isDistanceWithin(_bat, _player, maxPairingDistance, true) ) 	// yes
 				{
 					//FlxG.log.add("within distance!");
+					//_bat.togglePaired();	
+					//	return true;
 					if ( (_bat.y + _bat.height / 2.0)  < (_player.y + _player.height * .2) ) // bat is above the player's torso. The bat _should_ never be below the ground anyway though
 					{
 						_bat.togglePaired();	
@@ -302,12 +301,11 @@ class Level1 extends FlxState
 	}
 	
     
-    // written by Fuller
+    //written by Fuller
     function platformTouched(_stepTrigger:StepTrigger, _light:FlxNapeSprite):Void
     {
-		// LOGIC TO DETERMINE IF THE PLAYER IS TRIGGERING THE STEPTRIGGER
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
-		var x:Float = _player.x + _player.width / 2.0; 	// x position of the middle of the player sprite
+		var x:Float = _player.x + _player.width / 2; 	// x position of the middle of the player sprite
 		var x_feet:Float = _player.x + _player.width;	// x position of the player's feet
 		if (_player.facing == FlxObject.LEFT)
 		{
@@ -323,48 +321,19 @@ class Level1 extends FlxState
 		var p_triggered:Bool = p_standing_on || p_from_left || p_from_right;	// triggered by the player
 		
 		
-		// LOGIC TO DETERMINE IF THE BOULDER IS TRIGGERING THE STEPTRIGGER
-		var y:Float = _boulder.y + _boulder.height;
-		var x:Float = _boulder.x + _boulder.width / 2.0;		// should be where the bottom of the boulder touches the ground
-		var b_x_right:Float = _boulder.x + _boulder.width * .9;	// right part of boulder collision
-		var b_x_left:Float = _boulder.x + _boulder.width * .1;	// left part of boulder collision
-		
-		_debug_line = new FlxSprite(b_x_left, y);
-		_debug_line.makeGraphic(1, 1);
-		//add(_debug_line);
+		// logic to determine if the platform is triggered by a boulder
 		
 		
 		
 		
-		var b_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x && x <= _stepTrigger.x + _stepTrigger.width;
-		var b_from_left:Bool = Math.abs(b_x_right - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
-		var b_from_right:Bool = Math.abs(b_x_left - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
 		
-		
-		/* ALSO, if the boulder has triggered the platform, we should slow it's horizontal movement so it stops on the trigger, aka apply our own decelleration?
-		 * Additionally, the stepTrigger is being moved as well, so it's horizontal movement should be zeroed out
-		 * 
-		 */
-		
-		
-		
-		var b_triggered:Bool = b_standing_on || b_from_left || b_from_right;	// triggered by the boulder
-		
-		if (b_triggered)
-		{
-			_boulder.body.velocity.setxy(0, 0);
-			FlxG.log.add(_stepTrigger.body.position);
-		}
+		var b_triggered:Bool = false;	// triggered by the boulder
 		
 		var triggered:Bool = p_triggered || b_triggered;
-		
-		//FlxG.log.add(_stepTrigger.body.velocity.x);
 		
 		//FlxG.log.add("_from_left: " + _from_left + "\t_from_right: " + _from_right);
 		if ( triggered )
 		{
-			// zero out the platforms horizontal movement
-			//_stepTrigger.body.velocity.x = 0;
 			
 			// lower the stepTrigger
 			if ( !_stepTrigger.isDepressed()  )//&& !_stepTrigger.inMotion() )
@@ -391,14 +360,69 @@ class Level1 extends FlxState
 		
     }
     
+	/*
+    //written by Fuller
+    function platform1Touched():Void
+    {
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		
+		var x:Float = _player.x + _player.width / 2; 	// x position of the middle of the player sprite
+		
+		var x_feet:Float = _player.x + _player.width;	// x position of the player's feet
+		if (_player.facing == FlxObject.LEFT)
+		{
+			x_feet = _player.x;
+		}
+        
+		var trigger_right_x:Float = _stepTrigger1.x + _stepTrigger1.width;
+		
+		var p_standing_on:Bool = Math.abs(y - _stepTrigger1.y) < 2.0 && _stepTrigger1.x <= x  && x <= _stepTrigger1.x + _stepTrigger1.width;
+		var p_from_left:Bool = Math.abs(x_feet - _stepTrigger1.x) < 2.0 && y >= _stepTrigger1.y;
+		var p_from_right:Bool = Math.abs(x_feet - trigger_right_x) < 2.0 && y >= _stepTrigger1.y;
+		
+		var p_triggered:Bool = p_standing_on || p_from_left || p_from_right;	// triggered by the player
+		
+		var b_triggered:Bool = false;	// triggered by the boulder
+		
+		var triggered:Bool = p_triggered || b_triggered;
+		
+		//FlxG.log.add("_from_left: " + _from_left + "\t_from_right: " + _from_right);
+		if ( triggered )
+		{
+			
+			// lower the stepTrigger
+			if ( !_stepTrigger1.isDepressed()  )//&& !_stepTrigger.inMotion() )
+			{
+				_stepTrigger1.lower();
+				_light1.kill();
+			}
+			
+		}
+		else
+		{
+			if (_stepTrigger1.isDepressed() && !_stepTrigger1.inMotion()){
+				
+				if ( _light1.body.space == null)
+				{
+					// raise the stepTrigger
+					_stepTrigger1.raise();
+					_light1.revive();
+				}
+				
+			}
+			
+		}
+		
+    }*/
     
     function nextLevel():Void
     {
-		var y:Float = _player.y;
-		var x:Float = _player.x;
-		
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		if ( 950 <= x && x <= 1000 && y >= 450)
+		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		
+		if ( 850 <= x  && x <= 900 )
 		{
             FlxG.switchState(new Level2());
 		}

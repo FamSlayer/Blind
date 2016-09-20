@@ -195,10 +195,5 @@ class Gate extends FlxNapeSprite
 		return _moving;
 	}
 	
-	// written by Gabriel
-	public function DoorSound():Void {
-		FlxG.sound.play("stone_door");
-	}
-	
 	
 }

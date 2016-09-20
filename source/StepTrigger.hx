@@ -35,22 +35,32 @@ class StepTrigger extends FlxNapeSprite
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false, ?image_path:String = "")
 	{
-		if ( image_path == "" ) image_path = "assets/images/blue button 1.png";
-		
-		super(X, Y, image_path, true, true);
-		
-		// set physics
-		setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
-		body.gravMass = 50000;
-		body.allowRotation = false;
-		Layer = new Layers();
-		body.shapes.at(0).filter = Layer.gate_filter;
+		super(X, Y);
 		
 		_rest_position = new FlxPoint(X, Y);
 		_upside_down = flipped;
 		_depressed = depressed;
         _times = [];
         
+        
+		if (image_path == "")
+		{	
+			loadGraphic("assets/images/blue button 1.png", false);
+		}
+		
+		
+        //makeGraphic(32, 6);
+		//loadGraphic("assets/images/blue button 1", false);
+		loadGraphic(image_path, false);// , 16, 16)
+        createRectangularBody();
+        setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		body.gravMass = 50000;
+		body.allowRotation = false;
+		
+		Layer = new Layers();
+		body.shapes.at(0).filter = Layer.gate_filter;
+
+		
 		if (!_upside_down)
 		{
 			_depressed_position = new FlxPoint(X, Y + (height));		// 6 because that's the height of the graphic
@@ -64,22 +74,6 @@ class StepTrigger extends FlxNapeSprite
 		FlxG.log.add(_rest_position);
 		
 		FlxG.log.add(_depressed_position);
-		
-		
-		/* old code
-		if (image_path == "")
-		{	
-			loadGraphic("assets/images/blue button 1.png", false);
-		}
-        makeGraphic(32, 6);
-		loadGraphic("assets/images/blue button 1", false);
-		loadGraphic(image_path, false);// , 16, 16)
-        createRectangularBody();
-        
-		allowCollisions = 2;
-		*/
-
-		
 		
 		
 		
@@ -123,14 +117,10 @@ class StepTrigger extends FlxNapeSprite
 		if (!_upside_down)
 		{
 			body.velocity.setxy(0, _speed);
-			//velocity.x = 0;
-			//velocity.y = _speed;
 		}
 		else
 		{
 			body.velocity.setxy(0, -_speed);
-			//velocity.x = 0;
-			//velocity.y = -_speed;
 		}
 		
 		_moving = true;
@@ -143,14 +133,10 @@ class StepTrigger extends FlxNapeSprite
 		if (!_upside_down)
 		{
 			body.velocity.setxy(0, -_speed);
-			//velocity.x = 0;
-			//velocity.y = -_speed;
 		}
 		else
 		{
 			body.velocity.setxy(0, _speed);
-			//velocity.x = 0;
-			//velocity.y = _speed;
 		}
 		_moving = true;
 		_depressed = false;
@@ -164,31 +150,26 @@ class StepTrigger extends FlxNapeSprite
 		if (_moving_to_depressed_position)	// if moving to the origin, check the distance to the origin
 		{
 			reached = FlxMath.isDistanceToPointWithin(this, _depressed_position, _speed / _times.length, true);	// _times.length = FPS
+			//body.velocity.setxy(0, 0);
 		}
 		else					// if moving away from the origin, check the distance to the target
 		{
 			reached = FlxMath.isDistanceToPointWithin(this, _rest_position, _speed / _times.length, true);
-
+            //body.velocity.setxy(0, 0);
 		}
 		
 		if (reached)
 		{
 			//FlxG.log.add("ARRIVED. _depressed: " + _depressed);
 			body.velocity.setxy(0, 0);
-			//velocity.x = 0;
-			//velocity.y = 0;
 			_moving = false;
 			if (_moving_to_depressed_position)
 			{
 				body.position.set(new Vec2(_depressed_position.x, _depressed_position.y));
-				//x = _depressed_position.x;
-				//y = _depressed_position.y;
 			}
 			else
 			{
 				body.position.set(new Vec2(_rest_position.x, _rest_position.y));
-				//x = _depressed_position.x;
-				//y = _depressed_position.y;
 			}
 			_moving_to_depressed_position = !_moving_to_depressed_position;
 			
