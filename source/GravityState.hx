@@ -9,7 +9,7 @@ import flixel.addons.nape.FlxNapeVelocity;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-<<<<<<< HEAD:source/PlayState.hx
+
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -26,13 +26,13 @@ import nape.util.BitmapDebug;
 import nape.util.Debug;
 import flash.events.Event;
 import flash.display.Stage;
-=======
+
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.group.FlxGroup;
->>>>>>> f560002174e018c232234bf065abb9adea1f0fed:source/GravityState.hx
+
 
 class GravityState extends FlxState
 {
@@ -57,7 +57,7 @@ class GravityState extends FlxState
 		super.create();
 		FlxNapeSpace.init();
 		
-<<<<<<< HEAD:source/PlayState.hx
+
 		gravity = Vec2.weak(0, 600);
         space = new Space(gravity);
 		
@@ -74,18 +74,14 @@ class GravityState extends FlxState
         _test.body.velocity.x = 5;
 		
         add(_test);
-=======
+
 		_blocks = new FlxGroup(128);
->>>>>>> f560002174e018c232234bf065abb9adea1f0fed:source/GravityState.hx
+
 		
 		addFloor(64, 2, 0, 700);
 		
 		addPlayerAndBat();
-<<<<<<< HEAD:source/PlayState.hx
-		
-		
-=======
->>>>>>> f560002174e018c232234bf065abb9adea1f0fed:source/GravityState.hx
+
 	}
 
 	override public function update(elapsed:Float):Void
@@ -113,7 +109,7 @@ class GravityState extends FlxState
 	}
 	
 	// written by Gabriel
-<<<<<<< HEAD:source/PlayState.hx
+
 	function enterFrameHandler(ev:Event):Void {
 		space.step(1 / stage.frameRate);
         debug.clear();
@@ -128,7 +124,9 @@ class GravityState extends FlxState
 		_blockBody.shapes.add(_block);
 		_blockBody.position.setxy(20, 228);
 		_blockBody.space = space;
-=======
+        
+    }
+    
 	public function addFloor(W:Int, H:Int, X:Int, Y:Int):Void {
 		for (i in 0...W) {
 			for (u in 0...H) {
@@ -137,20 +135,19 @@ class GravityState extends FlxState
 			}
 		}
 		add(_blocks);
->>>>>>> f560002174e018c232234bf065abb9adea1f0fed:source/GravityState.hx
+
 	}
 	
 	// written by Fuller
 	function addPlayerAndBat():Void 	
 	{
-<<<<<<< HEAD:source/PlayState.hx
+
 		_player = new Player(_playerX, _playerY);
 		_bat = new Bat(_playerX-4, _playerY-4);
-=======
+
 		_bat = new Bat(_playerY-24, _playerY-8);
 		_player = new Player(_playerY, _playerY, _bat);
->>>>>>> f560002174e018c232234bf065abb9adea1f0fed:source/GravityState.hx
-		
+
 		_bat.body.velocity = _player.body.velocity;
 		
 		add(_player);
