@@ -33,24 +33,15 @@ class Player extends FlxNapeSprite
 		_the_bat = b;
 		
         
-		createRectangularBody(30, 106);
+		
         
         loadGraphic("assets/images/Idle_0.png", false);
-		
+		createRectangularBody(30, 106);
         body.allowRotation = false;
 		body.gravMass = 55;
-		
-
-		createRectangularBody(16, 28);
-		body.allowRotation = false;
-		makeGraphic(16, 28, FlxColor.PURPLE);
-
-        //makeGraphic(16, 28, FlxColor.PURPLE);
-		
-		// set collision layer
+        
 		Layer = new Layers();
 		body.shapes.at(0).filter = Layer.player_filter;
-
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
@@ -63,9 +54,6 @@ class Player extends FlxNapeSprite
 	
 	override public function update(elapsed:Float):Void 
 	{
-
-		move();
-
 		super.update(elapsed);
 		move();
 	}

@@ -35,7 +35,7 @@ import flixel.group.FlxGroup;
 
 
 class GravityState extends FlxState
-{
+{/*
 	var _playerY:Int = 200;
 	var _playerX:Int = 20;
 	var _player:Player;
@@ -187,5 +187,5 @@ class GravityState extends FlxState
 		}
 		return false;
 	}
-
+*/
 }
