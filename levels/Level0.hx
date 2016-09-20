@@ -68,7 +68,7 @@ class Level0 extends FlxState
         applyGravity();
         reset();
         nextLevel();
-		parallax();
+		//parallax();
 		
 	}
 	
@@ -303,7 +303,7 @@ class Level0 extends FlxState
 			{
 				_stepTrigger.lower();
 				_light.kill();
-				//FlxG.sound.play("light_click");
+				FlxG.sound.play("assets/sounds/light_click.wav");
 			}
 			
 		}
