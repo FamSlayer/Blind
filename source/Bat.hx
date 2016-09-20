@@ -50,7 +50,7 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		//FlxG.sound.playMusic("assets/sounds/fast_wings.wav");
+		//FlxG.sound.playMusic("fast_wings");
 		
 	}
 	
@@ -74,6 +74,12 @@ class Bat extends FlxNapeSprite
 		_player_speed = s;
 	}
 	
+	// written by Gabriel
+	/*
+	public function Squeak():Void {
+		FlxG.sound.play("bat_squeak");
+	}
+	*/
 	
 	// written by Fuller
 	public function togglePaired():Void

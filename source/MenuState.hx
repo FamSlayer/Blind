@@ -19,8 +19,6 @@ import levels.Level3;
 import levels.Level4;
 import levels.Level5;
 
-
-
 class MenuState extends FlxState
 {
 	var _playButton:FlxButton;

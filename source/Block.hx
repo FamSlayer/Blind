@@ -1,4 +1,8 @@
 package;
+/**
+ * ...
+ * @author Gabriel Langlois
+ */
 
 import flixel.FlxSprite;
 import flixel.addons.nape.FlxNapeSprite;

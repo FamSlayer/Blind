@@ -317,6 +317,7 @@ class Level3 extends FlxState
 			//FlxG.log.add("collision");
 			
             _light.kill();
+			FlxG.sound.play("light_click");
 		}
 		else
 		{

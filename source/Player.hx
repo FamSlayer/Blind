@@ -26,6 +26,8 @@ class Player extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
+	var drop_timer:Int = 30;
+	
 	function new(?X:Float=0, ?Y:Float=0, b:Bat, ?face_left:Bool = false)
 	{
 		super(X, Y, false, true);
@@ -60,10 +62,13 @@ class Player extends FlxNapeSprite
 		}
 	}
 	
+
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
 		move();
+		checkDrops();
+		//checkFootsteps();
 	}
 	
 	public function getSpeed():Float
@@ -79,6 +84,26 @@ class Player extends FlxNapeSprite
 	public function allowJump():Void
 	{
 		_can_jump = true;
+	}
+	
+	//Written by Gabriel
+	/*
+	public function checkFootstep():Void {
+		if (animation.name == "walk") {
+			if (animation.frameIndex == 1 || animation.frameIndex == 4) {
+				FlxG.sound.play("footstep");
+			}
+		}
+	}
+	*/
+	
+	//written by Gabriel
+	public function checkDrops():Void {
+		drop_timer -= 1;
+		if (drop_timer <= 0) {
+			FlxG.sound.play("water_droplet");
+			drop_timer = FlxG.random.int(300, 900);
+		}
 	}
 	
 	function move():Void
