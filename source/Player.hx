@@ -50,6 +50,11 @@ class Player extends FlxNapeSprite
 		return speed;
 	}
 	
+	// written by Gabriel
+	public function FootStep():Void {
+		FlxG.sound.play("footstep");
+	}
+	
 	function move():Void
 	{
 		_up = FlxG.keys.anyPressed([UP]);

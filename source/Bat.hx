@@ -43,7 +43,8 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		
+		FlxG.sound.playMusic("fast_wings", 1, true);
+		Squeak();
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -65,6 +66,10 @@ class Bat extends FlxNapeSprite
 		_player_speed = s;
 	}
 	
+	// written by Gabriel
+	public function Squeak():Void {
+		FlxG.sound.play("bat_squeak");
+	}
 	
 	// written by Fuller
 	public function togglePaired():Void
@@ -85,7 +90,7 @@ class Bat extends FlxNapeSprite
 		else
 			output += "not paired ";
 		
-		FlxG.log.add(output);
+		//FlxG.log.add(output);
 		
 	}
 	

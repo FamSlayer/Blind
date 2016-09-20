@@ -66,6 +66,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		Font.registerFont (__ASSET__flixel_fonts_nokiafc22_ttf);
 		Font.registerFont (__ASSET__flixel_fonts_monsterrat_ttf);
 		
@@ -74,6 +76,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -589,6 +593,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_monsterrat_ttf);
 		
@@ -597,22 +603,26 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if flash
 		
-		path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
-		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
-		path.set ("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", "assets/images/3_pointillizeBlue_blackLines_whiteBackground.png");
-		type.set ("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", AssetType.IMAGE);
-		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
-		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
-		path.set ("assets/images/leg.jpg", "assets/images/leg.jpg");
-		type.set ("assets/images/leg.jpg", AssetType.IMAGE);
-		path.set ("assets/images/Master_Main_Character.psd", "assets/images/Master_Main_Character.psd");
-		type.set ("assets/images/Master_Main_Character.psd", AssetType.BINARY);
-		path.set ("assets/map.tmx", "assets/map.tmx");
-		type.set ("assets/map.tmx", AssetType.TEXT);
-		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
-		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
-		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
-		type.set ("assets/sounds/sounds-go-here.txt", AssetType.TEXT);
+		path.set ("bat_squeak", "assets//sounds/bat_squeak.wav");
+		type.set ("bat_squeak", AssetType.SOUND);
+		path.set ("fast_wings", "assets//sounds/fast_wings.wav");
+		type.set ("fast_wings", AssetType.SOUND);
+		path.set ("footstep", "assets//sounds/footstep.wav");
+		type.set ("footstep", AssetType.SOUND);
+		path.set ("light_click", "assets//sounds/light_click.wav");
+		type.set ("light_click", AssetType.SOUND);
+		path.set ("splash", "assets//sounds/splash.wav");
+		type.set ("splash", AssetType.SOUND);
+		path.set ("stone_door", "assets//sounds/stone_door.wav");
+		type.set ("stone_door", AssetType.SOUND);
+		path.set ("water_deep_drop", "assets//sounds/water_deep_drop.wav");
+		type.set ("water_deep_drop", AssetType.SOUND);
+		path.set ("water_droplet", "assets//sounds/water_droplet.wav");
+		type.set ("water_droplet", AssetType.SOUND);
+		path.set ("wind", "assets//sounds/wind.wav");
+		type.set ("wind", AssetType.SOUND);
+		path.set ("wings", "assets//sounds/wings.wav");
+		type.set ("wings", AssetType.SOUND);
 		className.set ("flixel/sounds/beep.ogg", __ASSET__flixel_sounds_beep_ogg);
 		type.set ("flixel/sounds/beep.ogg", AssetType.SOUND);
 		className.set ("flixel/sounds/flixel.ogg", __ASSET__flixel_sounds_flixel_ogg);
@@ -628,30 +638,36 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#elseif html5
 		
 		var id;
-		id = "assets/data/data-goes-here.txt";
-		path.set (id, id);
-		type.set (id, AssetType.TEXT);
-		id = "assets/images/3_pointillizeBlue_blackLines_whiteBackground.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/images-go-here.txt";
-		path.set (id, id);
-		type.set (id, AssetType.TEXT);
-		id = "assets/images/leg.jpg";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/Master_Main_Character.psd";
-		path.set (id, id);
-		type.set (id, AssetType.BINARY);
-		id = "assets/map.tmx";
-		path.set (id, id);
-		type.set (id, AssetType.TEXT);
-		id = "assets/music/music-goes-here.txt";
-		path.set (id, id);
-		type.set (id, AssetType.TEXT);
-		id = "assets/sounds/sounds-go-here.txt";
-		path.set (id, id);
-		type.set (id, AssetType.TEXT);
+		id = "bat_squeak";
+		path.set (id, "assets//sounds/bat_squeak.wav");
+		type.set (id, AssetType.SOUND);
+		id = "fast_wings";
+		path.set (id, "assets//sounds/fast_wings.wav");
+		type.set (id, AssetType.SOUND);
+		id = "footstep";
+		path.set (id, "assets//sounds/footstep.wav");
+		type.set (id, AssetType.SOUND);
+		id = "light_click";
+		path.set (id, "assets//sounds/light_click.wav");
+		type.set (id, AssetType.SOUND);
+		id = "splash";
+		path.set (id, "assets//sounds/splash.wav");
+		type.set (id, AssetType.SOUND);
+		id = "stone_door";
+		path.set (id, "assets//sounds/stone_door.wav");
+		type.set (id, AssetType.SOUND);
+		id = "water_deep_drop";
+		path.set (id, "assets//sounds/water_deep_drop.wav");
+		type.set (id, AssetType.SOUND);
+		id = "water_droplet";
+		path.set (id, "assets//sounds/water_droplet.wav");
+		type.set (id, AssetType.SOUND);
+		id = "wind";
+		path.set (id, "assets//sounds/wind.wav");
+		type.set (id, AssetType.SOUND);
+		id = "wings";
+		path.set (id, "assets//sounds/wings.wav");
+		type.set (id, AssetType.SOUND);
 		id = "flixel/sounds/beep.ogg";
 		path.set (id, id);
 		
@@ -689,6 +705,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1438,6 +1456,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
 @:keep @:bind #if display private #end class __ASSET__flixel_sounds_beep_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__flixel_sounds_flixel_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends null { }
@@ -1446,6 +1466,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 #elseif html5
+
+
 
 
 

@@ -16,22 +16,26 @@ class AssetData {
 		
 		if (!initialized) {
 			
-			path.set ("assets/data/data-goes-here.txt", "assets/data/data-goes-here.txt");
-			type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-			path.set ("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", "assets/images/3_pointillizeBlue_blackLines_whiteBackground.png");
-			type.set ("assets/images/3_pointillizeBlue_blackLines_whiteBackground.png", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
-			type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-			path.set ("assets/images/leg.jpg", "assets/images/leg.jpg");
-			type.set ("assets/images/leg.jpg", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/Master_Main_Character.psd", "assets/images/Master_Main_Character.psd");
-			type.set ("assets/images/Master_Main_Character.psd", Reflect.field (AssetType, "binary".toUpperCase ()));
-			path.set ("assets/map.tmx", "assets/map.tmx");
-			type.set ("assets/map.tmx", Reflect.field (AssetType, "text".toUpperCase ()));
-			path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
-			type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-			path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
-			type.set ("assets/sounds/sounds-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+			path.set ("bat_squeak", "assets//sounds/bat_squeak.wav");
+			type.set ("bat_squeak", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("fast_wings", "assets//sounds/fast_wings.wav");
+			type.set ("fast_wings", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("footstep", "assets//sounds/footstep.wav");
+			type.set ("footstep", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("light_click", "assets//sounds/light_click.wav");
+			type.set ("light_click", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("splash", "assets//sounds/splash.wav");
+			type.set ("splash", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("stone_door", "assets//sounds/stone_door.wav");
+			type.set ("stone_door", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("water_deep_drop", "assets//sounds/water_deep_drop.wav");
+			type.set ("water_deep_drop", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("water_droplet", "assets//sounds/water_droplet.wav");
+			type.set ("water_droplet", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("wind", "assets//sounds/wind.wav");
+			type.set ("wind", Reflect.field (AssetType, "sound".toUpperCase ()));
+			path.set ("wings", "assets//sounds/wings.wav");
+			type.set ("wings", Reflect.field (AssetType, "sound".toUpperCase ()));
 			path.set ("flixel/sounds/beep.ogg", "flixel/sounds/beep.ogg");
 			type.set ("flixel/sounds/beep.ogg", Reflect.field (AssetType, "sound".toUpperCase ()));
 			path.set ("flixel/sounds/flixel.ogg", "flixel/sounds/flixel.ogg");
