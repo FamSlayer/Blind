@@ -50,9 +50,7 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		
 		//FlxG.sound.playMusic("assets/sounds/fast_wings.wav");
-		
 		
 	}
 	
