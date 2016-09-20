@@ -54,6 +54,7 @@ class StepTrigger extends FlxNapeSprite
 		loadGraphic(image_path, false);// , 16, 16)
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		body.gravMass = 50000;
 		body.allowRotation = false;
 		
 		Layer = new Layers();

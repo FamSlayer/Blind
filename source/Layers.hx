@@ -19,8 +19,8 @@ class Layers
 	static var 	  player_collision_mask:Int = 57;	// 111001
 	static var 	     bat_collision_mask:Int = 54;	// 110110
 	static var 	   light_collision_mask:Int =  6;	// 000110
-	static var 	 boulder_collision_mask:Int = 57;	// 111001
-	static var 	    gate_collision_mask:Int = 27;	// 011011
+	static var 	 boulder_collision_mask:Int = 41;	// 101001
+	static var 	    gate_collision_mask:Int = 11;	// 001011
 	static var 	  ground_collision_mask:Int = 27;	// 011011
 	
 	
