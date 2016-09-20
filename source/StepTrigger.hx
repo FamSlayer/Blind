@@ -6,12 +6,13 @@ package;
  */
 
 import flixel.addons.nape.FlxNapeSprite; 
+import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import nape.geom.Vec2;
 
 
-class StepTrigger extends FlxNapeSprite 
+class StepTrigger extends FlxSprite 
 {
 	var _rest_position:FlxPoint;
 	var _depressed_position:FlxPoint;
@@ -24,6 +25,8 @@ class StepTrigger extends FlxNapeSprite
     var _speed:Int = 100;
     
     var _moving:Bool = false;
+	
+	var _raising:Bool = false;		// same as _moving_to_origin variable in Gate.hx
     
     private var _times:Array<Float>; // will be used to count the FPS
 	
@@ -36,18 +39,18 @@ class StepTrigger extends FlxNapeSprite
 		_depressed = depressed;
         _times = [];
         
-        makeGraphic(32,4);
-        createRectangularBody();
-        setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        makeGraphic(32,6);
+        //createRectangularBody();
+        //setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
 
 		
 		if (!_upside_down)
 		{
-			_depressed_position = new FlxPoint(X, Y + 1);
+			_depressed_position = new FlxPoint(X, Y + 6);		// 6 because that's the height of the graphic
 		}
 		else
 		{
-			_depressed_position = new FlxPoint(X, Y - 1);
+			_depressed_position = new FlxPoint(X, Y - 6);		// 6 because that's the height of the graphic
 		}
 		
 	}
@@ -80,24 +83,29 @@ class StepTrigger extends FlxNapeSprite
         {
             if (!_moving_to_depressed_position)
             {
-                body.velocity.setxy(0, -_speed);
+                //body.velocity.setxy(0, -_speed);
+				velocity.set(0, -_speed);
             }
             else
             {	
                 // moving back to its original state
-				body.velocity.setxy(0, _speed);
+				//body.velocity.setxy(0, _speed);
+				velocity.set(0, _speed);
+				
             }
         }
         else
         {
             if (!_moving_to_depressed_position)
             {
-				body.velocity.setxy(0, _speed);
+				//body.velocity.setxy(0, _speed);
+				velocity.set(0, _speed);
             }
             else
             {	
                 // moving back to its original state
-				body.velocity.setxy(0, -_speed);
+				//body.velocity.setxy(0, -_speed);
+				velocity.set(0, -_speed);
             }
         }
         _moving = true;
@@ -124,6 +132,7 @@ class StepTrigger extends FlxNapeSprite
             body.velocity.setxy(0, 0);
 			if (_moving_to_depressed_position)
 			{
+<<<<<<< HEAD
 				body.position.set(new Vec2(_depressed_position.x, _depressed_position.y));
                 
 			}
@@ -133,6 +142,22 @@ class StepTrigger extends FlxNapeSprite
                 
 			}
 			//body.velocity.setxy(0, 0);
+=======
+				//body.position.set(new Vec2(_depressed_position.x, _depressed_position.y));
+				var d_pos:Vec2 = new Vec2(_depressed_position.x, _depressed_position.y);
+				this.x = d_pos.x;
+				this.y = d_pos.y;
+			}
+			else
+			{
+				//body.position.set(new Vec2(_rest_position.x, _rest_position.y));
+				var r_pos:Vec2 = new Vec2(_rest_position.x, _rest_position.y);
+				this.x = r_pos.x;
+				this.y = r_pos.y;
+			}
+			//body.velocity.setxy(0, 0);
+			velocity.set(0, 0);
+>>>>>>> 024fc6e279ea9d01e18ba2e3812c23778f6a0244
 			_moving = false;
 			_moving_to_depressed_position = !_moving_to_depressed_position;
 		}
