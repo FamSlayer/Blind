@@ -3,7 +3,6 @@ package;
 /**
  * ...
  * @author Fuller Taylor
- * Sound playing added by: Gabe
  */
 
  import flixel.FlxSprite;
@@ -41,7 +40,7 @@ class Bat extends FlxNapeSprite
 		
 		
 		loadGraphic("assets/images/Bat_Sprite_Sheet.png", true, 76, 25);// , 16, 16);
-		animation.add("fly", [0, 1, 2, 3, 4], 10, true);
+		animation.add("fly", [0, 1, 2, 3, 4], 12, true);
 		animation.play("fly", false, false, -1);
 		centerOffsets();
 		createRectangularBody();
@@ -51,8 +50,8 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		//FlxG.sound.playMusic("assets/sounds/fast_wings", 1, true);
-		//Squeak();
+		//FlxG.sound.playMusic("assets/sounds/fast_wings.wav");
+		
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -75,10 +74,13 @@ class Bat extends FlxNapeSprite
 		_player_speed = s;
 	}
 	
+<<<<<<< HEAD
 	// written by Gabriel
 	public function Squeak():Void {
 		//FlxG.sound.play("assets/sounds/bat_squeak");
 	}
+=======
+>>>>>>> c4f46799d9397dd319f9ffeae25c9ffd9cc381e7
 	
 	// written by Fuller
 	public function togglePaired():Void

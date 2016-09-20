@@ -34,12 +34,9 @@ class GravityState extends FlxState
 		
 		_blocks = new FlxGroup(128);
 		
-		addFloor(32, 2, 0, 700);
-		addFloor(24, 2, 512+16*12, 700);
+		addFloor(64, 2, 0, 700);
 		
 		addPlayerAndBat();
-		
-		FlxG.sound.playMusic("wind", 1, true);
 	}
 
 	override public function update(elapsed:Float):Void
