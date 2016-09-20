@@ -324,6 +324,7 @@ class Level4 extends FlxState
 			{
 				_stepTrigger.lower();
 				_light.kill();
+				FlxG.sound.play("light_click");
 			}
 			
 		}
