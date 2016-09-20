@@ -29,7 +29,19 @@
 
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
-	<assets path="assets" />
+	<assets path="assets">
+		<!--<music path="music_1.ogg" id="music_1" />-->
+		<sound path="/sounds/bat_squeak.wav" id="bat_squeak" />
+		<sound path="/sounds/fast_wings.wav" id="fast_wings" />
+		<sound path="/sounds/footstep.wav" id="footstep" />
+		<sound path="/sounds/light_click.wav" id="light_click" />
+		<sound path="/sounds/splash.wav" id="splash" />
+		<sound path="/sounds/stone_door.wav" id="stone_door" />
+		<sound path="/sounds/water_deep_drop.wav" id="water_deep_drop" />
+		<sound path="/sounds/water_droplet.wav" id="water_droplet" />
+		<sound path="/sounds/wind.wav" id="wind" />
+		<sound path="/sounds/wings.wav" id="wings" />
+	</assets>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 

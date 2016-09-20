@@ -63,6 +63,7 @@ class Player extends FlxNapeSprite
 		return speed;
 	}
 	
+<<<<<<< HEAD
 	public function canJump():Bool
 	{
 		return _can_jump;
@@ -71,6 +72,11 @@ class Player extends FlxNapeSprite
 	public function allowJump():Void
 	{
 		_can_jump = true;
+=======
+	// written by Gabriel
+	public function FootStep():Void {
+		FlxG.sound.play("footstep");
+>>>>>>> 15d253c9d4e195a2843416f0cca30a422d2a10f4
 	}
 	
 	function move():Void
