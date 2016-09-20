@@ -35,32 +35,22 @@ class StepTrigger extends FlxNapeSprite
 	
 	public function new(?X:Float=0, ?Y:Float=0, ?flipped:Bool=false, ?depressed:Bool = false, ?image_path:String = "")
 	{
-		super(X, Y);
+		if ( image_path == "" ) image_path = "assets/images/blue button 1.png";
+		
+		super(X, Y, image_path, true, true);
+		
+		// set physics
+		setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
+		body.gravMass = 50000;
+		body.allowRotation = false;
+		Layer = new Layers();
+		body.shapes.at(0).filter = Layer.gate_filter;
 		
 		_rest_position = new FlxPoint(X, Y);
 		_upside_down = flipped;
 		_depressed = depressed;
         _times = [];
         
-        
-		if (image_path == "")
-		{	
-			loadGraphic("assets/images/blue button 1.png", false);
-		}
-		
-		
-        //makeGraphic(32, 6);
-		//loadGraphic("assets/images/blue button 1", false);
-		loadGraphic(image_path, false);// , 16, 16)
-        createRectangularBody();
-        setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
-		body.gravMass = 50000;
-		body.allowRotation = false;
-		
-		Layer = new Layers();
-		body.shapes.at(0).filter = Layer.gate_filter;
-
-		
 		if (!_upside_down)
 		{
 			_depressed_position = new FlxPoint(X, Y + (height));		// 6 because that's the height of the graphic
@@ -74,6 +64,20 @@ class StepTrigger extends FlxNapeSprite
 		FlxG.log.add(_rest_position);
 		
 		FlxG.log.add(_depressed_position);
+		
+		
+		/* old code
+		if (image_path == "")
+		{	
+			loadGraphic("assets/images/blue button 1.png", false);
+		}
+        makeGraphic(32, 6);
+		loadGraphic("assets/images/blue button 1", false);
+		loadGraphic(image_path, false);// , 16, 16)
+        createRectangularBody();
+        
+		allowCollisions = 2;
+		*/
 		
 		
 		
