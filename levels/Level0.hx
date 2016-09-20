@@ -35,6 +35,9 @@ class Level0 extends FlxState
 	
 	var _debug_line:FlxSprite;
 	
+	var super_background:FlxSprite;
+	var parallax_speed:Int = 5;
+	
 	override public function create():Void
 	{
 		super.create();
@@ -65,9 +68,20 @@ class Level0 extends FlxState
         applyGravity();
         reset();
         nextLevel();
-		
+		parallax();
 		
 	}
+	
+	// written by Gabriel
+	/*
+	public function parallax():Void {
+		if (_player.body.velocity.x > 0) {
+			super_background.x  += parallax_speed;
+		} else if (_player.body.velocity.x < 0) {
+			super_background.x  -= parallax_speed;
+		}
+	}
+	*/
 	
 	// written by Eric
 	function loadBackground():Void
@@ -80,7 +94,7 @@ class Level0 extends FlxState
 		 * 	etc
 		 */
         
-		var super_background:FlxSprite = new FlxSprite();
+		super_background = new FlxSprite();
 		super_background.loadGraphic("assets/images/cave_back_background.png");
 		add(super_background);
 		
