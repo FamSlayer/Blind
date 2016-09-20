@@ -31,15 +31,15 @@ class Player extends FlxNapeSprite
 		super(X, Y, false, true);
 		
 		_the_bat = b;
-		
-        
-		
         
         loadGraphic("assets/images/Idle_0.png", false);
 		createRectangularBody(30, 106);
         body.allowRotation = false;
 		body.gravMass = 55;
-        
+		
+        //makeGraphic(16, 28, FlxColor.PURPLE);
+		
+		// set collision layer
 		Layer = new Layers();
 		body.shapes.at(0).filter = Layer.player_filter;
 		
