@@ -277,14 +277,14 @@ class Level2 extends FlxState
 		else
 		{
 			//FlxG.log.add("not colliding, applying gravity to player");
-			_player.body.velocity.y += 11;
+			_player.body.velocity.y += 18;
 			
 			if (_bat.isPaired())	// move the bat with the player if they are paired
 			{
 				if ( (_bat.y - _bat.height / 2.0)  < (_player.y - _player.height * .8) ) // bat will stop falling below the player..?
 				{
 					//FlxG.log.add("Applying gravity to the bat");
-					_bat.body.velocity.y += 11;
+					_bat.body.velocity.y += 18;
 				}
 				else{
 					//FlxG.log.add("NOT APPLYING");
