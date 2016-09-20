@@ -39,7 +39,9 @@ class Bat extends FlxNapeSprite
 		Layer = new Layers();
 		
 		
-		loadGraphic("assets/images/REALBAT!.png", true, 80, 50);// , 16, 16);
+		loadGraphic("assets/images/Bat_Sprite_Sheet.png", true, 76, 25);// , 16, 16);
+		animation.add("fly", [0, 1, 2, 3, 4], 12, true);
+		animation.play("fly", false, false, -1);
 		centerOffsets();
 		createRectangularBody();
 		body.allowRotation = false;
@@ -48,6 +50,7 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
+		//FlxG.sound.playMusic("assets/sounds/fast_wings.wav");
 		
 	}
 	
