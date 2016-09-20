@@ -11,6 +11,6 @@ class Main extends Sprite
 	{
 		super();
 		addChild(new FlxGame(0, 0, MenuState));
-		//FlxG.sound.playMusic("theme1");
+		FlxG.sound.playMusic("assets/music/theme1.ogg");
 	}
 }

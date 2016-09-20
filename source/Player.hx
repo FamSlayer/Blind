@@ -27,6 +27,7 @@ class Player extends FlxNapeSprite
 	var Layer:Layers;
 	
 	var drop_timer:Int = 30;
+	var wind_timer:Int = 38 * 30;
 	
 	function new(?X:Float=0, ?Y:Float=0, b:Bat, ?face_left:Bool = false)
 	{
@@ -60,6 +61,9 @@ class Player extends FlxNapeSprite
 		if (face_left){
 			facing = FlxObject.LEFT;
 		}
+		
+		FlxG.sound.play("assets/sounds/wind.wav");
+		//FlxG.sound.playMusic("assets/music/theme1.ogg");
 	}
 	
 
@@ -68,7 +72,8 @@ class Player extends FlxNapeSprite
 		super.update(elapsed);
 		move();
 		checkDrops();
-		//checkFootsteps();
+		//checkFootstep();
+		checkWind();
 	}
 	
 	public function getSpeed():Float
@@ -90,8 +95,8 @@ class Player extends FlxNapeSprite
 	/*
 	public function checkFootstep():Void {
 		if (animation.name == "walk") {
-			if (animation.frameIndex == 1 || animation.frameIndex == 4) {
-				FlxG.sound.play("footstep");
+			if (animation.frameIndex == 1 || animation.getFrameIndex() == 4) {
+				FlxG.sound.play("assets/sounds/footstep.wav");
 			}
 		}
 	}
@@ -101,8 +106,17 @@ class Player extends FlxNapeSprite
 	public function checkDrops():Void {
 		drop_timer -= 1;
 		if (drop_timer <= 0) {
-			FlxG.sound.play("water_droplet");
+			FlxG.sound.play("assets/sounds/water_droplet.wav");
 			drop_timer = FlxG.random.int(300, 900);
+		}
+	}
+	
+	//written by Gabriel
+	public function checkWind():Void {
+		wind_timer -= 1;
+		if (wind_timer <= 0) {
+			FlxG.sound.play("assets/sounds/wind.wav");
+			wind_timer = 38 * 30;
 		}
 	}
 	
