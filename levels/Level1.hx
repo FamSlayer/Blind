@@ -23,7 +23,7 @@ class Level1 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 80;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
     var _lightA:FlxNapeSprite;
@@ -166,15 +166,15 @@ class Level1 extends FlxState
 		_standable_objects.add(_stepTriggerB);
         
         //add boulder
-        _boulder = new FlxNapeSprite(300, _ground_height);
-        _boulder.loadGraphic("assets/images/boulder.png", false);
+        _boulder = new FlxNapeSprite(300, _ground_height, "assets/images/boulder.png", false, true);
         _boulder.createCircularBody(30);
 		_boulder.body.allowMovement = true;
 		_boulder.body.allowRotation = true;
 		_boulder.setDrag(40, 10);
-        _boulder.setBodyMaterial(.5, 2000, 0.4, 1, 0.001);
+        _boulder.setBodyMaterial(.945, 2000, 0.4, 1, 0.05);
 		_boulder.body.gravMass = 2000;
 		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
+		_standable_objects.add(_boulder);
 		
 		add(_lightA);
         add(_lightB);
@@ -355,6 +355,7 @@ class Level1 extends FlxState
 		if (b_triggered)
 		{
 			_boulder.body.velocity.setxy(0, 0);
+			_boulder.body.angularVel = 0;
 			FlxG.log.add(_stepTrigger.body.position);
 		}
 		

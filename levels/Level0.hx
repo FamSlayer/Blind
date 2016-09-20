@@ -23,7 +23,7 @@ class Level0 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 80;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
     var _light:FlxNapeSprite;
@@ -140,13 +140,16 @@ class Level0 extends FlxState
 		_standable_objects.add(_stepTrigger);
 		
 		// adding them in this SPECIFIC order
-		add(_ground);
-		add(_ground_sprite);
+		
 		add(_player);
-		add(_stepTrigger);
+		
 		add(_bat);
 		
 		add(_light);
+		
+		add(_ground);
+		add(_ground_sprite);
+		add(_stepTrigger);
 		
 		
 	}
@@ -261,6 +264,10 @@ class Level0 extends FlxState
 			x_feet = _player.x;
 		}
         
+		var _debug_line = new FlxSprite(x, y);
+		_debug_line.makeGraphic(1, 1);
+		add(_debug_line);
+		
 		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
 		
 		var p_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width;

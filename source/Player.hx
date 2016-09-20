@@ -32,20 +32,20 @@ class Player extends FlxNapeSprite
 		
 		_the_bat = b;
         
-		// load jump animation
+		// load animation sprite sheet
 		loadGraphic("assets/images/jump_sprite_sheet12.png", true, 53, 125);// , 16, 16);
 		animation.add("jump", [1, 2, 3, 3, 3, 3, 3, 2, 1, 0], 10, false);	
-		// Fuller I'm literally just playing with the order of the frames so Amanda doesn't have to change any frames.
+		// I'm literally just playing with the order of the frames so Amanda doesn't have to change any frames. - Fuller 
 		
-		
+		//animation.add("idle", [0, 0], 2, false);
+		//animation.play("jump");
+		centerOffsets();
         //loadGraphic("assets/images/Idle_0.png", false);
-		createRectangularBody(30, 106);
+		createRectangularBody();// 53, 106);
         body.allowRotation = false;
 		body.gravMass = 55;
 		
 		
-		
-        //makeGraphic(16, 28, FlxColor.PURPLE);
 		
 		// set collision layer
 		Layer = new Layers();

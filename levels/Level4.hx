@@ -23,7 +23,7 @@ class Level4 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 950;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
 	
