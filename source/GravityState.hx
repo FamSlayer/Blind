@@ -118,5 +118,4 @@ class GravityState extends FlxState
 		}
 		return false;
 	}
-*/
 }
