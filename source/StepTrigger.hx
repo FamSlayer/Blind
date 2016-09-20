@@ -159,7 +159,7 @@ class StepTrigger extends FlxNapeSprite
 		
 		if (reached)
 		{
-			FlxG.log.add("ARRIVED. _depressed: " + _depressed);
+			//FlxG.log.add("ARRIVED. _depressed: " + _depressed);
 			body.velocity.setxy(0, 0);
 			_moving = false;
 			if (_moving_to_depressed_position)
@@ -170,7 +170,6 @@ class StepTrigger extends FlxNapeSprite
 			{
 				body.position.set(new Vec2(_rest_position.x, _rest_position.y));
 			}
-
 			_moving_to_depressed_position = !_moving_to_depressed_position;
 			
 		}
