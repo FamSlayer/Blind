@@ -31,12 +31,9 @@ class Player extends FlxNapeSprite
 		super(X, Y, false, true);
 		
 		_the_bat = b;
-		
-        
-		createRectangularBody(30, 106);
         
         loadGraphic("assets/images/Idle_0.png", false);
-		
+		createRectangularBody(30, 106);
         body.allowRotation = false;
 		body.gravMass = 55;
 		

@@ -9,6 +9,7 @@ import flixel.addons.nape.FlxNapeVelocity;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -24,7 +25,6 @@ class GravityState extends FlxState
 	var _blocks:FlxGroup;
 	
 	var _bat:Bat;
-	var _test:FlxNapeSprite;
 	
 	override public function create():Void
 	{
@@ -63,7 +63,6 @@ class GravityState extends FlxState
 		}
 	}
 	
-	// written by Gabriel
 	public function addFloor(W:Int, H:Int, X:Int, Y:Int):Void {
 		for (i in 0...W) {
 			for (u in 0...H) {
@@ -77,8 +76,8 @@ class GravityState extends FlxState
 	// written by Fuller
 	function addPlayerAndBat():Void 	
 	{
-		_bat = new Bat(_playerY-24, _playerY-8);
-		_player = new Player(_playerY, _playerY, _bat);
+		_bat = new Bat(_playerX-24, _playerY-8);
+		_player = new Player(_playerX, _playerY, _bat);
 		
 		_bat.body.velocity = _player.body.velocity;
 		
@@ -119,5 +118,4 @@ class GravityState extends FlxState
 		}
 		return false;
 	}
-
 }
