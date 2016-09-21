@@ -401,11 +401,11 @@ class Level1 extends FlxState
     
     function nextLevel():Void
     {
-		var y:Float = _player.y;
-		var x:Float = _player.x;
+		var y:Float = _player.y + _player.height;
+		var x:Float = _player.x + _player.width / 2;
 		
         
-		if ( 950 <= x && x <= 1000 && y >= 450)
+		if ( 950 <= x && x <= 1000 && y >= 450 && _bat.isPaired() )
 		{
             FlxG.switchState(new Level2());
 		}

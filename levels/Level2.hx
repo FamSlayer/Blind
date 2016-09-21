@@ -29,6 +29,7 @@ class Level2 extends FlxState
     var _batplatform:FlxNapeSprite;
     var _gate:Gate;
     var _gate1:Gate;
+    var _nextLevelBlock:FlxSprite;
 	
     var _standable_objects:FlxGroup;
 	
@@ -63,6 +64,7 @@ class Level2 extends FlxState
         applyGravity();
         batPlatformTouched();
         reset();
+        nextLevel();
 		
 	}
 	
@@ -115,21 +117,7 @@ class Level2 extends FlxState
 		_ground.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
 		_standable_objects.add(_ground);	// the player can now stand on the ground
 		
-        /*
-        //this is the upper ledge
-        var _ground_sprite1 = new FlxSprite(0, 385);
-		_ground_sprite1.loadGraphic("assets/images/platform.png", false);
-		
-		var _ground1 = new FlxNapeSprite(24, _ground_height-270);
-		_ground1.makeGraphic(1024, 50, FlxColor.BROWN);
-        _ground1.createRectangularBody(1024, 50);
-		_ground1.body.allowMovement = false;
-		_ground1.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999); //makes ground immovable
-		_ground1.body.gravMass = 300000;
-		_ground1.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
-		_standable_objects.add(_ground1);	// the player can now stand on the ground
-        */
-        
+
         //this is the ground on the far right
         var _ground_sprite2 = new FlxSprite(800, _ground_height-150);
 		_ground_sprite2.loadGraphic("assets/images/cave_floor_final.png", false);
@@ -177,13 +165,17 @@ class Level2 extends FlxState
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
         
+        _nextLevelBlock = new FlxSprite(100, 200);
+        _nextLevelBlock.makeGraphic(16,16);
+        
+
+        add(_nextLevelBlock);
+        
         add(_batplatform);
         add(_gate1);
 		
 		add(_ground);
 		add(_ground_sprite);
-        //add(_ground1);
-		//add(_ground_sprite1);
         add(_ground2);
 		add(_ground_sprite2);
         add(_cave_ledge);
@@ -315,8 +307,9 @@ class Level2 extends FlxState
         
 		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 500 <= x  && x <= 600 )
+		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
 		{
+            _gate.trigger();
             FlxG.switchState(new Level3());
 		}
 

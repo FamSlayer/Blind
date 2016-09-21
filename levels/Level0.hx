@@ -35,7 +35,7 @@ class Level0 extends FlxState
 	var _stepTrigger:StepTrigger;
 	
     var _standable_objects:FlxGroup;
-	var _nextLevelBlock:FlxSprite;
+
 	var Layer:Layers;
 	
 	var _debug_line:FlxSprite;
@@ -203,16 +203,11 @@ class Level0 extends FlxState
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
-        
-        
-        var _nextLevelBlock = new FlxSprite(925, 625);
-        _nextLevelBlock.makeGraphic(8, 8, FlxColor.WHITE);
 		
-        
 		// adding them in this SPECIFIC order
 		
 		add(_player);
-		
+        
 		add(_bat);
 		
 		add(_light);
@@ -220,7 +215,7 @@ class Level0 extends FlxState
 		add(_ground);
 		add(_ground_sprite);
 		add(_stepTrigger);
-        add(_nextLevelBlock);
+
 		
 		
 	}
@@ -385,10 +380,10 @@ class Level0 extends FlxState
     function nextLevel():Void
     {
 		//var y:Float = _player.y + _player.height; 		// y position of the player's feet!
-		//var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
 		
-		if (FlxG.collide(_player, _nextLevelBlock) ) //&& _bat.isPaired())
+		if (950 <= x && x <= 1000 && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
 		{
             FlxG.switchState(new Level1());
 		}

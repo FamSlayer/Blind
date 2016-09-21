@@ -12,6 +12,7 @@ import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
@@ -309,28 +310,60 @@ class Level3 extends FlxState
     function platformTouched():Void
     {
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
-		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
-        
-		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if (  Math.abs(y - _stepTrigger.y) < .5 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width )
+		var x:Float = _player.x + _player.width / 2; 	// x position of the middle of the player sprite
+		
+		var x_feet:Float = _player.x + _player.width;	// x position of the player's feet
+		if (_player.facing == FlxObject.LEFT)
+		{
+			x_feet = _player.x;
+		}
+        
+		var _debug_line = new FlxSprite(x, y);
+		_debug_line.makeGraphic(1, 1);
+		//add(_debug_line);
+		
+		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
+		
+		var p_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width;
+		var p_from_left:Bool = Math.abs(x_feet - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
+		var p_from_right:Bool = Math.abs(x_feet - trigger_right_x) < 2.0 && y >= _stepTrigger.y;
+		
+		var p_triggered:Bool = p_standing_on || p_from_left || p_from_right;	// triggered by the player
+		
+		var b_triggered:Bool = false;	// triggered by the boulder
+		
+		var triggered:Bool = p_triggered || b_triggered;
+		
+		//FlxG.log.add("_from_left: " + _from_left + "\t_from_right: " + _from_right);
+		if ( triggered )
 		{
 			
-			//FlxG.log.add("collision");
+			// lower the stepTrigger
+			if ( !_stepTrigger.isDepressed()  )//&& !_stepTrigger.inMotion() )
+			{
+				_stepTrigger.lower();
+				_light.kill();
+				//FlxG.sound.play("assets/sounds/light_click.wav");
+				//light_sound.play();
+			}
 			
-            _light.kill();
-			FlxG.sound.play("assets/sounds/light_click.wav");
 		}
 		else
 		{
-			if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
-				// I HOPE that the only time the body.space will be nulled out is after a kill call, and I THINK that'll be true!
-				// otherwise, create a boolean variable that just keeps track of whether the object is deleted or not!
-			{
-				_light.revive();
+			if (_stepTrigger.isDepressed() && !_stepTrigger.inMotion()){
+				
+				if ( _light.body.space == null)
+				{
+					// raise the stepTrigger
+					_stepTrigger.raise();
+					_light.revive();
+				}
+				
 			}
-            
+			
 		}
+		
     }
 	
 	
