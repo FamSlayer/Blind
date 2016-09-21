@@ -38,7 +38,7 @@ class Gate extends FlxNapeSprite
 		_move_to = new FlxPoint(dX, dY);
 		_times = [];
 		
-		makeGraphic(width,height);		// <-- replace this line with loading an image instead of loading the gate
+		//makeGraphic(width,height);		// <-- replace this line with loading an image instead of loading the gate
         loadGraphic(image_path, false);
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);	//non-elastic, the rest of the numbers basically say "should not be moved by other stuff"
