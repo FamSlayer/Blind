@@ -18,12 +18,13 @@ import flixel.util.FlxColor;
 import flixel.math.FlxMath;
 import flixel.FlxObject;
 import Layers;
+import flixel.system.FlxSound;
 
 class Level0 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 80;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
     var _light:FlxNapeSprite;
@@ -35,13 +36,23 @@ class Level0 extends FlxState
 	
 	var _debug_line:FlxSprite;
 	
+	var super_background:FlxSprite;
+	var parallax_speed:Int = 5;
+	
+	var light_sound:FlxSound;
+	
 	override public function create():Void
 	{
-		super.create();
+		
 		FlxNapeSpace.init();
 		
 		Layer = new Layers();
 		_standable_objects = new FlxGroup();
+		
+		
+		// load sounds???
+		light_sound = FlxG.sound.load("assets/sounds/light_click.wav");
+		
 		
 		/*functions planned by Fuller*/
 		loadBackground();	// everything behind the player scenery wise
@@ -51,6 +62,9 @@ class Level0 extends FlxState
 		/* in update(), test if there is collision between the player and the tunnel that marks the end of the level and if the player has "entered" it
 		 * and pushed the appropriate key to signify they want to go in to the tunnel. If this trigger happens, load the next level
 		 */
+		
+		FlxG.camera.follow(_player, PLATFORMER, 1);
+		super.create();
 		
 		
 	}
@@ -65,9 +79,20 @@ class Level0 extends FlxState
         applyGravity();
         reset();
         nextLevel();
-		
+		//parallax();
 		
 	}
+	
+	// written by Gabriel
+	/*
+	public function parallax():Void {
+		if (_player.body.velocity.x > 0) {
+			super_background.x  += parallax_speed;
+		} else if (_player.body.velocity.x < 0) {
+			super_background.x  -= parallax_speed;
+		}
+	}
+	*/
 	
 	// written by Eric
 	function loadBackground():Void
@@ -80,8 +105,11 @@ class Level0 extends FlxState
 		 * 	etc
 		 */
         
-        var background:FlxSprite; //background variable
-        background = new FlxSprite();
+		super_background = new FlxSprite();
+		super_background.loadGraphic("assets/images/cave_back_background.png");
+		add(super_background);
+		
+        var background:FlxSprite = new FlxSprite();
         background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
         add(background);
         
@@ -132,18 +160,21 @@ class Level0 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTrigger = new StepTrigger(600, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTrigger = new StepTrigger(600, _ground_height - 40 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
 		// adding them in this SPECIFIC order
-		add(_ground);
-		add(_ground_sprite);
+		
 		add(_player);
-		add(_stepTrigger);
+		
 		add(_bat);
 		
 		add(_light);
+		
+		add(_ground);
+		add(_ground_sprite);
+		add(_stepTrigger);
 		
 		
 	}
@@ -258,6 +289,10 @@ class Level0 extends FlxState
 			x_feet = _player.x;
 		}
         
+		var _debug_line = new FlxSprite(x, y);
+		_debug_line.makeGraphic(1, 1);
+		add(_debug_line);
+		
 		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
 		
 		var p_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width;
@@ -279,6 +314,8 @@ class Level0 extends FlxState
 			{
 				_stepTrigger.lower();
 				_light.kill();
+				//FlxG.sound.play("assets/sounds/light_click.wav");
+				light_sound.play();
 			}
 			
 		}

@@ -157,6 +157,7 @@ class Gate extends FlxNapeSprite
 		_moving = true;
 		FlxG.log.add("[Gate.hx] Set _moving to: ");
 		FlxG.log.add(_moving);
+		FlxG.sound.play("assets/sounds/stone_door.wav");
 	}
 	
 	
