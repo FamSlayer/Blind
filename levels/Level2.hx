@@ -27,6 +27,7 @@ class Level2 extends FlxState
 	var _bat:Bat;
     var _batplatform:FlxNapeSprite;
     var _gate:Gate;
+    var _gate1:Gate;
 	
     var _standable_objects:FlxGroup;
 	
@@ -113,9 +114,10 @@ class Level2 extends FlxState
 		_ground.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
 		_standable_objects.add(_ground);	// the player can now stand on the ground
 		
+        /*
         //this is the upper ledge
-        var _ground_sprite1 = new FlxSprite(-475, 385);
-		_ground_sprite1.loadGraphic("assets/images/cave_ledge.png", false);
+        var _ground_sprite1 = new FlxSprite(0, 385);
+		_ground_sprite1.loadGraphic("assets/images/platform.png", false);
 		
 		var _ground1 = new FlxNapeSprite(24, _ground_height-270);
 		_ground1.makeGraphic(1024, 50, FlxColor.BROWN);
@@ -125,7 +127,7 @@ class Level2 extends FlxState
 		_ground1.body.gravMass = 300000;
 		_ground1.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
 		_standable_objects.add(_ground1);	// the player can now stand on the ground
-
+        */
         
         //this is the ground on the far right
         var _ground_sprite2 = new FlxSprite(800, _ground_height-150);
@@ -143,7 +145,7 @@ class Level2 extends FlxState
         
         
         //add platform with the portal
-        var _cave_ledge = new FlxNapeSprite(-200, _ground_height-350);
+        var _cave_ledge = new FlxNapeSprite(-200, _ground_height-400);
         _cave_ledge.makeGraphic(500,500);
         _cave_ledge.loadGraphic("assets/images/cave_ledge.png", false);
         _cave_ledge.createRectangularBody();
@@ -164,8 +166,8 @@ class Level2 extends FlxState
 
 		add(_ground);
 		add(_ground_sprite);
-        add(_ground1);
-		add(_ground_sprite1);
+        //add(_ground1);
+		//add(_ground_sprite1);
         add(_ground2);
 		add(_ground_sprite2);
         add(_cave_ledge);
@@ -208,8 +210,13 @@ class Level2 extends FlxState
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
         
+        _gate1 = new Gate(450, 360, 450, 360, 60, 15, "assets/images/platform.png");    //this gate doesn't move
+        _gate1.body.shapes.at(0).filter = Layer.gate_filter;
+        _standable_objects.add(_gate1);
+        
         add(_batplatform);
         add(_gate);
+        add(_gate1);
 		
 		
     }
@@ -317,7 +324,7 @@ class Level2 extends FlxState
         
 		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 50 <= x  && x <= 100 && 250 <= y && y <= 350 )
+		if ( 500 <= x  && x <= 600 )
 		{
             FlxG.switchState(new Level3());
 		}
