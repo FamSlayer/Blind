@@ -37,7 +37,7 @@ class Level0 extends FlxState
 	var _debug_line:FlxSprite;
 	
 	var super_background:FlxSprite;
-	var parallax_speed:Int = 5;
+	var parallax_speed:Float = .3;
 	
 	var light_sound:FlxSound;
 	
@@ -63,7 +63,7 @@ class Level0 extends FlxState
 		 * and pushed the appropriate key to signify they want to go in to the tunnel. If this trigger happens, load the next level
 		 */
 		
-		FlxG.camera.follow(_player, PLATFORMER, 1);
+		//FlxG.camera.follow(_player, PLATFORMER, 1);
 		super.create();
 		
 		
@@ -79,20 +79,24 @@ class Level0 extends FlxState
         applyGravity();
         reset();
         nextLevel();
-		//parallax();
+		doParallax();
 		
 	}
 	
 	// written by Gabriel
-	/*
-	public function parallax():Void {
+	
+	public function doParallax():Void {
 		if (_player.body.velocity.x > 0) {
-			super_background.x  += parallax_speed;
+			super_background.x -= parallax_speed;
 		} else if (_player.body.velocity.x < 0) {
-			super_background.x  -= parallax_speed;
+			super_background.x += parallax_speed;
+		}
+		else
+		{
+			super_background.x = 0;
 		}
 	}
-	*/
+	
 	
 	// written by Eric
 	function loadBackground():Void
