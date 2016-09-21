@@ -79,12 +79,8 @@ class Level0 extends FlxState
         platformTouched();
         applyGravity();
         reset();
-<<<<<<< HEAD
-		doParallax();
-=======
         nextLevel();
 		//doParallax();
->>>>>>> bab85804ca0b5ba342ee05db4ab579241726074f
 		
 	}
 	
