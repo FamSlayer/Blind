@@ -79,7 +79,12 @@ class Level0 extends FlxState
         platformTouched();
         applyGravity();
         reset();
+<<<<<<< HEAD
 		doParallax();
+=======
+        nextLevel();
+		//doParallax();
+>>>>>>> bab85804ca0b5ba342ee05db4ab579241726074f
 		
 	}
 	
@@ -133,7 +138,15 @@ class Level0 extends FlxState
 		 * 	etc
 		 */
 		
-		// adding objects in this order: light, ground, stepTrigger, player, bat
+		// add the control scheme at in the middle of the screen
+		var player_controls =  new FlxSprite(75, 300, "assets/images/keymap.png");
+		var pair_controls = new FlxSprite(275, 300, "assets/images/keymap3.png");
+		var bat_controls = new FlxSprite(600, 300, "assets/images/keymap2.png");
+		
+		add(player_controls);
+		add(bat_controls);
+		add(pair_controls);
+		
 		
 		// add light
 		_light = new FlxNapeSprite(825, 400);
@@ -302,7 +315,7 @@ class Level0 extends FlxState
         
 		var _debug_line = new FlxSprite(x, y);
 		_debug_line.makeGraphic(1, 1);
-		add(_debug_line);
+		//add(_debug_line);
 		
 		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
 		
