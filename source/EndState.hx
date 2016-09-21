@@ -17,7 +17,7 @@ class EndState extends FlxState
 	override public function create():Void
 	{
 		_scene = new FlxSprite();
-		_scene.loadGraphic("assets/images/CutsceneSpriteSheet.png", true, 1024, 720);// , 16, 16);
+		_scene.loadGraphic("assets/images/Cave_Win_Screen.png", true, 1024, 720);// , 16, 16);
 		
 		add(_scene);
 		super.create();
