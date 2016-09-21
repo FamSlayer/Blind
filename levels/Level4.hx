@@ -94,7 +94,7 @@ class Level4 extends FlxState
 		
 	}
 	
-	// written by Eric
+	// written by Eric, cave_back added by Fuller
 	function loadBackground():Void
 	{
 
@@ -110,7 +110,11 @@ class Level4 extends FlxState
         background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
         add(background);
         
-        
+        cave_x = -40;
+		cave_y = 157;
+		var cave_back:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_back.png");
+		cave_back.facing = FlxObject.LEFT;
+		add(cave_back);
 		
 	}
 	
@@ -179,7 +183,7 @@ class Level4 extends FlxState
 		_stepTriggerC = new StepTrigger(625, _ground_height - 40 - 6, "assets/images/green button 1.png");
 		
 		
-		_boulder = new FlxNapeSprite(500, _ground_height, "assets/images/boulder.png", false, true);
+		_boulder = new FlxNapeSprite(550, _ground_height - 40, "assets/images/boulder.png", false, true);
         _boulder.createCircularBody(30);
 		_boulder.body.allowMovement = true;
 		_boulder.body.allowRotation = true;
@@ -190,12 +194,13 @@ class Level4 extends FlxState
 		_standable_objects.add(_boulder);
 		
 		//_top_platform = new Gate)
-		_platformA = new Gate(275, 430, 275, 430, "assets/images/platform.png");    //this one doesn't move
+		var _top_platform = new Gate(-350, 330, -350, 330, "assets/images/cave_ledge.png");
+		_platformA = new Gate(275, 500, 275, 500, "assets/images/platform.png");    //this one doesn't move
         
-		_gateA = new Gate(100, 550, 300, 550, "assets/images/horizontal_gate.png");
-		_gateB = new Gate(300, 330, 100, 330, "assets/images/horizontal_gate.png");
+		_gateA = new Gate(100, 600, 330, 600, "assets/images/horizontal_gate.png");
+		_gateB = new Gate(300, 400, 100, 400, "assets/images/horizontal_gate.png");
 		
-		_batButton = new FlxNapeSprite(50, 400, "assets/images/wallbutton.png");
+		_batButton = new FlxNapeSprite(165, 310, "assets/images/wallbutton.png");
         _batButton.createRectangularBody(nape.phys.BodyType.STATIC);
         _batButton.setBodyMaterial(9999999, 9999999, 9999999, 9999999, 9999999);
         _batButton.flipX = true;
@@ -205,12 +210,13 @@ class Level4 extends FlxState
 		_standable_objects.add(_stepTriggerA);
 		_standable_objects.add(_stepTriggerB);
 		_standable_objects.add(_stepTriggerC);
+		_standable_objects.add(_top_platform);
 		_standable_objects.add(_platformA);
 		_standable_objects.add(_gateA);
 		_standable_objects.add(_gateB);
         
-        _nextLevelBlock = new FlxSprite(100, 275);
-        _nextLevelBlock.makeGraphic(16,16);
+        //_nextLevelBlock = new FlxSprite(100, 275);
+        //_nextLevelBlock.makeGraphic(16,16);
 		
 		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc.
 		add(_player);
@@ -219,6 +225,7 @@ class Level4 extends FlxState
 		add(_lightB);
 		add(_lightC);
 		
+		add(_top_platform);
 		add(_platformA);
 		add(_gateA);
 		add(_gateB);
@@ -233,7 +240,7 @@ class Level4 extends FlxState
 		
 		add(_boulder);
 		add(_bat);
-        add(_nextLevelBlock);
+        //add(_nextLevelBlock);
 		
 		
 	}
@@ -465,9 +472,9 @@ class Level4 extends FlxState
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
 		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		FlxG.log.add(x + " and y " + y);
 		
-		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
+		if ( x <= 50 && y <= 285 && _bat.isPaired() )
 		{
             FlxG.switchState(new Level5());
 		}

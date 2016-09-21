@@ -87,7 +87,7 @@ class Level5 extends FlxState
 		
 	}
 	
-	// written by Eric
+	// written by Eric, cave tunnel added by Fuller
 	function loadBackground():Void
 	{
 
@@ -104,6 +104,11 @@ class Level5 extends FlxState
         add(background);
         
         
+		cave_x = 925;
+		cave_y = 112;
+		var cave_back:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_back.png");
+		cave_back.facing = FlxObject.LEFT;
+		add(cave_back);
 		
 	}
 	
@@ -124,7 +129,7 @@ class Level5 extends FlxState
 		// add light
 		_lightA = new FlxNapeSprite(350, 350);
 		_lightA.loadGraphic("assets/images/Blue_Light.png");
-        _lightA.createRectangularBody();
+        _lightA.createRectangularBody(_lightA.width / 3.0, _lightA.height);
 		_lightA.body.allowMovement = false;
         _lightA.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightA.body.shapes.at(0).filter = Layer.light_filter;
@@ -132,7 +137,7 @@ class Level5 extends FlxState
         // add another light
 		_lightB = new FlxNapeSprite(275, 380);
 		_lightB.loadGraphic("assets/images/rotatedlight.png");
-        _lightB.createRectangularBody();
+		_lightB.createRectangularBody(_lightB.width / 3.0, _lightB.height);
 		_lightB.body.allowMovement = false;
         _lightB.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightB.body.shapes.at(0).filter = Layer.light_filter;
@@ -152,12 +157,13 @@ class Level5 extends FlxState
         
         
         //gate with portal
-        var _ground_sprite2 = new FlxSprite(800, 280);
-		_ground_sprite2.loadGraphic("assets/images/horizontal_gate.png", false);
+        var _ground_sprite2 = new FlxSprite(800, 230);
+		_ground_sprite2.loadGraphic("assets/images/cave_ledge.png", false);
+		//_ground_sprite2.facing = FlxObject.LEFT;
 		
-		var _ground2 = new FlxNapeSprite(1324, 300);
+		var _ground2 = new FlxNapeSprite(1324, 250);
 		_ground2.makeGraphic(1024, 40, FlxColor.PURPLE);
-        _ground2.createRectangularBody(1024, 80);
+        _ground2.createRectangularBody();
 		_ground2.body.allowMovement = false;
 		_ground2.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999); //makes ground immovable
 		_ground2.body.gravMass = 300000;
@@ -182,17 +188,17 @@ class Level5 extends FlxState
 		_standable_objects.add(_stepTriggerB);
         
         //add boulder
-        _boulder = new FlxNapeSprite(75, _ground_height, "assets/images/boulder.png", false, true);
+        _boulder = new FlxNapeSprite(300, _ground_height, "assets/images/boulder.png", false, true);
         _boulder.createCircularBody(30);
 		_boulder.centerOffsets();
 		_boulder.body.allowMovement = true;
 		_boulder.body.allowRotation = true;
 		_boulder.setDrag(40, 10);
         _boulder.setBodyMaterial(.945, 2000, 0.4, 1, 0.05);
-		_boulder.body.gravMass = 2000;
+		_boulder.body.gravMass = 20000;
 		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
 		_standable_objects.add(_boulder);
-        
+        /*
         _boulder1 = new FlxNapeSprite(300, _ground_height, "assets/images/boulder.png", false, true);
         _boulder1.createCircularBody(30);
 		_boulder1.centerOffsets();
@@ -202,7 +208,7 @@ class Level5 extends FlxState
         _boulder1.setBodyMaterial(.945, 2000, 0.4, 1, 0.05);
 		_boulder1.body.gravMass = 2000;
 		_boulder1.body.shapes.at(0).filter = Layer.boulder_filter;
-		_standable_objects.add(_boulder1);
+		_standable_objects.add(_boulder1);*/
 
         addBatPlatformAndRock();
         
@@ -216,7 +222,7 @@ class Level5 extends FlxState
 		add(_stepTriggerA);
         add(_stepTriggerB);
         add(_boulder);
-        add(_boulder1);
+        //add(_boulder1);
 		add(_bat);
 		
 		
@@ -236,10 +242,10 @@ class Level5 extends FlxState
 		add(cave_front);
 	}
     
-        //written by Eric, modified by Fuller
+    // written by Eric, modified by Fuller
     function addBatPlatformAndRock():Void
     {
-        _batplatform = new FlxNapeSprite(799,305);
+        _batplatform = new FlxNapeSprite(799,255);
         _batplatform.makeGraphic(8,8);
         _batplatform.loadGraphic("assets/images/wallbutton.png", false);
         _batplatform.createRectangularBody();
@@ -505,13 +511,14 @@ class Level5 extends FlxState
     
     function nextLevel():Void
     {
-		var y:Float = _player.y + _player.height;
-		var x:Float = _player.x + _player.width / 2;
-		
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		if ( 950 <= x && x <= 1000 && y >= 450 && _bat.isPaired() )
+		FlxG.log.add(x + " and y " + y);
+		
+		if ( x >= 1000 && y <= 235 && _bat.isPaired() )
 		{
-            FlxG.switchState(new Level2());
+            FlxG.switchState(new EndState());
 		}
 
     }

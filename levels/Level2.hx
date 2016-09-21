@@ -330,9 +330,9 @@ class Level2 extends FlxState
 		var y:Float = _player.y; 		// y position of the player's feet!
 		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		//FlxG.log.add(x + " and the y " + y);
+		FlxG.log.add(x + " and the y " + y);
 		
-		if ( x <= 50 && y <= 110 && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
+		if ( x <= 50 && y <= 115 && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
 		{
             FlxG.switchState(new Level3());
 		}

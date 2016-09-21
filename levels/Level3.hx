@@ -391,7 +391,7 @@ class Level3 extends FlxState
 		var y:Float = _player.y; 		// y position of the player's feet!
 		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		//FlxG.log.add(x + " and y " + y);
+		FlxG.log.add(x + " and y " + y);
 		
 		if ( x <= 50 && y >= 510 && _bat.isPaired() )
 		{

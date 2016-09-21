@@ -78,7 +78,7 @@ class Player extends FlxNapeSprite
 		
 		//wind_sound = FlxG.sound.load("assets/sounds/wind.wav");
 		water_droplet = FlxG.sound.load("assets/sounds/water_droplet.wav");
-		//FlxG.sound.playMusic("assets/music/theme1.ogg");
+		FlxG.sound.playMusic("assets/music/Theme1Final.wav");
 	}
 	
 
@@ -87,8 +87,23 @@ class Player extends FlxNapeSprite
 		super.update(elapsed);
 		move();
 		checkDrops();
-		//checkFootstep();
+		checkSong();
 		checkWind();
+	}
+	
+	public function checkSong():Void {
+		song_timer -= 1;
+		if (song_timer <= 0) {
+			if (current_song == 1) {
+				FlxG.sound.playMusic("assets/music/theme2.wav");
+				current_song = 2;
+				song_timer = 60 * 86;
+			} else if (current_song == 2) {
+				FlxG.sound.playMusic("assets/music/Theme1Final.wav");
+				current_song = 1;
+				song_timer = 60 * 99;
+			}
+		}
 	}
 	
 	public function getSpeed():Float

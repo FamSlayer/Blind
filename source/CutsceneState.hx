@@ -25,6 +25,8 @@ class CutsceneState extends FlxState
 		//_scene.animation.addByStringIndices("play2", "cutScene", ["1", "1T", "2"], ".png", 2, false);
 		_scene.animation.play("play");
 		
+		FlxG.sound.playMusic("assets/music/Theme2.wav");
+		
 		add(_scene);
 		super.create();
 	}

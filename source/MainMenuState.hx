@@ -23,6 +23,7 @@ class MainMenuState extends FlxState
 		_scene.centerOrigin();
 		_scene.screenCenter();
 	
+		FlxG.sound.playMusic("assets/music/Theme1Final.wav");
 		add(_scene);
 		super.create();
 	}
@@ -35,19 +36,19 @@ class MainMenuState extends FlxState
 		var pressed:Bool = false;
 		
 		// number row
-		if (FlxG.keys.anyPressed([ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, BACKSPACE])) pressed = true;
+		if (FlxG.keys.anyJustPressed([ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, BACKSPACE])) pressed = true;
 		
 		// upper row
-		else if (FlxG.keys.anyPressed([TAB, Q, W, E, R, T, Y, U, I, O, P, LBRACKET, RBRACKET, BACKSLASH])) pressed = true;
+		else if (FlxG.keys.anyJustPressed([TAB, Q, W, E, R, T, Y, U, I, O, P, LBRACKET, RBRACKET, BACKSLASH])) pressed = true;
 		
 		// home row
-		else if (FlxG.keys.anyPressed([CAPSLOCK, A, S, D, F, G, H, J, K, L, SEMICOLON, QUOTE, ENTER] )) pressed = true;
+		else if (FlxG.keys.anyJustPressed([CAPSLOCK, A, S, D, F, G, H, J, K, L, SEMICOLON, QUOTE, ENTER] )) pressed = true;
 		
 		// lower row
-		else if (FlxG.keys.anyPressed([SHIFT, Z, X, C, V, B, N, M, COMMA, PERIOD, SLASH])) pressed = true;
+		else if (FlxG.keys.anyJustPressed([SHIFT, Z, X, C, V, B, N, M, COMMA, PERIOD, SLASH])) pressed = true;
 		
 		// we didn't have a name for this row in my keyboarding class in ELEMENTARY SCHOOL
-		else if (FlxG.keys.anyPressed([CONTROL, ALT, SPACE, LEFT, DOWN, UP, RIGHT])) pressed = true;
+		else if (FlxG.keys.anyJustPressed([CONTROL, ALT, SPACE, LEFT, DOWN, UP, RIGHT])) pressed = true;
 		
 		// num pad? who cares?
 		
