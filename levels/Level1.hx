@@ -110,7 +110,7 @@ class Level1 extends FlxState
 		// adding objects in this order: light, ground, stepTrigger, player, bat
 		
 		// add light
-		_lightA = new FlxNapeSprite(725, 450);
+		_lightA = new FlxNapeSprite(725, 350);
 		_lightA.loadGraphic("assets/images/Blue_Light.png");
         _lightA.createRectangularBody();
 		_lightA.body.allowMovement = false;
@@ -118,7 +118,7 @@ class Level1 extends FlxState
 		_lightA.body.shapes.at(0).filter = Layer.light_filter;
         
         // add another light
-		_lightB = new FlxNapeSprite(650, 450);
+		_lightB = new FlxNapeSprite(650, 380);
 		_lightB.loadGraphic("assets/images/rotatedlight.png");
         _lightB.createRectangularBody();
 		_lightB.body.allowMovement = false;
