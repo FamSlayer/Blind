@@ -1,5 +1,6 @@
 package levels;
 
+
 /*
  * @authors
  * Template written by: Fuller
@@ -23,9 +24,10 @@ class Level1 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 80;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
+
     var _lightA:FlxNapeSprite;
     var _lightB:FlxNapeSprite;
 	var _stepTriggerA:StepTrigger;
@@ -108,7 +110,7 @@ class Level1 extends FlxState
 		// adding objects in this order: light, ground, stepTrigger, player, bat
 		
 		// add light
-		_lightA = new FlxNapeSprite(600, 450);
+		_lightA = new FlxNapeSprite(725, 350);
 		_lightA.loadGraphic("assets/images/Blue_Light.png");
         _lightA.createRectangularBody();
 		_lightA.body.allowMovement = false;
@@ -116,8 +118,8 @@ class Level1 extends FlxState
 		_lightA.body.shapes.at(0).filter = Layer.light_filter;
         
         // add another light
-		_lightB = new FlxNapeSprite(800, 450);
-		_lightB.loadGraphic("assets/images/Green_Light.png");
+		_lightB = new FlxNapeSprite(650, 380);
+		_lightB.loadGraphic("assets/images/rotatedlight.png");
         _lightB.createRectangularBody();
 		_lightB.body.allowMovement = false;
         _lightB.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
@@ -166,15 +168,16 @@ class Level1 extends FlxState
 		_standable_objects.add(_stepTriggerB);
         
         //add boulder
-        _boulder = new FlxNapeSprite(300, _ground_height);
-        _boulder.loadGraphic("assets/images/boulder.png", false);
+        _boulder = new FlxNapeSprite(300, _ground_height, "assets/images/boulder.png", false, true);
         _boulder.createCircularBody(30);
+		_boulder.centerOffsets();
 		_boulder.body.allowMovement = true;
 		_boulder.body.allowRotation = true;
 		_boulder.setDrag(40, 10);
-        _boulder.setBodyMaterial(.5, 2000, 0.4, 1, 0.001);
+        _boulder.setBodyMaterial(.945, 2000, 0.4, 1, 0.05);
 		_boulder.body.gravMass = 2000;
 		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
+		_standable_objects.add(_boulder);
 		
 		add(_lightA);
         add(_lightB);
@@ -355,6 +358,7 @@ class Level1 extends FlxState
 		if (b_triggered)
 		{
 			_boulder.body.velocity.setxy(0, 0);
+			_boulder.body.angularVel = 0;
 			FlxG.log.add(_stepTrigger.body.position);
 		}
 		
@@ -373,6 +377,7 @@ class Level1 extends FlxState
 			{
 				_stepTrigger.lower();
 				_light.kill();
+				FlxG.sound.play("assets/sounds/light_click.wav");
 			}
 			
 		}
@@ -396,11 +401,11 @@ class Level1 extends FlxState
     
     function nextLevel():Void
     {
-		var y:Float = _player.y;
-		var x:Float = _player.x;
+		var y:Float = _player.y + _player.height;
+		var x:Float = _player.x + _player.width / 2;
 		
         
-		if ( 950 <= x && x <= 1000 && y >= 450)
+		if ( 950 <= x && x <= 1000 && y >= 450 && _bat.isPaired() )
 		{
             FlxG.switchState(new Level2());
 		}

@@ -18,30 +18,45 @@ import flixel.util.FlxColor;
 import flixel.math.FlxMath;
 import flixel.FlxObject;
 import Layers;
+import flixel.system.FlxSound;
+
+import nape.geom.Vec2;
+import nape.phys.Body;
+import nape.shape.Polygon;
 
 class Level0 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 80;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
     var _light:FlxNapeSprite;
 	var _stepTrigger:StepTrigger;
 	
     var _standable_objects:FlxGroup;
-	
+
 	var Layer:Layers;
 	
 	var _debug_line:FlxSprite;
 	
+	var super_background:FlxSprite;
+	var parallax_speed:Float = .3;
+	
+	var light_sound:FlxSound;
+	
 	override public function create():Void
 	{
-		super.create();
+		
 		FlxNapeSpace.init();
 		
 		Layer = new Layers();
 		_standable_objects = new FlxGroup();
+		
+		
+		// load sounds???
+		light_sound = FlxG.sound.load("assets/sounds/light_click.wav");
+		
 		
 		/*functions planned by Fuller*/
 		loadBackground();	// everything behind the player scenery wise
@@ -52,6 +67,9 @@ class Level0 extends FlxState
 		 * and pushed the appropriate key to signify they want to go in to the tunnel. If this trigger happens, load the next level
 		 */
 		
+		//FlxG.camera.follow(_player, PLATFORMER, 1);
+		super.create();
+		
 		
 	}
 
@@ -59,15 +77,31 @@ class Level0 extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+        nextLevel();
         checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		if (_bat.isPaired()) movePairTogether();	// if bat is still paired, set _bat.body.velocity = player.body.velocity
         platformTouched();
         applyGravity();
         reset();
         nextLevel();
-		
+		//doParallax();
 		
 	}
+	
+	// written by Gabriel
+	
+	public function doParallax():Void {
+		if (_player.body.velocity.x > 0) {
+			super_background.x -= parallax_speed;
+		} else if (_player.body.velocity.x < 0) {
+			super_background.x += parallax_speed;
+		}
+		else
+		{
+			super_background.x = 0;
+		}
+	}
+	
 	
 	// written by Eric
 	function loadBackground():Void
@@ -80,8 +114,11 @@ class Level0 extends FlxState
 		 * 	etc
 		 */
         
-        var background:FlxSprite; //background variable
-        background = new FlxSprite();
+		super_background = new FlxSprite();
+		super_background.loadGraphic("assets/images/cave_back_background.png");
+		add(super_background);
+		
+        var background:FlxSprite = new FlxSprite();
         background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
         add(background);
         
@@ -101,12 +138,42 @@ class Level0 extends FlxState
 		 * 	etc
 		 */
 		
-		// adding objects in this order: light, ground, stepTrigger, player, bat
+		// add the control scheme at in the middle of the screen
+		var player_controls =  new FlxSprite(75, 300, "assets/images/keymap.png");
+		var pair_controls = new FlxSprite(275, 300, "assets/images/keymap3.png");
+		var bat_controls = new FlxSprite(600, 300, "assets/images/keymap2.png");
+		
+		add(player_controls);
+		add(bat_controls);
+		add(pair_controls);
+		
 		
 		// add light
-		_light = new FlxNapeSprite(825, 400);
+		_light = new FlxNapeSprite(825, 350);
 		_light.loadGraphic("assets/images/Blue_Light.png");
-        _light.createRectangularBody();		// change this to be a different kind of body!
+        _light.createRectangularBody(_light.width / 3.0, _light.height);		// change this to be a different kind of body!
+		
+		// create CUSTOM TRIANGULAR COLLISION BODY! 
+		/*
+		if (_light.body != null) _light.destroyPhysObjects();		// if a body already exists, delete it
+		_light.centerOffsets(false);
+		
+		var top:Vec2 =     new Vec2(   _light.x + _light.width / 2.0,                 _light.y);
+		var b_left:Vec2 =  new Vec2(  						_light.x, _light.y + _light.height);
+		var b_right:Vec2 = new Vec2( 		 _light.x + _light.width, _light.y + _light.height);
+		
+		var verts = new Array<Vec2>();
+		verts.push(top);
+		verts.push(b_left);
+		verts.push(b_right);
+		
+		var poly:Polygon = new Polygon(verts);
+		
+		_light.body.shapes.add(new Polygon(verts));
+		
+		// Alas, I give up. I have failed in my endeavor. Forgive me.
+		*/
+		
 		_light.body.allowMovement = false;
         _light.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_light.body.shapes.at(0).filter = Layer.light_filter;
@@ -136,14 +203,19 @@ class Level0 extends FlxState
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
+		
 		// adding them in this SPECIFIC order
-		add(_ground);
-		add(_ground_sprite);
+		
 		add(_player);
-		add(_stepTrigger);
+        
 		add(_bat);
 		
 		add(_light);
+		
+		add(_ground);
+		add(_ground_sprite);
+		add(_stepTrigger);
+
 		
 		
 	}
@@ -258,6 +330,10 @@ class Level0 extends FlxState
 			x_feet = _player.x;
 		}
         
+		var _debug_line = new FlxSprite(x, y);
+		_debug_line.makeGraphic(1, 1);
+		//add(_debug_line);
+		
 		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
 		
 		var p_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width;
@@ -279,6 +355,8 @@ class Level0 extends FlxState
 			{
 				_stepTrigger.lower();
 				_light.kill();
+				//FlxG.sound.play("assets/sounds/light_click.wav");
+				light_sound.play();
 			}
 			
 		}
@@ -301,12 +379,11 @@ class Level0 extends FlxState
     
     function nextLevel():Void
     {
-		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		//var y:Float = _player.y + _player.height; 		// y position of the player's feet!
 		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 850 <= x  && x <= 900 )
+		if (950 <= x && x <= 1000 && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
 		{
             FlxG.switchState(new Level1());
 		}

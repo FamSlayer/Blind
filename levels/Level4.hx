@@ -23,28 +23,34 @@ class Level4 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 950;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
 	
-    var _platformA:StepTrigger;
-	var _platformB:StepTrigger;
-	var _platformC:StepTrigger;
-	var _platforms:FlxGroup;
+    var _platformA:Gate;
+	//var _platformB:StepTrigger;
+	//var _platformC:StepTrigger;
 		
     var _lightA:FlxNapeSprite;
 	var _lightB:FlxNapeSprite;
 	var _lightC:FlxNapeSprite;
-	var _lights:FlxGroup;
 	
 	var _stepTriggerA:StepTrigger;
 	var _stepTriggerB:StepTrigger;
 	var _stepTriggerC:StepTrigger;
-	var _stepTriggers:FlxGroup;
+	
+	var _gateA:Gate;
+	var _gateB:Gate;
+	
+	var _batButton:FlxNapeSprite;
+	
+	var _boulder:FlxNapeSprite;
 	
     var _standable_objects:FlxGroup;
 	
 	var Layer:Layers;
+	
+	var _debug_line:FlxSprite;
 	
 	override public function create():Void
 	{
@@ -53,8 +59,6 @@ class Level4 extends FlxState
 		
 		Layer = new Layers();
 		_standable_objects = new FlxGroup();
-		_stepTriggers = new FlxGroup();
-		_lights = new FlxGroup();
 		
 		/*functions planned by Fuller*/
 		loadBackground();	// everything behind the player scenery wise
@@ -74,6 +78,7 @@ class Level4 extends FlxState
 		super.update(elapsed);
         checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		if (_bat.isPaired()) movePairTogether();	// if bat is still paired, set _bat.body.velocity = player.body.velocity
+		batPlatformTouched();
         platformTouched(_stepTriggerA, _lightA);
 		platformTouched(_stepTriggerB, _lightB);
 		platformTouched(_stepTriggerC, _lightC);
@@ -117,26 +122,22 @@ class Level4 extends FlxState
 		// adding objects in this order: light, ground, stepTrigger, player, bat
 		
 		// add light
-		_lightA = new FlxNapeSprite(600, 450);
-		_lightA.loadGraphic("assets/images/Blue_Light.png");
-		_lightA.body.rotation = 135 / 180 * 3.14;
-        _lightA.createRectangularBody();
+		_lightA = new FlxNapeSprite(625, 350, "assets/images/Blue_Light.png");
+        _lightA.createRectangularBody(_lightA.width / 3.0, _lightA.height);
 		_lightA.body.allowMovement = false;
 		_lightA.body.allowRotation = false;
         _lightA.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightA.body.shapes.at(0).filter = Layer.light_filter;
 		
-		_lightB = new FlxNapeSprite(700, 450);
-		_lightB.loadGraphic("assets/images/Purple_Light.png");
-        _lightB.createRectangularBody();
+		_lightB = new FlxNapeSprite(700, 350, "assets/images/Pink_Light.png");
+        _lightB.createRectangularBody(_lightB.width / 3.0, _lightB.height);
 		_lightB.body.allowMovement = false;
 		_lightB.body.allowRotation = false;
         _lightB.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightB.body.shapes.at(0).filter = Layer.light_filter;
 		
-		_lightC = new FlxNapeSprite(800, 450);
-		_lightC.loadGraphic("assets/images/Green_Light.png");
-        _lightC.createRectangularBody();
+		_lightC = new FlxNapeSprite(800, 350, "assets/images/rotatedlight.png");
+        _lightC.createRectangularBody(_lightC.width / 3.0, _lightC.height);
 		_lightC.body.allowMovement = false;
 		_lightC.body.allowRotation = false;
         _lightC.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
@@ -164,31 +165,62 @@ class Level4 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTriggerA = new StepTrigger(800, _ground_height - 30 - 6, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTriggerA = new StepTrigger(800, _ground_height - 40 - 6, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		
-		_stepTriggerB = new StepTrigger(700, _ground_height - 30 - 6, "assets/images/pink button 1.png");
-		_stepTriggerC = new StepTrigger(600, _ground_height - 30 - 6, "assets/images/green button 1.png");
+		_stepTriggerB = new StepTrigger(700, _ground_height - 40 - 6, "assets/images/pink button 1.png");
+		_stepTriggerC = new StepTrigger(625, _ground_height - 40 - 6, "assets/images/green button 1.png");
+		
+		
+		_boulder = new FlxNapeSprite(500, _ground_height, "assets/images/boulder.png", false, true);
+        _boulder.createCircularBody(30);
+		_boulder.body.allowMovement = true;
+		_boulder.body.allowRotation = true;
+		_boulder.setDrag(60, 2);
+        _boulder.setBodyMaterial(.945, 2000, 0.4, 1, 0.05);
+		_boulder.body.gravMass = 200;
+		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
+		_standable_objects.add(_boulder);
+		
+		_platformA = new Gate(400, 360, 400, 360, "assets/images/platform.png");    //this one doesn't move
+        
+		_gateA = new Gate(100, 550, 300, 550, "assets/images/horizontal_gate.png");
+		_gateB = new Gate(300, 250, 100, 250, "assets/images/horizontal_gate.png");
+		
+		_batButton = new FlxNapeSprite(400, 300, "assets/images/wallbutton.png");
+        _batButton.createRectangularBody(nape.phys.BodyType.STATIC);
+        _batButton.setBodyMaterial(9999999, 9999999, 9999999, 9999999, 9999999);
+		//_batButton.body.shapes.at(0).filter = Layer.gate_filter;
 		
 		
 		_standable_objects.add(_stepTriggerA);
 		_standable_objects.add(_stepTriggerB);
 		_standable_objects.add(_stepTriggerC);
+		_standable_objects.add(_platformA);
+		_standable_objects.add(_gateA);
+		_standable_objects.add(_gateB);
 		
-		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc. 
-		
-		
-		add(_ground);
-		add(_ground_sprite);
+		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc.
 		add(_player);
-		add(_stepTriggerA);
-		add(_stepTriggerB);
-		add(_stepTriggerC);
-		add(_bat);
 		
 		add(_lightA);
 		add(_lightB);
 		add(_lightC);
+		
+		add(_platformA);
+		add(_gateA);
+		add(_gateB);
+		add(_batButton);
+		
+		add(_ground);
+		add(_ground_sprite);
+		
+		add(_stepTriggerA);
+		add(_stepTriggerB);
+		add(_stepTriggerC);
+		
+		add(_boulder);
+		add(_bat);
 		
 		
 	}
@@ -287,16 +319,44 @@ class Level4 extends FlxState
 				}
 			}
 		}
+		
+		//boulder gravity, added by Fuller
+		if (FlxG.collide(_boulder, _standable_objects))
+		{
+			_boulder.body.velocity.y = 0;
+		}
+		else
+		{
+			_boulder.body.velocity.y += 18;
+		}
+		
 	}
 	
+	// written by Fuller
+	function batPlatformTouched():Void
+    {
+        //if (FlxG.keys.anyPressed([B]) && FlxG.collide(_bat, _batplatform))
+		if (FlxG.collide(_bat, _batButton))
+        {
+			//FlxG.log.add("Bat is pushing the button");
+			if ( !_gateA.inMotion() && !_gateB.inMotion())
+			{
+				
+				//FlxG.log.add("_gate.trigger() called");
+				_gateA.trigger();
+				_gateB.trigger();
+				//FlxG.log.add("");
+			}
+            //_batplatform.kill();
+        }
+    }
     
-    //written by Fuller
+    // written by Fuller
     function platformTouched(_stepTrigger:StepTrigger, _light:FlxNapeSprite):Void
     {
+		// LOGIC TO DETERMINE IF THE PLAYER IS TRIGGERING THE STEPTRIGGER
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
-		
-		var x:Float = _player.x + _player.width / 2; 	// x position of the middle of the player sprite
-		
+		var x:Float = _player.x + _player.width / 2.0; 	// x position of the middle of the player sprite
 		var x_feet:Float = _player.x + _player.width;	// x position of the player's feet
 		if (_player.facing == FlxObject.LEFT)
 		{
@@ -311,19 +371,58 @@ class Level4 extends FlxState
 		
 		var p_triggered:Bool = p_standing_on || p_from_left || p_from_right;	// triggered by the player
 		
-		var b_triggered:Bool = false;	// triggered by the boulder
+		
+		// LOGIC TO DETERMINE IF THE BOULDER IS TRIGGERING THE STEPTRIGGER
+		var y:Float = _boulder.y + _boulder.height;
+		var x:Float = _boulder.x + _boulder.width / 2.0;		// should be where the bottom of the boulder touches the ground
+		var b_x_right:Float = _boulder.x + _boulder.width * .9;	// right part of boulder collision
+		var b_x_left:Float = _boulder.x + _boulder.width * .1;	// left part of boulder collision
+		
+		_debug_line = new FlxSprite(b_x_left, y);
+		_debug_line.makeGraphic(1, 1);
+		//add(_debug_line);
+		
+		
+		
+		
+		var b_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x && x <= _stepTrigger.x + _stepTrigger.width;
+		var b_from_left:Bool = Math.abs(b_x_right - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
+		var b_from_right:Bool = Math.abs(b_x_left - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
+		
+		
+		/* ALSO, if the boulder has triggered the platform, we should slow it's horizontal movement so it stops on the trigger, aka apply our own decelleration?
+		 * Additionally, the stepTrigger is being moved as well, so it's horizontal movement should be zeroed out
+		 * 
+		 */
+		
+		
+		
+		var b_triggered:Bool = b_standing_on || b_from_left || b_from_right;	// triggered by the boulder
+		
+		if (b_triggered)
+		{
+			_boulder.body.velocity.setxy(0, 0);
+			_boulder.body.angularVel = 0;
+			FlxG.log.add(_stepTrigger.body.velocity.x);
+			
+		}
 		
 		var triggered:Bool = p_triggered || b_triggered;
+		
+		//FlxG.log.add(_stepTrigger.body.velocity.x);
 		
 		//FlxG.log.add("_from_left: " + _from_left + "\t_from_right: " + _from_right);
 		if ( triggered )
 		{
+			// zero out the platforms horizontal movement
+			//_stepTrigger.body.velocity.x = 0;
 			
 			// lower the stepTrigger
 			if ( !_stepTrigger.isDepressed()  )//&& !_stepTrigger.inMotion() )
 			{
 				_stepTrigger.lower();
 				_light.kill();
+				FlxG.sound.play("assets/sounds/light_click.wav");
 			}
 			
 		}

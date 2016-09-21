@@ -12,6 +12,7 @@ import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
@@ -21,8 +22,8 @@ import Layers;
 class Level3 extends FlxState
 {
 	var _playerY:Int = 560;
-	var _playerX:Int = 850;
-	var _ground_height:Int = 660;
+	var _playerX:Int = 875;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
     var _light:FlxNapeSprite;
@@ -103,9 +104,9 @@ class Level3 extends FlxState
 		// adding objects in this order: light, ground, stepTrigger, player, bat
 		
 		// add light
-		_light = new FlxNapeSprite(700, 450);
-		_light.makeGraphic(32, 800, FlxColor.YELLOW);
-        _light.createRectangularBody();
+		_light = new FlxNapeSprite(625, 350);
+		_light.loadGraphic("assets/images/Blue_Light.png");
+        _light.createRectangularBody(_light.width / 3.0, _light.height);
 		_light.body.allowMovement = false;
         _light.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_light.body.shapes.at(0).filter = Layer.light_filter;
@@ -124,10 +125,10 @@ class Level3 extends FlxState
 		_standable_objects.add(_ground);	// the player can now stand on the ground
         
         //ledge
-        var _ground_sprite1 = new FlxSprite(-550, _ground_height-360);
+        var _ground_sprite1 = new FlxSprite(-550, _ground_height-400);
 		_ground_sprite1.loadGraphic("assets/images/cave_floor_final.png", false);
 		
-		var _ground1 = new FlxNapeSprite(-50, _ground_height-300);
+		var _ground1 = new FlxNapeSprite(-50, _ground_height-340);
 		_ground1.makeGraphic(1024, 80, FlxColor.BROWN);
         _ground1.createRectangularBody(1024, 80);
 		_ground1.body.allowMovement = false;
@@ -144,7 +145,7 @@ class Level3 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTrigger = new StepTrigger(800, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTrigger = new StepTrigger(800, _ground_height - 40 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
         
@@ -178,14 +179,16 @@ class Level3 extends FlxState
     {
         _batplatform = new FlxNapeSprite(100,100);
         _batplatform.makeGraphic(8,8);
+        _batplatform.loadGraphic("assets/images/wallbutton.png", false);
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        _batplatform.flipX = true;
         
-        _gate = new Gate(500, 600, 500, 800, 75, 220);//, "assets/images/platform.png");
+        _gate = new Gate(500, 600, 500, 800, "assets/images/gate.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
         
-        _gate1 = new Gate(300, 750, 300, 600, 75, 220);//, "assets/images/platform.png");
+        _gate1 = new Gate(300, 850, 300, 600, "assets/images/gate.png");
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
         
@@ -307,27 +310,60 @@ class Level3 extends FlxState
     function platformTouched():Void
     {
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
-		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
-        
-		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if (  Math.abs(y - _stepTrigger.y) < .5 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width )
+		var x:Float = _player.x + _player.width / 2; 	// x position of the middle of the player sprite
+		
+		var x_feet:Float = _player.x + _player.width;	// x position of the player's feet
+		if (_player.facing == FlxObject.LEFT)
+		{
+			x_feet = _player.x;
+		}
+        
+		var _debug_line = new FlxSprite(x, y);
+		_debug_line.makeGraphic(1, 1);
+		//add(_debug_line);
+		
+		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
+		
+		var p_standing_on:Bool = Math.abs(y - _stepTrigger.y) < 2.0 && _stepTrigger.x <= x  && x <= _stepTrigger.x + _stepTrigger.width;
+		var p_from_left:Bool = Math.abs(x_feet - _stepTrigger.x) < 2.0 && y >= _stepTrigger.y;
+		var p_from_right:Bool = Math.abs(x_feet - trigger_right_x) < 2.0 && y >= _stepTrigger.y;
+		
+		var p_triggered:Bool = p_standing_on || p_from_left || p_from_right;	// triggered by the player
+		
+		var b_triggered:Bool = false;	// triggered by the boulder
+		
+		var triggered:Bool = p_triggered || b_triggered;
+		
+		//FlxG.log.add("_from_left: " + _from_left + "\t_from_right: " + _from_right);
+		if ( triggered )
 		{
 			
-			//FlxG.log.add("collision");
+			// lower the stepTrigger
+			if ( !_stepTrigger.isDepressed()  )//&& !_stepTrigger.inMotion() )
+			{
+				_stepTrigger.lower();
+				_light.kill();
+				//FlxG.sound.play("assets/sounds/light_click.wav");
+				//light_sound.play();
+			}
 			
-            _light.kill();
 		}
 		else
 		{
-			if (_light.body.space == null)		// what ".kill()" does is call the parent's kill() and delete the rigidbody
-				// I HOPE that the only time the body.space will be nulled out is after a kill call, and I THINK that'll be true!
-				// otherwise, create a boolean variable that just keeps track of whether the object is deleted or not!
-			{
-				_light.revive();
+			if (_stepTrigger.isDepressed() && !_stepTrigger.inMotion()){
+				
+				if ( _light.body.space == null)
+				{
+					// raise the stepTrigger
+					_stepTrigger.raise();
+					_light.revive();
+				}
+				
 			}
-            
+			
 		}
+		
     }
 	
 	

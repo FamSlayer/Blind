@@ -17,16 +17,19 @@ import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import flixel.math.FlxMath;
 import Layers;
+import nape.phys.BodyType;
 
 class Level2 extends FlxState
 {
 	var _playerY:Int = 560;
 	var _playerX:Int = 80;
-	var _ground_height:Int = 660;
+	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
     var _batplatform:FlxNapeSprite;
     var _gate:Gate;
+    var _gate1:Gate;
+    var _nextLevelBlock:FlxSprite;
 	
     var _standable_objects:FlxGroup;
 	
@@ -61,6 +64,7 @@ class Level2 extends FlxState
         applyGravity();
         batPlatformTouched();
         reset();
+        nextLevel();
 		
 	}
 	
@@ -113,25 +117,13 @@ class Level2 extends FlxState
 		_ground.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
 		_standable_objects.add(_ground);	// the player can now stand on the ground
 		
-        //this is the bottom part of the upper ledge
-        var _ground_sprite1 = new FlxSprite(-475, _ground_height-300);
-		_ground_sprite1.loadGraphic("assets/images/cave_floor_final.png", false);
-		
-		var _ground1 = new FlxNapeSprite(24, _ground_height-240);
-		_ground1.makeGraphic(1024, 80, FlxColor.BROWN);
-        _ground1.createRectangularBody(1024, 80);
-		_ground1.body.allowMovement = false;
-		_ground1.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999); //makes ground immovable
-		_ground1.body.gravMass = 300000;
-		_ground1.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
-		_standable_objects.add(_ground1);	// the player can now stand on the ground
-        
-        //this is the top part of the upper ledge (where the portal is)
-        var _ground_sprite2 = new FlxSprite(-550, _ground_height-360);
+
+        //this is the ground on the far right
+        var _ground_sprite2 = new FlxSprite(800, _ground_height-150);
 		_ground_sprite2.loadGraphic("assets/images/cave_floor_final.png", false);
 		
-		var _ground2 = new FlxNapeSprite(-50, _ground_height-300);
-		_ground2.makeGraphic(1024, 80, FlxColor.BROWN);
+		var _ground2 = new FlxNapeSprite(1324, _ground_height-90);
+		_ground2.makeGraphic(1024, 80, FlxColor.PURPLE);
         _ground2.createRectangularBody(1024, 80);
 		_ground2.body.allowMovement = false;
 		_ground2.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999); //makes ground immovable
@@ -140,18 +132,16 @@ class Level2 extends FlxState
 		_standable_objects.add(_ground2);	// the player can now stand on the ground
         
         
-        //this is the ground on the far right
-        var _ground_sprite3 = new FlxSprite(800, _ground_height-120);
-		_ground_sprite3.loadGraphic("assets/images/cave_floor_final.png", false);
-		
-		var _ground3 = new FlxNapeSprite(1324, _ground_height-60);
-		_ground3.makeGraphic(1024, 80, FlxColor.PURPLE);
-        _ground3.createRectangularBody(1024, 80);
-		_ground3.body.allowMovement = false;
-		_ground3.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999); //makes ground immovable
-		_ground3.body.gravMass = 300000;
-		_ground3.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
-		_standable_objects.add(_ground3);	// the player can now stand on the ground
+        
+        //add platform with the portal
+        var _cave_ledge = new FlxNapeSprite(-200, _ground_height-400);
+        _cave_ledge.makeGraphic(500,500);
+        _cave_ledge.loadGraphic("assets/images/cave_ledge.png", false);
+        _cave_ledge.createRectangularBody();
+        _cave_ledge.setBodyMaterial(.945,9999999,9999999,9999999,9999999);
+        _cave_ledge.body.gravMass = 3000000;
+        _cave_ledge.body.shapes.at(0).filter = Layer.ground_filter;
+        _standable_objects.add(_cave_ledge);
         
 		// add bat
 		_bat = new Bat(_playerX - 30, _playerY - 64);
@@ -160,17 +150,35 @@ class Level2 extends FlxState
 		_player = new Player(_playerX, _playerY, _bat);
 		_bat.body.velocity = _player.body.velocity;
 		
+		
+		_batplatform = new FlxNapeSprite(900, 100, "assets/images/wallbutton.png");
+        _batplatform.createRectangularBody(BodyType.STATIC);
+        _batplatform.setBodyMaterial(9999999, 9999999, 9999999, 9999999, 9999999);
+		
+        
+        _gate = new Gate(500, 460, 700, 460, "assets/images/platform.png");
+        _gate.body.shapes.at(0).filter = Layer.gate_filter;
+        _standable_objects.add(_gate);
+        add(_gate);
+        
+        _gate1 = new Gate(450, 360, 450, 360, "assets/images/platform.png");    //this gate doesn't move
+        _gate1.body.shapes.at(0).filter = Layer.gate_filter;
+        _standable_objects.add(_gate1);
+        
+        _nextLevelBlock = new FlxSprite(100, 200);
+        _nextLevelBlock.makeGraphic(16,16);
+        
 
-        addBatPlatformAndRock();
-
+        add(_nextLevelBlock);
+        
+        add(_batplatform);
+        add(_gate1);
+		
 		add(_ground);
 		add(_ground_sprite);
-        add(_ground1);
-		add(_ground_sprite1);
         add(_ground2);
 		add(_ground_sprite2);
-        add(_ground3);
-		add(_ground_sprite3);
+        add(_cave_ledge);
 		add(_player);
 		add(_bat);
 
@@ -196,25 +204,6 @@ class Level2 extends FlxState
         }
     }
     
-    //written by Eric, modified by Fuller
-    function addBatPlatformAndRock():Void
-    {
-        _batplatform = new FlxNapeSprite(800,100);
-        _batplatform.makeGraphic(8,8);
-        _batplatform.createRectangularBody();
-        _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
-        
-        
-        _gate = new Gate(450, 460, 700, 460, 60, 15);//, "assets/images/platform.png");
-        _gate.body.shapes.at(0).filter = Layer.gate_filter;
-        _standable_objects.add(_gate);
-        
-        add(_batplatform);
-        add(_gate);
-		
-		
-    }
-	
 	
 	// written by Fuller
     function checkPairPressed():Bool	
@@ -309,8 +298,8 @@ class Level2 extends FlxState
 			}
             //_batplatform.kill();
         }
-
     }
+	
     function nextLevel():Void
     {
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
@@ -318,8 +307,9 @@ class Level2 extends FlxState
         
 		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 50 <= x  && x <= 100 && 250 <= y && y <= 350 )
+		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
 		{
+            _gate.trigger();
             FlxG.switchState(new Level3());
 		}
 

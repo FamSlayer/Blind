@@ -7,10 +7,12 @@ package;
 
  import flixel.FlxSprite;
  import flixel.addons.nape.FlxNapeSprite;
+ import flixel.system.FlxSound;
  import flixel.util.FlxColor;
  import flixel.FlxG;
  import flixel.math.FlxPoint;
  import flixel.FlxObject;
+ import flixel.system.FlxSound;
 
 class Bat extends FlxNapeSprite
 {
@@ -32,6 +34,7 @@ class Bat extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
+	var bat_flap_sound:FlxSound;
 	
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
@@ -50,7 +53,7 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		//FlxG.sound.playMusic("assets/sounds/fast_wings.wav");
+		bat_flap_sound = FlxG.sound.load("assets/sounds/fast_wings.wav");
 		
 	}
 	
@@ -59,11 +62,20 @@ class Bat extends FlxNapeSprite
 		super.update(elapsed);
 		// Here, play the animation. Because the bat is never walking, it should always be playing its animation. No need to check if its motionless.
 		move();
-		
+		//checkFlaps();
 	}
 	
-	// written by Fuller
+	//Written by Gabriel
 	
+	public function checkFlaps():Void {
+		//if (animation.name == "fly" && animation.getFrameIndex() == 1) {
+		//	FlxG.sound.play("assets/sounds/fast_wings.wav");
+		//}
+		//bat_flap_sound.play();
+	}
+	
+	
+	// written by Fuller
 	public function isPaired():Bool
 	{
 		return _paired;
@@ -74,6 +86,10 @@ class Bat extends FlxNapeSprite
 		_player_speed = s;
 	}
 	
+	// written by Gabriel
+	public function Squeak():Void {
+		FlxG.sound.play("assets/sounds/bat_squeak.wav");
+	}
 	
 	// written by Fuller
 	public function togglePaired():Void

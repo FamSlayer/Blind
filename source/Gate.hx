@@ -30,7 +30,7 @@ class Gate extends FlxNapeSprite
 	
 	private var _times:Array<Float>; // will be used to count the FPS
 	
-	function new(?X:Float = 0, ?Y:Float = 0, ?dX:Float = 0, ?dY:Float = 0, width:Int, height:Int )//, image_path:String ) //added a variabe in constructor for image path
+	function new(?X:Float = 0, ?Y:Float = 0, ?dX:Float = 0, ?dY:Float = 0, image_path:String ) //added a variabe in constructor for image path
 	{
 		super(X, Y);
 		_moving_to_origin = false;
@@ -38,8 +38,8 @@ class Gate extends FlxNapeSprite
 		_move_to = new FlxPoint(dX, dY);
 		_times = [];
 		
-		makeGraphic(width,height);		// <-- replace this line with loading an image instead of loading the gate
-        //loadGraphic(image_path, false);
+		//makeGraphic(width,height);		// <-- replace this line with loading an image instead of loading the gate
+        loadGraphic(image_path, false);
         createRectangularBody();
         setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);	//non-elastic, the rest of the numbers basically say "should not be moved by other stuff"
 		body.allowRotation = false;
@@ -157,6 +157,7 @@ class Gate extends FlxNapeSprite
 		_moving = true;
 		FlxG.log.add("[Gate.hx] Set _moving to: ");
 		FlxG.log.add(_moving);
+		FlxG.sound.play("assets/sounds/stone_door.wav");
 	}
 	
 	

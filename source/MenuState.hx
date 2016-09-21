@@ -19,8 +19,6 @@ import levels.Level3;
 import levels.Level4;
 import levels.Level5;
 
-
-
 class MenuState extends FlxState
 {
 	var _playButton:FlxButton;
@@ -31,6 +29,9 @@ class MenuState extends FlxState
 		_playButton  = new FlxButton(0,0, "P L A Y", clickPlay);
 		_playButton.screenCenter();
 		add(_playButton);
+		
+		var cutscene_button = new FlxButton(100, 100, "Watch cutscene", loadCutscene);
+		add(cutscene_button);
 		
 		var grav_button = new FlxButton(360, 600, "Gravity", loadGrav);
 		add(grav_button);
@@ -57,6 +58,11 @@ class MenuState extends FlxState
 		super.update(elapsed);
 	}
 
+	function loadCutscene():Void
+	{
+		FlxG.switchState(new CutsceneState());
+	}
+	
 	function loadGrav():Void 
 	{
 		FlxG.switchState(new GravityState());
@@ -96,6 +102,6 @@ class MenuState extends FlxState
 	function clickPlay():Void
 	{
 		// switch to play scene!
-		FlxG.switchState(new TestingState());
+		FlxG.switchState(new Level0());
 	}
 }
