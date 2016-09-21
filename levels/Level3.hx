@@ -31,6 +31,7 @@ class Level3 extends FlxState
     var _batplatform:FlxNapeSprite;
     var _gate:Gate;
     var _gate1:Gate;
+    var _nextLevelBlock:FlxSprite;
 	
     var _standable_objects:FlxGroup;
 	
@@ -66,6 +67,7 @@ class Level3 extends FlxState
         applyGravity();
         batPlatformTouched();
         reset();
+        nextLevel();
 		
 	}
 	
@@ -150,6 +152,9 @@ class Level3 extends FlxState
 		_standable_objects.add(_stepTrigger);
         
         addBatPlatformAndRock();
+        
+        _nextLevelBlock = new FlxSprite(100, 600);
+        _nextLevelBlock.makeGraphic(16,16);
 		
 		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc. 
 		add(_light);
@@ -160,6 +165,7 @@ class Level3 extends FlxState
 		add(_player);
 		add(_stepTrigger);
 		add(_bat);
+        add(_nextLevelBlock);
 		
 		
 	}
@@ -364,6 +370,20 @@ class Level3 extends FlxState
 			
 		}
 		
+    }
+    
+        function nextLevel():Void
+    {
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+        
+		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		
+		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
+		{
+            FlxG.switchState(new Level4());
+		}
+
     }
 	
 	
