@@ -164,11 +164,11 @@ class Level4 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTriggerA = new StepTrigger(800, _ground_height - 30 - 6, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTriggerA = new StepTrigger(800, _ground_height - 40 - 6, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		
-		_stepTriggerB = new StepTrigger(700, _ground_height - 30 - 6, "assets/images/pink button 1.png");
-		_stepTriggerC = new StepTrigger(600, _ground_height - 30 - 6, "assets/images/green button 1.png");
+		_stepTriggerB = new StepTrigger(700, _ground_height - 40 - 6, "assets/images/pink button 1.png");
+		_stepTriggerC = new StepTrigger(600, _ground_height - 40 - 6, "assets/images/green button 1.png");
 		
 		
 		_standable_objects.add(_stepTriggerA);
