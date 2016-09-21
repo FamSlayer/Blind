@@ -1,5 +1,6 @@
 package levels;
 
+
 /*
  * @authors
  * Template written by: Fuller
@@ -31,6 +32,7 @@ class Level1 extends FlxState
 	var _stepTrigger:StepTrigger;
     var _stepTrigger1:StepTrigger;
     var _boulder:Block;
+    
 	
     var _standable_objects:FlxGroup;
 	
