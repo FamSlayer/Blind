@@ -49,6 +49,8 @@ class MainMenuState extends FlxState
 		// we didn't have a name for this row in my keyboarding class in ELEMENTARY SCHOOL
 		else if (FlxG.keys.anyPressed([CONTROL, ALT, SPACE, LEFT, DOWN, UP, RIGHT])) pressed = true;
 		
+		// num pad? who cares?
+		
 		
 		// are the rest of the keys even worth it? It does say "almost any key..."
 		
