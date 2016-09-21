@@ -309,7 +309,6 @@ class Level2 extends FlxState
 		
 		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
 		{
-            _gate.trigger();
             FlxG.switchState(new Level3());
 		}
 
