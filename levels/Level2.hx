@@ -324,7 +324,7 @@ class Level2 extends FlxState
         
 		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 500 <= x  && x <= 600 )
+		if ( 0 <= x  && x <= 300 && 0 <= y && y <= 500 )
 		{
             FlxG.switchState(new Level3());
 		}
