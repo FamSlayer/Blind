@@ -7,10 +7,12 @@ package;
 
  import flixel.FlxSprite;
  import flixel.addons.nape.FlxNapeSprite;
+ import flixel.system.FlxSound;
  import flixel.util.FlxColor;
  import flixel.FlxG;
  import flixel.math.FlxPoint;
  import flixel.FlxObject;
+ import flixel.system.FlxSound;
 
 class Bat extends FlxNapeSprite
 {
@@ -32,6 +34,7 @@ class Bat extends FlxNapeSprite
 	
 	var Layer:Layers;
 	
+	var bat_flap_sound:FlxSound;
 	
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
@@ -50,6 +53,8 @@ class Bat extends FlxNapeSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
+		bat_flap_sound = FlxG.sound.load("assets/sounds/fast_wings.wav");
+		
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -61,13 +66,14 @@ class Bat extends FlxNapeSprite
 	}
 	
 	//Written by Gabriel
-	/*
+	
 	public function checkFlaps():Void {
-		if (animation.name == "fly" && animation.getFrameIndex() == 1) {
-			FlxG.sound.play("assets/sounds/fast_wings.wav");
-		}
+		//if (animation.name == "fly" && animation.getFrameIndex() == 1) {
+		//	FlxG.sound.play("assets/sounds/fast_wings.wav");
+		//}
+		//bat_flap_sound.play();
 	}
-	*/
+	
 	
 	// written by Fuller
 	public function isPaired():Bool

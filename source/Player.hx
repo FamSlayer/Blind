@@ -11,6 +11,8 @@ import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.FlxObject;
 
+import flixel.system.FlxSound;
+
 class Player extends FlxNapeSprite
 {
 	var speed:Float = 200;
@@ -27,7 +29,12 @@ class Player extends FlxNapeSprite
 	var Layer:Layers;
 	
 	var drop_timer:Int = 30;
-	var wind_timer:Int = 38 * 30;
+	var wind_timer:Int = 20;
+	
+	
+	var wind_sound:FlxSound;
+	var water_droplet:FlxSound;
+	
 	
 	function new(?X:Float=0, ?Y:Float=0, b:Bat, ?face_left:Bool = false)
 	{
@@ -62,7 +69,10 @@ class Player extends FlxNapeSprite
 			facing = FlxObject.LEFT;
 		}
 		
-		FlxG.sound.play("assets/sounds/wind.wav");
+		
+		
+		//wind_sound = FlxG.sound.load("assets/sounds/wind.wav");
+		water_droplet = FlxG.sound.load("assets/sounds/water_droplet.wav");
 		//FlxG.sound.playMusic("assets/music/theme1.ogg");
 	}
 	
@@ -106,7 +116,8 @@ class Player extends FlxNapeSprite
 	public function checkDrops():Void {
 		drop_timer -= 1;
 		if (drop_timer <= 0) {
-			FlxG.sound.play("assets/sounds/water_droplet.wav");
+			//FlxG.sound.play("assets/sounds/water_droplet.wav");
+			water_droplet.play();
 			drop_timer = FlxG.random.int(300, 900);
 		}
 	}
@@ -115,7 +126,7 @@ class Player extends FlxNapeSprite
 	public function checkWind():Void {
 		wind_timer -= 1;
 		if (wind_timer <= 0) {
-			FlxG.sound.play("assets/sounds/wind.wav");
+			//wind_sound.play();
 			wind_timer = 38 * 30;
 		}
 	}

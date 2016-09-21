@@ -18,6 +18,7 @@ import flixel.util.FlxColor;
 import flixel.math.FlxMath;
 import flixel.FlxObject;
 import Layers;
+import flixel.system.FlxSound;
 
 class Level0 extends FlxState
 {
@@ -38,13 +39,20 @@ class Level0 extends FlxState
 	var super_background:FlxSprite;
 	var parallax_speed:Int = 5;
 	
+	var light_sound:FlxSound;
+	
 	override public function create():Void
 	{
-		super.create();
+		
 		FlxNapeSpace.init();
 		
 		Layer = new Layers();
 		_standable_objects = new FlxGroup();
+		
+		
+		// load sounds???
+		light_sound = FlxG.sound.load("assets/sounds/light_click.wav");
+		
 		
 		/*functions planned by Fuller*/
 		loadBackground();	// everything behind the player scenery wise
@@ -54,6 +62,9 @@ class Level0 extends FlxState
 		/* in update(), test if there is collision between the player and the tunnel that marks the end of the level and if the player has "entered" it
 		 * and pushed the appropriate key to signify they want to go in to the tunnel. If this trigger happens, load the next level
 		 */
+		
+		FlxG.camera.follow(_player, PLATFORMER, 1);
+		super.create();
 		
 		
 	}
@@ -303,7 +314,8 @@ class Level0 extends FlxState
 			{
 				_stepTrigger.lower();
 				_light.kill();
-				FlxG.sound.play("assets/sounds/light_click.wav");
+				//FlxG.sound.play("assets/sounds/light_click.wav");
+				light_sound.play();
 			}
 			
 		}
