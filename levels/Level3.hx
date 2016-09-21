@@ -144,7 +144,7 @@ class Level3 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		// add stepTrigger
-		_stepTrigger = new StepTrigger(800, _ground_height - 30 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
+		_stepTrigger = new StepTrigger(800, _ground_height - 40 - 6, false, false, "assets/images/blue button 1.png");	// i had to hardcode and guess this location through trial and error. I'm not sure there is a better way
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
         
@@ -181,11 +181,11 @@ class Level3 extends FlxState
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         
-        _gate = new Gate(500, 600, 500, 800, 75, 220);//, "assets/images/platform.png");
+        _gate = new Gate(500, 600, 500, 800, 75, 220, "assets/images/platform.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
         
-        _gate1 = new Gate(300, 750, 300, 600, 75, 220);//, "assets/images/platform.png");
+        _gate1 = new Gate(300, 750, 300, 600, 75, 220, "assets/images/platform.png");
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
         
