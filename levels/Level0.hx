@@ -79,7 +79,7 @@ class Level0 extends FlxState
         applyGravity();
         reset();
         nextLevel();
-		doParallax();
+		//doParallax();
 		
 	}
 	
@@ -305,7 +305,7 @@ class Level0 extends FlxState
         
 		var _debug_line = new FlxSprite(x, y);
 		_debug_line.makeGraphic(1, 1);
-		add(_debug_line);
+		//add(_debug_line);
 		
 		var trigger_right_x:Float = _stepTrigger.x + _stepTrigger.width;
 		
