@@ -31,7 +31,7 @@ class Level0 extends FlxState
 	var _stepTrigger:StepTrigger;
 	
     var _standable_objects:FlxGroup;
-	
+	var _nextLevelBlock:FlxSprite;
 	var Layer:Layers;
 	
 	var _debug_line:FlxSprite;
@@ -73,12 +73,12 @@ class Level0 extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+        nextLevel();
         checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		if (_bat.isPaired()) movePairTogether();	// if bat is still paired, set _bat.body.velocity = player.body.velocity
         platformTouched();
         applyGravity();
         reset();
-        nextLevel();
 		doParallax();
 		
 	}
@@ -168,6 +168,12 @@ class Level0 extends FlxState
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		_standable_objects.add(_stepTrigger);
 		
+        
+        
+        var _nextLevelBlock = new FlxSprite(925, 625);
+        _nextLevelBlock.makeGraphic(8, 8, FlxColor.WHITE);
+		
+        
 		// adding them in this SPECIFIC order
 		
 		add(_player);
@@ -179,6 +185,7 @@ class Level0 extends FlxState
 		add(_ground);
 		add(_ground_sprite);
 		add(_stepTrigger);
+        add(_nextLevelBlock);
 		
 		
 	}
@@ -342,12 +349,11 @@ class Level0 extends FlxState
     
     function nextLevel():Void
     {
-		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
-		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+		//var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		//var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 850 <= x  && x <= 900 )
+		if (FlxG.collide(_player, _nextLevelBlock) ) //&& _bat.isPaired())
 		{
             FlxG.switchState(new Level1());
 		}

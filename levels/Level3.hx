@@ -21,7 +21,7 @@ import Layers;
 class Level3 extends FlxState
 {
 	var _playerY:Int = 560;
-	var _playerX:Int = 850;
+	var _playerX:Int = 875;
 	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
@@ -124,10 +124,10 @@ class Level3 extends FlxState
 		_standable_objects.add(_ground);	// the player can now stand on the ground
         
         //ledge
-        var _ground_sprite1 = new FlxSprite(-550, _ground_height-360);
+        var _ground_sprite1 = new FlxSprite(-550, _ground_height-400);
 		_ground_sprite1.loadGraphic("assets/images/cave_floor_final.png", false);
 		
-		var _ground1 = new FlxNapeSprite(-50, _ground_height-300);
+		var _ground1 = new FlxNapeSprite(-50, _ground_height-340);
 		_ground1.makeGraphic(1024, 80, FlxColor.BROWN);
         _ground1.createRectangularBody(1024, 80);
 		_ground1.body.allowMovement = false;
@@ -181,6 +181,7 @@ class Level3 extends FlxState
         _batplatform.loadGraphic("assets/images/wallbutton.png", false);
         _batplatform.createRectangularBody();
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        _batplatform.flipX = true;
         
         _gate = new Gate(500, 600, 500, 800, 75, 220, "assets/images/gate.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
