@@ -114,21 +114,7 @@ class Level2 extends FlxState
 		_ground.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
 		_standable_objects.add(_ground);	// the player can now stand on the ground
 		
-        /*
-        //this is the upper ledge
-        var _ground_sprite1 = new FlxSprite(0, 385);
-		_ground_sprite1.loadGraphic("assets/images/platform.png", false);
-		
-		var _ground1 = new FlxNapeSprite(24, _ground_height-270);
-		_ground1.makeGraphic(1024, 50, FlxColor.BROWN);
-        _ground1.createRectangularBody(1024, 50);
-		_ground1.body.allowMovement = false;
-		_ground1.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999); //makes ground immovable
-		_ground1.body.gravMass = 300000;
-		_ground1.body.shapes.at(0).filter = Layer.ground_filter; // SETS THE GROUND TO THE CORRECT COLLISION LAYER
-		_standable_objects.add(_ground1);	// the player can now stand on the ground
-        */
-        
+
         //this is the ground on the far right
         var _ground_sprite2 = new FlxSprite(800, _ground_height-150);
 		_ground_sprite2.loadGraphic("assets/images/cave_floor_final.png", false);
@@ -183,8 +169,6 @@ class Level2 extends FlxState
 		
 		add(_ground);
 		add(_ground_sprite);
-        //add(_ground1);
-		//add(_ground_sprite1);
         add(_ground2);
 		add(_ground_sprite2);
         add(_cave_ledge);
@@ -316,7 +300,7 @@ class Level2 extends FlxState
         
 		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 0 <= x  && x <= 300 && 0 <= y && y <= 500 )
+		if ( 0 <= x  && x <= 200 && 0 <= y && y <= 300 )
 		{
             FlxG.switchState(new Level3());
 		}
