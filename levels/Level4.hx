@@ -17,6 +17,7 @@ import flixel.FlxObject;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import flixel.math.FlxMath;
+import flixel.FlxObject;
 import Layers;
 
 class Level4 extends FlxState
@@ -51,6 +52,9 @@ class Level4 extends FlxState
     var _standable_objects:FlxGroup;
 	
 	var Layer:Layers;
+	
+	var cave_x:Int;
+	var cave_y:Int;
 	
 	var _debug_line:FlxSprite;
 	
@@ -185,6 +189,7 @@ class Level4 extends FlxState
 		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
 		_standable_objects.add(_boulder);
 		
+		//_top_platform = new Gate)
 		_platformA = new Gate(275, 430, 275, 430, "assets/images/platform.png");    //this one doesn't move
         
 		_gateA = new Gate(100, 550, 300, 550, "assets/images/horizontal_gate.png");
@@ -241,6 +246,10 @@ class Level4 extends FlxState
 		 *  "Accessory foreground art" on the Close Out document
 		 *  StepTrigger platform
 		 */
+		
+		// front of the cave so that the player can walk behind it
+        var cave_front:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_front.png");
+		add(cave_front);
 	}
     
     public function reset():Void

@@ -16,6 +16,7 @@ import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import flixel.math.FlxMath;
+import flixel.FlxObject;
 import Layers;
 import nape.phys.BodyType;
 
@@ -34,6 +35,9 @@ class Level2 extends FlxState
     var _standable_objects:FlxGroup;
 	
 	var Layer:Layers;
+	
+	var cave_x:Int;
+	var cave_y:Int;
 	
 	override public function create():Void
 	{
@@ -68,7 +72,7 @@ class Level2 extends FlxState
 		
 	}
 	
-	// written by Eric
+	// written by Eric, cave_back tunnel added by Fuller
 	function loadBackground():Void
 	{
 
@@ -84,7 +88,11 @@ class Level2 extends FlxState
         background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
         add(background);
         
-        
+        cave_x = -40;
+		cave_y = 107;
+		var cave_back:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_back.png");
+		//cave_back.facing = FlxObject.LEFT;
+		add(cave_back);
 		
 	}
 	
@@ -165,11 +173,6 @@ class Level2 extends FlxState
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
         
-        _nextLevelBlock = new FlxSprite(100, 200);
-        _nextLevelBlock.makeGraphic(16,16);
-        
-
-        add(_nextLevelBlock);
         
         add(_batplatform);
         add(_gate1);
@@ -194,6 +197,11 @@ class Level2 extends FlxState
 		 *  "Accessory foreground art" on the Close Out document
 		 *  StepTrigger platform
 		 */
+		
+		
+		// front of the cave so that the player can walk behind it
+        var cave_front:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_front.png");
+		add(cave_front);
 	}
     
     public function reset():Void
@@ -300,6 +308,7 @@ class Level2 extends FlxState
         }
     }
 	
+	/*
     function nextLevel():Void
     {
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
@@ -308,6 +317,22 @@ class Level2 extends FlxState
 		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
 		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
+		{
+            FlxG.switchState(new Level3());
+		}
+
+    }
+	*/
+	
+	
+	function nextLevel():Void
+    {
+		var y:Float = _player.y; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+        
+		//FlxG.log.add(x + " and the y " + y);
+		
+		if ( x <= 50 && y <= 110 && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
 		{
             FlxG.switchState(new Level3());
 		}

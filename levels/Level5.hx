@@ -45,6 +45,9 @@ class Level5 extends FlxState
 	
 	var Layer:Layers;
 	
+	var cave_x:Int;
+	var cave_y:Int;
+	
 	var _debug_line:FlxSprite;
 	
 	override public function create():Void
@@ -227,6 +230,10 @@ class Level5 extends FlxState
 		 *  "Accessory foreground art" on the Close Out document
 		 *  StepTrigger platform
 		 */
+		
+		// front of the cave so that the player can walk behind it
+        var cave_front:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_front.png");
+		add(cave_front);
 	}
     
         //written by Eric, modified by Fuller

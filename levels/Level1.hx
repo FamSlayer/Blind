@@ -42,6 +42,9 @@ class Level1 extends FlxState
 	
 	var _debug_line:FlxSprite;
 	
+	var cave_x:Int;
+	var cave_y:Int;
+	
 	override public function create():Void
 	{
 		super.create();
@@ -88,6 +91,7 @@ class Level1 extends FlxState
 		 * 	etc
 		 */
         
+		
 		super_background = new FlxSprite();
 		super_background.loadGraphic("assets/images/Cave_back_background2.png");
 		add(super_background);
@@ -97,6 +101,13 @@ class Level1 extends FlxState
         background = new FlxSprite();
         background.loadGraphic("assets/images/Cave_front_background_2.png"); //load the background image
         add(background);
+		
+		
+		cave_x = 850;
+		cave_y = _ground_height - 215;
+		var cave_back:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_back.png");
+		cave_back.facing = FlxObject.LEFT;
+		add(cave_back);
         
         
 		
@@ -209,6 +220,11 @@ class Level1 extends FlxState
 		 *  "Accessory foreground art" on the Close Out document
 		 *  StepTrigger platform
 		 */
+		
+		 
+		// front of the cave so that the player can walk behind it
+        var cave_front:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_front.png");
+		add(cave_front);
 	}
     
 	// written by Eric
@@ -405,14 +421,28 @@ class Level1 extends FlxState
 		
     }
    
-    
+    /*
     function nextLevel():Void
     {
 		var y:Float = _player.y + _player.height;
 		var x:Float = _player.x + _player.width / 2;
-		
-        
 		if ( 950 <= x && x <= 1000 && y >= 450 && _bat.isPaired() )
+		{
+            FlxG.switchState(new Level2());
+		}
+
+    }
+	*/
+	
+	
+	function nextLevel():Void
+    {
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+        
+		//FlxG.log.add(x);
+		
+		if (975 <= x  && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
 		{
             FlxG.switchState(new Level2());
 		}

@@ -45,6 +45,9 @@ class Level0 extends FlxState
 	
 	var light_sound:FlxSound;
 	
+	var cave_x:Int;
+	var cave_y:Int;
+	
 	override public function create():Void
 	{
 		
@@ -77,13 +80,13 @@ class Level0 extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-        nextLevel();
+		nextLevel();
         checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		if (_bat.isPaired()) movePairTogether();	// if bat is still paired, set _bat.body.velocity = player.body.velocity
         platformTouched();
         applyGravity();
         reset();
-        nextLevel();
+        //nextLevel();
 		//doParallax();
 		
 	}
@@ -108,8 +111,9 @@ class Level0 extends FlxState
 		 * 	Glowing rocks (if that happens)
 		 * 	Cheeseburgers
 		 * 	etc
-		 */
+		*/
         
+		
 		super_background = new FlxSprite();
 		super_background.loadGraphic("assets/images/cave_back_background.png");
 		add(super_background);
@@ -118,7 +122,10 @@ class Level0 extends FlxState
         background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
         add(background);
         
-        
+		cave_x = 850;
+		cave_y = _ground_height - 160;
+        var cave_back:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_back.png");
+		add(cave_back);
 		
 	}
 	
@@ -224,6 +231,12 @@ class Level0 extends FlxState
 		 *  "Accessory foreground art" on the Close Out document
 		 *  StepTrigger platform
 		 */
+		
+		// front of the cave so that the player can walk behind it
+        var cave_front:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_front.png");
+		add(cave_front);
+		
+		
 	}
     
     public function reset():Void
@@ -378,8 +391,9 @@ class Level0 extends FlxState
 		//var y:Float = _player.y + _player.height; 		// y position of the player's feet!
 		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
+		//FlxG.log.add(x);
 		
-		if (950 <= x && x <= 1000 && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
+		if (975 <= x  && _bat.isPaired()) //check to see if player is at edge of screen AND paired with bat
 		{
             FlxG.switchState(new Level1());
 		}

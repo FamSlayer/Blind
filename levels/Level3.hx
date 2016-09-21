@@ -17,6 +17,7 @@ import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import flixel.math.FlxMath;
+import flixel.FlxObject;
 import Layers;
 
 class Level3 extends FlxState
@@ -36,6 +37,9 @@ class Level3 extends FlxState
     var _standable_objects:FlxGroup;
 	
 	var Layer:Layers;
+	
+	var cave_x:Int;
+	var cave_y:Int;
 	
 	override public function create():Void
 	{
@@ -86,6 +90,12 @@ class Level3 extends FlxState
         background = new FlxSprite();
         background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
         add(background);
+		
+		
+		cave_x = -40;
+		cave_y = _ground_height - 160;
+		var cave_back:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_back.png");
+		add(cave_back);
         
         
 		
@@ -153,8 +163,8 @@ class Level3 extends FlxState
         
         addBatPlatformAndRock();
         
-        _nextLevelBlock = new FlxSprite(100, 600);
-        _nextLevelBlock.makeGraphic(16,16);
+        //_nextLevelBlock = new FlxSprite(100, 600);
+        //_nextLevelBlock.makeGraphic(16,16);
 		
 		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc. 
 		add(_light);
@@ -165,7 +175,7 @@ class Level3 extends FlxState
 		add(_player);
 		add(_stepTrigger);
 		add(_bat);
-        add(_nextLevelBlock);
+        //add(_nextLevelBlock);
 		
 		
 	}
@@ -178,6 +188,10 @@ class Level3 extends FlxState
 		 *  "Accessory foreground art" on the Close Out document
 		 *  StepTrigger platform
 		 */
+		
+		// front of the cave so that the player can walk behind it
+        var cave_front:FlxSprite = new FlxSprite(cave_x, cave_y, "assets/images/Cave_tunnel_front.png");
+		add(cave_front);
 	}
     
     //written by Eric, modified by Fuller
@@ -374,12 +388,12 @@ class Level3 extends FlxState
     
     function nextLevel():Void
     {
-		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var y:Float = _player.y; 		// y position of the player's feet!
 		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
         
-		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		//FlxG.log.add(x + " and y " + y);
 		
-		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
+		if ( x <= 50 && y >= 510 && _bat.isPaired() )
 		{
             FlxG.switchState(new Level4());
 		}

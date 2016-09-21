@@ -188,7 +188,7 @@ class Player extends FlxNapeSprite
 			if (_can_jump){ // the player is on a standable object
 				//if (body.velocity.x != 0) 	// if the player is walking
 				var threshold:Int = 10;
-				if ( -threshold >= body.velocity.x && body.velocity.x >= threshold)
+				if ( body.velocity.x <= -threshold || body.velocity.x >= threshold )
 				{
 					animation.play("walk");
 				}
