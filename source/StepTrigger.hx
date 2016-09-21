@@ -37,9 +37,10 @@ class StepTrigger extends FlxNapeSprite
 	{
 		if ( image_path == "" ) image_path = "assets/images/blue button 1.png";
 		
-		super(X, Y, image_path, true, true);
+		super(X, Y, image_path, false, true);
 		
 		// set physics
+		createRectangularBody(nape.phys.BodyType.KINEMATIC);
 		setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999);
 		body.gravMass = 50000;
 		body.allowRotation = false;

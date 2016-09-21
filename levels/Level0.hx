@@ -20,6 +20,10 @@ import flixel.FlxObject;
 import Layers;
 import flixel.system.FlxSound;
 
+import nape.geom.Vec2;
+import nape.phys.Body;
+import nape.shape.Polygon;
+
 class Level0 extends FlxState
 {
 	var _playerY:Int = 560;
@@ -145,9 +149,31 @@ class Level0 extends FlxState
 		
 		
 		// add light
-		_light = new FlxNapeSprite(825, 400);
+		_light = new FlxNapeSprite(825, 350);
 		_light.loadGraphic("assets/images/Blue_Light.png");
-        _light.createRectangularBody();		// change this to be a different kind of body!
+        _light.createRectangularBody(_light.width / 3.0, _light.height);		// change this to be a different kind of body!
+		
+		// create CUSTOM TRIANGULAR COLLISION BODY! 
+		/*
+		if (_light.body != null) _light.destroyPhysObjects();		// if a body already exists, delete it
+		_light.centerOffsets(false);
+		
+		var top:Vec2 =     new Vec2(   _light.x + _light.width / 2.0,                 _light.y);
+		var b_left:Vec2 =  new Vec2(  						_light.x, _light.y + _light.height);
+		var b_right:Vec2 = new Vec2( 		 _light.x + _light.width, _light.y + _light.height);
+		
+		var verts = new Array<Vec2>();
+		verts.push(top);
+		verts.push(b_left);
+		verts.push(b_right);
+		
+		var poly:Polygon = new Polygon(verts);
+		
+		_light.body.shapes.add(new Polygon(verts));
+		
+		// Alas, I give up. I have failed in my endeavor. Forgive me.
+		*/
+		
 		_light.body.allowMovement = false;
         _light.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_light.body.shapes.at(0).filter = Layer.light_filter;

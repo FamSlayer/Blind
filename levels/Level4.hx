@@ -27,10 +27,9 @@ class Level4 extends FlxState
     var _player:Player;
 	var _bat:Bat;
 	
-    var _platformA:StepTrigger;
-	var _platformB:StepTrigger;
-	var _platformC:StepTrigger;
-	var _platforms:FlxGroup;
+    var _platformA:Gate;
+	//var _platformB:StepTrigger;
+	//var _platformC:StepTrigger;
 		
     var _lightA:FlxNapeSprite;
 	var _lightB:FlxNapeSprite;
@@ -39,6 +38,11 @@ class Level4 extends FlxState
 	var _stepTriggerA:StepTrigger;
 	var _stepTriggerB:StepTrigger;
 	var _stepTriggerC:StepTrigger;
+	
+	var _gateA:Gate;
+	var _gateB:Gate;
+	
+	var _batButton:FlxNapeSprite;
 	
 	var _boulder:FlxNapeSprite;
 	
@@ -74,6 +78,7 @@ class Level4 extends FlxState
 		super.update(elapsed);
         checkPairPressed();		// check if the player is trying to pair themself with the bat again
 		if (_bat.isPaired()) movePairTogether();	// if bat is still paired, set _bat.body.velocity = player.body.velocity
+		batPlatformTouched();
         platformTouched(_stepTriggerA, _lightA);
 		platformTouched(_stepTriggerB, _lightB);
 		platformTouched(_stepTriggerC, _lightC);
@@ -117,26 +122,22 @@ class Level4 extends FlxState
 		// adding objects in this order: light, ground, stepTrigger, player, bat
 		
 		// add light
-		_lightA = new FlxNapeSprite(600, 350);
-		_lightA.loadGraphic("assets/images/Blue_Light.png");
-		_lightA.body.rotation = 135 / 180 * 3.14;
-        _lightA.createRectangularBody();
+		_lightA = new FlxNapeSprite(625, 350, "assets/images/Blue_Light.png");
+        _lightA.createRectangularBody(_lightA.width / 3.0, _lightA.height);
 		_lightA.body.allowMovement = false;
 		_lightA.body.allowRotation = false;
         _lightA.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightA.body.shapes.at(0).filter = Layer.light_filter;
 		
-		_lightB = new FlxNapeSprite(700, 350);
-		_lightB.loadGraphic("assets/images/Purple_Light.png");
-        _lightB.createRectangularBody();
+		_lightB = new FlxNapeSprite(700, 350, "assets/images/Pink_Light.png");
+        _lightB.createRectangularBody(_lightB.width / 3.0, _lightB.height);
 		_lightB.body.allowMovement = false;
 		_lightB.body.allowRotation = false;
         _lightB.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_lightB.body.shapes.at(0).filter = Layer.light_filter;
 		
-		_lightC = new FlxNapeSprite(800, 350);
-		_lightC.loadGraphic("assets/images/Green_Light.png");
-        _lightC.createRectangularBody();
+		_lightC = new FlxNapeSprite(800, 350, "assets/images/rotatedlight.png");
+        _lightC.createRectangularBody(_lightC.width / 3.0, _lightC.height);
 		_lightC.body.allowMovement = false;
 		_lightC.body.allowRotation = false;
         _lightC.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
@@ -168,31 +169,48 @@ class Level4 extends FlxState
 		// it is 390 - 6 because "6" is the height of the step trigger. When we import the sprite for it, this number will have to change to match the sprite
 		
 		_stepTriggerB = new StepTrigger(700, _ground_height - 40 - 6, "assets/images/pink button 1.png");
-		_stepTriggerC = new StepTrigger(600, _ground_height - 40 - 6, "assets/images/green button 1.png");
+		_stepTriggerC = new StepTrigger(625, _ground_height - 40 - 6, "assets/images/green button 1.png");
 		
 		
-		_boulder = new FlxNapeSprite(300, _ground_height, "assets/images/boulder.png", false, true);
+		_boulder = new FlxNapeSprite(500, _ground_height, "assets/images/boulder.png", false, true);
         _boulder.createCircularBody(30);
 		_boulder.body.allowMovement = true;
 		_boulder.body.allowRotation = true;
-		_boulder.setDrag(40, 5);
+		_boulder.setDrag(60, 2);
         _boulder.setBodyMaterial(.945, 2000, 0.4, 1, 0.05);
 		_boulder.body.gravMass = 200;
 		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
 		_standable_objects.add(_boulder);
 		
+		_platformA = new Gate(400, 360, 400, 360, "assets/images/platform.png");    //this one doesn't move
+        
+		_gateA = new Gate(100, 550, 300, 550, "assets/images/horizontal_gate.png");
+		_gateB = new Gate(300, 250, 100, 250, "assets/images/horizontal_gate.png");
+		
+		_batButton = new FlxNapeSprite(400, 300, "assets/images/wallbutton.png");
+        _batButton.createRectangularBody(nape.phys.BodyType.STATIC);
+        _batButton.setBodyMaterial(9999999, 9999999, 9999999, 9999999, 9999999);
+		//_batButton.body.shapes.at(0).filter = Layer.gate_filter;
 		
 		
 		_standable_objects.add(_stepTriggerA);
 		_standable_objects.add(_stepTriggerB);
 		_standable_objects.add(_stepTriggerC);
+		_standable_objects.add(_platformA);
+		_standable_objects.add(_gateA);
+		_standable_objects.add(_gateB);
 		
-		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc. 
+		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc.
 		add(_player);
 		
 		add(_lightA);
 		add(_lightB);
 		add(_lightC);
+		
+		add(_platformA);
+		add(_gateA);
+		add(_gateB);
+		add(_batButton);
 		
 		add(_ground);
 		add(_ground_sprite);
@@ -201,8 +219,8 @@ class Level4 extends FlxState
 		add(_stepTriggerB);
 		add(_stepTriggerC);
 		
-		add(_bat);
 		add(_boulder);
+		add(_bat);
 		
 		
 	}
@@ -314,6 +332,24 @@ class Level4 extends FlxState
 		
 	}
 	
+	// written by Fuller
+	function batPlatformTouched():Void
+    {
+        //if (FlxG.keys.anyPressed([B]) && FlxG.collide(_bat, _batplatform))
+		if (FlxG.collide(_bat, _batButton))
+        {
+			//FlxG.log.add("Bat is pushing the button");
+			if ( !_gateA.inMotion() && !_gateB.inMotion())
+			{
+				
+				//FlxG.log.add("_gate.trigger() called");
+				_gateA.trigger();
+				_gateB.trigger();
+				//FlxG.log.add("");
+			}
+            //_batplatform.kill();
+        }
+    }
     
     // written by Fuller
     function platformTouched(_stepTrigger:StepTrigger, _light:FlxNapeSprite):Void

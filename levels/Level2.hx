@@ -17,6 +17,7 @@ import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import flixel.math.FlxMath;
 import Layers;
+import nape.phys.BodyType;
 
 class Level2 extends FlxState
 {
@@ -137,7 +138,7 @@ class Level2 extends FlxState
         _cave_ledge.makeGraphic(500,500);
         _cave_ledge.loadGraphic("assets/images/cave_ledge.png", false);
         _cave_ledge.createRectangularBody();
-        _cave_ledge.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+        _cave_ledge.setBodyMaterial(.945,9999999,9999999,9999999,9999999);
         _cave_ledge.body.gravMass = 3000000;
         _cave_ledge.body.shapes.at(0).filter = Layer.ground_filter;
         _standable_objects.add(_cave_ledge);
@@ -150,19 +151,17 @@ class Level2 extends FlxState
 		_bat.body.velocity = _player.body.velocity;
 		
 		
-		_batplatform = new FlxNapeSprite(900,100);
-        _batplatform.makeGraphic(8,8);
-        _batplatform.loadGraphic("assets/images/wallbutton.png", false);
-        _batplatform.createRectangularBody();
-        _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
+		_batplatform = new FlxNapeSprite(900, 100, "assets/images/wallbutton.png");
+        _batplatform.createRectangularBody(BodyType.STATIC);
+        _batplatform.setBodyMaterial(9999999, 9999999, 9999999, 9999999, 9999999);
+		
         
-        
-        _gate = new Gate(500, 460, 700, 460, 60, 15, "assets/images/platform.png");
+        _gate = new Gate(500, 460, 700, 460, "assets/images/platform.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
         add(_gate);
         
-        _gate1 = new Gate(450, 360, 450, 360, 60, 15, "assets/images/platform.png");    //this gate doesn't move
+        _gate1 = new Gate(450, 360, 450, 360, "assets/images/platform.png");    //this gate doesn't move
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
         
@@ -299,8 +298,8 @@ class Level2 extends FlxState
 			}
             //_batplatform.kill();
         }
-
     }
+	
     function nextLevel():Void
     {
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!

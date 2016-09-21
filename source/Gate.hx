@@ -30,7 +30,7 @@ class Gate extends FlxNapeSprite
 	
 	private var _times:Array<Float>; // will be used to count the FPS
 	
-	function new(?X:Float = 0, ?Y:Float = 0, ?dX:Float = 0, ?dY:Float = 0, width:Int, height:Int, image_path:String ) //added a variabe in constructor for image path
+	function new(?X:Float = 0, ?Y:Float = 0, ?dX:Float = 0, ?dY:Float = 0, image_path:String ) //added a variabe in constructor for image path
 	{
 		super(X, Y);
 		_moving_to_origin = false;
