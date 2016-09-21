@@ -18,9 +18,9 @@ class CutsceneState extends FlxState
 	override public function create():Void
 	{
 		_scene = new FlxSprite();
-		_scene.loadGraphic("assets/images/CutsceneSpriteSheet.png", true, 1024, 720);// , 16, 16);
+		_scene.loadGraphic("assets/images/CutsceneSpriteSheet_Final.png", true, 1024, 720);// , 16, 16);
 		
-		_scene.animation.add("play", [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, ], 2, false);
+		_scene.animation.add("play", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 2, false);
 		
 		_scene.animation.play("play");
 		
