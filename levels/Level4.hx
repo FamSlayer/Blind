@@ -315,7 +315,6 @@ class Level4 extends FlxState
 	}
 	
     
-    //written by Fuller
     // written by Fuller
     function platformTouched(_stepTrigger:StepTrigger, _light:FlxNapeSprite):Void
     {
