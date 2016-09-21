@@ -1,5 +1,6 @@
 package levels;
 
+
 /*
  * @authors
  * Template written by: Fuller
@@ -26,6 +27,7 @@ class Level1 extends FlxState
 	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
+
     var _lightA:FlxNapeSprite;
     var _lightB:FlxNapeSprite;
 	var _stepTriggerA:StepTrigger;
