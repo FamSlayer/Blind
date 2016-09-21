@@ -103,9 +103,9 @@ class Level3 extends FlxState
 		// adding objects in this order: light, ground, stepTrigger, player, bat
 		
 		// add light
-		_light = new FlxNapeSprite(625, 400);
+		_light = new FlxNapeSprite(625, 350);
 		_light.loadGraphic("assets/images/Blue_Light.png");
-        _light.createRectangularBody();		// change this to be a different kind of body!
+        _light.createRectangularBody(_light.width / 3.0, _light.height);
 		_light.body.allowMovement = false;
         _light.setBodyMaterial(1, 9999999, 9999999, 9999999, 9999999);
 		_light.body.shapes.at(0).filter = Layer.light_filter;
@@ -183,11 +183,11 @@ class Level3 extends FlxState
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         _batplatform.flipX = true;
         
-        _gate = new Gate(500, 600, 500, 800, 75, 220, "assets/images/gate.png");
+        _gate = new Gate(500, 600, 500, 800, "assets/images/gate.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
         
-        _gate1 = new Gate(300, 850, 300, 600, 75, 220, "assets/images/gate.png");
+        _gate1 = new Gate(300, 850, 300, 600, "assets/images/gate.png");
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
         
