@@ -133,7 +133,17 @@ class Level0 extends FlxState
 		 * 	etc
 		 */
 		
-		// adding objects in this order: light, ground, stepTrigger, player, bat
+		// add the control scheme at in the middle of the screen
+		var player_controls =  new FlxSprite(300, 300, "assets/images/keymap.png");
+		
+		var bat_controls = new FlxSprite(400, 300, "assets/images/keymap2.png");
+		
+		var pair_controls = new FlxSprite(500, 300, "assets/images/keymap3.png");
+		
+		add(player_controls);
+		add(bat_controls);
+		add(pair_controls);
+		
 		
 		// add light
 		_light = new FlxNapeSprite(825, 400);
