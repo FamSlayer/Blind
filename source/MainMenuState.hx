@@ -35,7 +35,7 @@ class MainMenuState extends FlxState
 		var pressed:Bool = false;
 		
 		// number row
-		if (FlxG.keys.anyPressed([ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO, MINUS, PLUS, BACKSPACE])) pressed = true;
+		if (FlxG.keys.anyPressed([ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, BACKSPACE])) pressed = true;
 		
 		// upper row
 		else if (FlxG.keys.anyPressed([TAB, Q, W, E, R, T, Y, U, I, O, P, LBRACKET, RBRACKET, BACKSLASH])) pressed = true;

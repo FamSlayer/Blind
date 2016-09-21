@@ -27,6 +27,8 @@ class Level1 extends FlxState
 	var _ground_height:Int = 680;
     var _player:Player;
 	var _bat:Bat;
+	
+	var super_background:FlxSprite;
 
     var _lightA:FlxNapeSprite;
     var _lightB:FlxNapeSprite;
@@ -86,9 +88,14 @@ class Level1 extends FlxState
 		 * 	etc
 		 */
         
+		super_background = new FlxSprite();
+		super_background.loadGraphic("assets/images/Cave_back_background2.png");
+		add(super_background);
+		 
+		 
         var background:FlxSprite; //background variable
         background = new FlxSprite();
-        background.loadGraphic("assets/images/Cave_fore_background.png"); //load the background image
+        background.loadGraphic("assets/images/Cave_front_background_2.png"); //load the background image
         add(background);
         
         
