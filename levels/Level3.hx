@@ -372,7 +372,7 @@ class Level3 extends FlxState
 		
     }
     
-        function nextLevel():Void
+    function nextLevel():Void
     {
 		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
 		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet

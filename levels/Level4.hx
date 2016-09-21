@@ -41,6 +41,8 @@ class Level4 extends FlxState
 	
 	var _gateA:Gate;
 	var _gateB:Gate;
+    
+    var _nextLevelBlock:FlxSprite;
 	
 	var _batButton:FlxNapeSprite;
 	
@@ -84,6 +86,7 @@ class Level4 extends FlxState
 		platformTouched(_stepTriggerC, _lightC);
         applyGravity();
         reset();
+        nextLevel();
 		
 	}
 	
@@ -182,14 +185,15 @@ class Level4 extends FlxState
 		_boulder.body.shapes.at(0).filter = Layer.boulder_filter;
 		_standable_objects.add(_boulder);
 		
-		_platformA = new Gate(400, 360, 400, 360, "assets/images/platform.png");    //this one doesn't move
+		_platformA = new Gate(275, 430, 275, 430, "assets/images/platform.png");    //this one doesn't move
         
 		_gateA = new Gate(100, 550, 300, 550, "assets/images/horizontal_gate.png");
-		_gateB = new Gate(300, 250, 100, 250, "assets/images/horizontal_gate.png");
+		_gateB = new Gate(300, 330, 100, 330, "assets/images/horizontal_gate.png");
 		
-		_batButton = new FlxNapeSprite(400, 300, "assets/images/wallbutton.png");
+		_batButton = new FlxNapeSprite(50, 400, "assets/images/wallbutton.png");
         _batButton.createRectangularBody(nape.phys.BodyType.STATIC);
         _batButton.setBodyMaterial(9999999, 9999999, 9999999, 9999999, 9999999);
+        _batButton.flipX = true;
 		//_batButton.body.shapes.at(0).filter = Layer.gate_filter;
 		
 		
@@ -199,6 +203,9 @@ class Level4 extends FlxState
 		_standable_objects.add(_platformA);
 		_standable_objects.add(_gateA);
 		_standable_objects.add(_gateB);
+        
+        _nextLevelBlock = new FlxSprite(100, 275);
+        _nextLevelBlock.makeGraphic(16,16);
 		
 		// adding them in this SPECIFIC order so that the player can walk in front of the light, etc.
 		add(_player);
@@ -221,6 +228,7 @@ class Level4 extends FlxState
 		
 		add(_boulder);
 		add(_bat);
+        add(_nextLevelBlock);
 		
 		
 	}
@@ -441,6 +449,20 @@ class Level4 extends FlxState
 			
 		}
 		
+    }
+    
+    function nextLevel():Void
+    {
+		var y:Float = _player.y + _player.height; 		// y position of the player's feet!
+		var x:Float = _player.x + _player.width / 2; 	// x position of the player's feet
+        
+		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
+		
+		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
+		{
+            FlxG.switchState(new Level5());
+		}
+
     }
 	
 	
