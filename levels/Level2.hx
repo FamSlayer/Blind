@@ -28,6 +28,7 @@ class Level2 extends FlxState
     var _batplatform:FlxNapeSprite;
     var _gate:Gate;
     var _gate1:Gate;
+    var _nextLevelBlock:FlxSprite;
 	
     var _standable_objects:FlxGroup;
 	
@@ -62,6 +63,7 @@ class Level2 extends FlxState
         applyGravity();
         batPlatformTouched();
         reset();
+        nextLevel();
 		
 	}
 	
@@ -163,6 +165,12 @@ class Level2 extends FlxState
         _gate1 = new Gate(450, 360, 450, 360, 60, 15, "assets/images/platform.png");    //this gate doesn't move
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
+        
+        _nextLevelBlock = new FlxSprite(100, 200);
+        _nextLevelBlock.makeGraphic(16,16);
+        
+
+        add(_nextLevelBlock);
         
         add(_batplatform);
         add(_gate1);
@@ -300,8 +308,9 @@ class Level2 extends FlxState
         
 		//FlxG.log.add("Y: " + y + "\tPlatform.y: " + _stepTrigger.y);
 		
-		if ( 0 <= x  && x <= 200 && 0 <= y && y <= 300 )
+		if ( FlxG.collide(_player, _nextLevelBlock) && _bat.isPaired() )
 		{
+            _gate.trigger();
             FlxG.switchState(new Level3());
 		}
 
