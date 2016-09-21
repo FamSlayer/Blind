@@ -170,6 +170,7 @@ class Level1 extends FlxState
         //add boulder
         _boulder = new FlxNapeSprite(300, _ground_height, "assets/images/boulder.png", false, true);
         _boulder.createCircularBody(30);
+		_boulder.centerOffsets();
 		_boulder.body.allowMovement = true;
 		_boulder.body.allowRotation = true;
 		_boulder.setDrag(40, 10);

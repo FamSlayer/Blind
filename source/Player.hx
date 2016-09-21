@@ -43,7 +43,7 @@ class Player extends FlxNapeSprite
 		_the_bat = b;
         
 		// load animation sprite sheet
-		loadGraphic("assets/images/jump_sprite_sheet12.png", true, 53, 125);// , 16, 16);
+		loadGraphic("assets/images/jump_sprite_sheet12.png", true, 53, 120);// , 16, 16);
 		animation.add("jump", [1, 2, 3, 3, 3, 3, 3, 2, 1, 0], 10, false);	
 		// I'm literally just playing with the order of the frames so Amanda doesn't have to change any frames. - Fuller 
 		
