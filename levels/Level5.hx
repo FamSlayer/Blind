@@ -239,7 +239,7 @@ class Level5 extends FlxState
         _batplatform.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         _batplatform.flipX = false;
         
-        _gate = new Gate(800, 600, 800, 800, 75, 220, "assets/images/gate.png");
+        _gate = new Gate(800, 600, 800, 800, "assets/images/gate.png");
         _gate.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate);
         
@@ -250,7 +250,7 @@ class Level5 extends FlxState
         _batplatform1.setBodyMaterial(9999999,9999999,9999999,9999999,9999999);
         _batplatform1.flipX = true;
         
-        _gate1 = new Gate(600, 600, 600, 300, 0, 75, "assets/images/platform.png");
+        _gate1 = new Gate(600, 600, 600, 300, "assets/images/platform.png");
         _gate1.body.shapes.at(0).filter = Layer.gate_filter;
         _standable_objects.add(_gate1);
         
