@@ -106,16 +106,6 @@ class Player extends FlxNapeSprite
 		_can_jump = true;
 	}
 	
-	//Written by Gabriel
-	/*
-	public function checkFootstep():Void {
-		if (animation.name == "walk") {
-			if (animation.frameIndex == 1 || animation.getFrameIndex() == 4) {
-				FlxG.sound.play("assets/sounds/footstep.wav");
-			}
-		}
-	}
-	*/
 	
 	//written by Gabriel
 	public function checkDrops():Void {
@@ -183,24 +173,31 @@ class Player extends FlxNapeSprite
 		// if y velocity is <= 0 (jumping)
 		// if y velocity is >= 0 (falling)
 		
-		if (body.velocity.y <= -20)
+		if (body.velocity.y <= -50)
 		{
-			animation.play("jump");
+			if ( animation.name != "jump"){
+				animation.play("jump");
+			}
 		}
-		else if (body.velocity.y >= 20)
+		else if (body.velocity.y >= 50)
 		{
 			animation.play("falling");
 		}
 		else	// not jumping or falling, 
 		{
-			if (body.velocity.x != 0) 	// if the player is walking
-			{
-				animation.play("walk");
+			if (_can_jump){ // the player is on a standable object
+				//if (body.velocity.x != 0) 	// if the player is walking
+				var threshold:Int = 10;
+				if ( -threshold >= body.velocity.x && body.velocity.x >= threshold)
+				{
+					animation.play("walk");
+				}
+				else 						// player is idle, in both x and y
+				{
+					animation.play("idle");
+				}
 			}
-			else 						// player is idle, in both x and y
-			{
-				animation.play("idle");
-			}
+			
 		}
 		
 		
