@@ -138,11 +138,11 @@ class Level3 extends FlxState
         
         //ledge
         var _ground_sprite1 = new FlxSprite(-550, _ground_height-400);
-		_ground_sprite1.loadGraphic("assets/images/cave_floor_final.png", false);
+		_ground_sprite1.loadGraphic("assets/images/cave_ledge.png", false);
 		
-		var _ground1 = new FlxNapeSprite(-50, _ground_height-340);
-		_ground1.makeGraphic(1024, 80, FlxColor.BROWN);
-        _ground1.createRectangularBody(1024, 80);
+		var _ground1 = new FlxNapeSprite(-50, _ground_height-360);
+		_ground1.makeGraphic(1024, 30, FlxColor.BROWN);
+        _ground1.createRectangularBody(1024, 30);
 		_ground1.body.allowMovement = false;
 		_ground1.setBodyMaterial(.945, 9999999, 9999999, 9999999, 9999999); //makes ground immovable
 		_ground1.body.gravMass = 300000;

@@ -31,6 +31,8 @@ class Player extends FlxNapeSprite
 	var drop_timer:Int = 30;
 	var wind_timer:Int = 20;
 	
+	var song_timer:Int = 0;
+	var current_song:Int = 1;
 	
 	var wind_sound:FlxSound;
 	var water_droplet:FlxSound;
@@ -78,7 +80,7 @@ class Player extends FlxNapeSprite
 		
 		//wind_sound = FlxG.sound.load("assets/sounds/wind.wav");
 		water_droplet = FlxG.sound.load("assets/sounds/water_droplet.wav");
-		FlxG.sound.playMusic("assets/music/Theme1Final.wav");
+		//FlxG.sound.playMusic("assets/music/Theme1Final.wav");
 	}
 	
 

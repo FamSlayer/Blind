@@ -142,9 +142,9 @@ class Level0 extends FlxState
 		 */
 		
 		// add the control scheme at in the middle of the screen
-		var player_controls =  new FlxSprite(75, 300, "assets/images/keymap.png");
-		var pair_controls = new FlxSprite(275, 300, "assets/images/keymap3.png");
-		var bat_controls = new FlxSprite(600, 300, "assets/images/keymap2.png");
+		var player_controls =  new FlxSprite(75, 300, "assets/images/keymap_fixed.png");
+		var pair_controls = new FlxSprite(275, 300, "assets/images/keymap3_fixed.png");
+		var bat_controls = new FlxSprite(600, 300, "assets/images/kaymap2_fixed.png");
 		
 		add(player_controls);
 		add(bat_controls);

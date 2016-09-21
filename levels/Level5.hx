@@ -516,7 +516,7 @@ class Level5 extends FlxState
         
 		FlxG.log.add(x + " and y " + y);
 		
-		if ( x >= 1000 && y <= 235 && _bat.isPaired() )
+		if ( x >= 1000 && y <= 235 )
 		{
             FlxG.switchState(new EndState());
 		}

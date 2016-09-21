@@ -23,7 +23,7 @@ class MainMenuState extends FlxState
 		_scene.centerOrigin();
 		_scene.screenCenter();
 	
-		FlxG.sound.playMusic("assets/music/Theme1Final.wav");
+		//FlxG.sound.playMusic("assets/music/Theme1Final.wav");
 		add(_scene);
 		super.create();
 	}
