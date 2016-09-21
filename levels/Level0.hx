@@ -93,12 +93,8 @@ class Level0 extends FlxState
 	public function doParallax():Void {
 		if (_player.body.velocity.x > 0) {
 			super_background.x -= parallax_speed;
-		} else if (_player.body.velocity.x < 0) {
+		} else if (_player.body.velocity.x < 0){
 			super_background.x += parallax_speed;
-		}
-		else
-		{
-			super_background.x = 0;
 		}
 	}
 	

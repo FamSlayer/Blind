@@ -43,8 +43,13 @@ class Player extends FlxNapeSprite
 		_the_bat = b;
         
 		// load animation sprite sheet
-		loadGraphic("assets/images/jump_sprite_sheet12.png", true, 53, 120);// , 16, 16);
-		animation.add("jump", [1, 2, 3, 3, 3, 3, 3, 2, 1, 0], 10, false);	
+		loadGraphic("assets/images/WalkIdleSpriteSheet.png", true, 72, 120);// , 16, 16);
+		animation.add("walk", [0, 1, 2, 3, 4, 5], 12, true);
+		animation.add("idle", [6, 7, 8], 4, true);
+		animation.add("jump", [9, 10], 8, false);
+		animation.add("falling", [11, 12, 13], 12, true);
+		
+		//animation.add("jump", [1, 2, 3, 3, 3, 3, 3, 2, 1, 0], 10, false);	
 		// I'm literally just playing with the order of the frames so Amanda doesn't have to change any frames. - Fuller 
 		
 		//animation.add("idle", [0, 0], 2, false);
@@ -175,6 +180,29 @@ class Player extends FlxNapeSprite
 		
 		// if x velocity = 0 and y velocity = 0,  play idle animation on repeat
 		// if x velocity = 0 and y velocity = 0,  play walking animation
-		// if 
+		// if y velocity is <= 0 (jumping)
+		// if y velocity is >= 0 (falling)
+		
+		if (body.velocity.y <= -20)
+		{
+			animation.play("jump");
+		}
+		else if (body.velocity.y >= 20)
+		{
+			animation.play("falling");
+		}
+		else	// not jumping or falling, 
+		{
+			if (body.velocity.x != 0) 	// if the player is walking
+			{
+				animation.play("walk");
+			}
+			else 						// player is idle, in both x and y
+			{
+				animation.play("idle");
+			}
+		}
+		
+		
 	}
 }
