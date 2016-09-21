@@ -36,7 +36,7 @@ class CutsceneState extends FlxState
 		if (_scene.animation.finished)
 		{
 			if (_testing_phase) FlxG.switchState(new MenuState());
-			else FlxG.switchState(new Level0());
+			else FlxG.switchState(new MainMenuState());
 		}
 	}
 }
